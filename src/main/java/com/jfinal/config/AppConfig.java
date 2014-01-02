@@ -94,7 +94,7 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configConstant(Constants constants) {
-        this.properties = loadPropertyFile("application.properties");
+        this.properties = loadPropertyFile("application.conf");
         constants.setDevMode(getPropertyToBoolean("dev.mode", false));
         constants.setLoggerFactory(new LogbackLoggerFactory());
         view_path = getProperty("view.path", BASE_VIEW_PATH);
