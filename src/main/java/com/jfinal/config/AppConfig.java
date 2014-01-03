@@ -14,6 +14,7 @@ import com.jfinal.config.interceptors.ContextInterceptor;
 import com.jfinal.config.interceptors.SqlInXmlInterceptor;
 import com.jfinal.config.interceptors.SystemLogProcessor;
 import com.jfinal.ext.ftl.*;
+import com.jfinal.ext.handler.SessionHandler;
 import com.jfinal.ext.interceptor.syslog.SysLogInterceptor;
 import com.jfinal.ext.plugin.logback.LogbackLoggerFactory;
 import com.jfinal.ext.plugin.monogodb.MongodbPlugin;
@@ -115,6 +116,14 @@ public class AppConfig extends JFinalConfig {
             // 增加日期美化指令（类似 几分钟前）
             config.setSharedVariable("prettyTime", new PrettyTimeDirective());
         }
+        String view_404 = getProperty("view.404");
+        if (!Strings.isNullOrEmpty(view_404)) {
+            constants.setError401View(view_404);
+        }
+        String view_500 = getProperty("view.500");
+        if (!Strings.isNullOrEmpty(view_500)) {
+            constants.setError500View(view_500);
+        }
     }
 
     @Override
@@ -199,6 +208,7 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configHandler(Handlers handlers) {
+        handlers.add(new SessionHandler());
         //访问路径是/admin/monitor
         DruidStatViewHandler dvh = new DruidStatViewHandler("/admin/monitor", new IDruidStatViewAuth() {
             public boolean isPermitted(HttpServletRequest request) {//获得查看权限
