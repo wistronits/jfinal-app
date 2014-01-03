@@ -49,6 +49,7 @@ import java.util.Properties;
  */
 public class AppConfig extends JFinalConfig {
 
+    public static final String APPLICATION_PROP = "application.conf";
     /**
      * Global routing system configuration.
      */
@@ -100,7 +101,11 @@ public class AppConfig extends JFinalConfig {
         view_path = getProperty("view.path", BASE_VIEW_PATH);
         constants.setBaseViewPath(view_path);
         domain = getProperty("domain", DEFAULT_DOMAIN);
-        if (constants.getViewType() == ViewType.FREE_MARKER) {
+        String view_type = getProperty("view.type", "free_marker");
+        final ViewType viewType = ViewType.valueOf(view_type.toUpperCase());
+        constants.setViewType(viewType);
+
+        if (viewType == ViewType.FREE_MARKER) {
             // custmer variable
             final Configuration config = FreeMarkerRender.getConfiguration();
             config.setSharedVariable("block", new BlockDirective());
