@@ -16,17 +16,16 @@
 
 package com.jfinal.render;
 
-import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Maps;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
+import com.jfinal.kit.JsonKit;
 
 /**
  * JsonRender.
- * <p/>
+ * <p>
  * IE 不支持content type 为 application/json, 在 ajax 上传文件完成后返回 json时 IE 提示下载文件,<br>
  * 解决办法是使用： render(new JsonRender(params).forIE());
  */
@@ -38,7 +37,7 @@ public class JsonRender extends Render {
      * http://zh.wikipedia.org/zh/MIME
      * 在wiki中查到: 尚未被接受为正式数据类型的subtype，可以使用x-开始的独立名称（例如application/x-gzip）
      * 所以以下可能要改成 application/x-json
-     * <p/>
+     *
      * 通过使用firefox测试,struts2-json-plugin返回的是 application/json, 所以暂不改为 application/x-json
      * 1: 官方的 MIME type为application/json, 见 http://en.wikipedia.org/wiki/MIME_type
      * 2: IE 不支持 application/json, 在 ajax 上传文件完成后返回 json时 IE 提示下载文件
@@ -46,6 +45,7 @@ public class JsonRender extends Render {
     private static final String contentType = "application/json;charset=" + getEncoding();
     private static final String contentTypeForIE = "text/html;charset=" + getEncoding();
     private boolean forIE = false;
+    private static int convertDepth = 8;
 
     public JsonRender forIE() {
         forIE = true;
@@ -63,7 +63,7 @@ public class JsonRender extends Render {
     public JsonRender(final String key, final Object value) {
         if (key == null)
             throw new IllegalArgumentException("The parameter key can not be null.");
-        this.jsonText = JSON.toJSONString(Maps.newHashMap().put(key, value));
+        this.jsonText = JsonKit.mapToJson(new HashMap<String, Object>(){{put(key, value);}}, convertDepth);
     }
 
     public JsonRender(String[] attrs) {
@@ -81,7 +81,13 @@ public class JsonRender extends Render {
     public JsonRender(Object object) {
         if (object == null)
             throw new IllegalArgumentException("The parameter object can not be null.");
-        this.jsonText = JSON.toJSONString(object);
+        this.jsonText = JsonKit.toJson(object, convertDepth);
+    }
+
+    public static void setConvertDepth(int convertDepth) {
+        if (convertDepth < 2)
+            throw new IllegalArgumentException("convert depth can not less than 2.");
+        JsonRender.convertDepth = convertDepth;
     }
 
     public void render() {
@@ -90,7 +96,7 @@ public class JsonRender extends Render {
 
         PrintWriter writer = null;
         try {
-            response.setHeader("Pragma", "no-cache");    // HTTP/1.0 caches might not implement Cache-Control and might only implement Pragma: no-cache
+            response.setHeader("Pragma", "no-cache");	// HTTP/1.0 caches might not implement Cache-Control and might only implement Pragma: no-cache
             response.setHeader("Cache-Control", "no-cache");
             response.setDateHeader("Expires", 0);
 
@@ -100,18 +106,21 @@ public class JsonRender extends Render {
             writer.flush();
         } catch (IOException e) {
             throw new RenderException(e);
-        } finally {
+        }
+        finally {
             if (writer != null)
                 writer.close();
         }
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     private void buildJsonText() {
-        Map<String, Object> map = Maps.newHashMap();
+        Map map = new HashMap();
         if (attrs != null) {
             for (String key : attrs)
                 map.put(key, request.getAttribute(key));
-        } else {
+        }
+        else {
             Enumeration<String> attrs = request.getAttributeNames();
             while (attrs.hasMoreElements()) {
                 String key = attrs.nextElement();
@@ -120,7 +129,7 @@ public class JsonRender extends Render {
             }
         }
 
-        this.jsonText = JSON.toJSONString(map);
+        this.jsonText = JsonKit.mapToJson(map, convertDepth);
     }
 }
 
