@@ -4,7 +4,7 @@
 
     <groupId>com.jfinal</groupId>
     <artifactId>jfinal-app</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <packaging>jar</packaging>
 
     <name>jfinal-app</name>
@@ -31,12 +31,7 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
         </dependency>
-        <!--see  http://www.importnew.com/7528.html-->
-        <dependency>
-            <groupId>org.magicwerk</groupId>
-            <artifactId>brownies-collections</artifactId>
-            <version>0.9.4</version>
-        </dependency>
+ 
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
