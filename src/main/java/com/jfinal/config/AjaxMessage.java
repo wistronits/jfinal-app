@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package com.jfinal.config.dto;
+package com.jfinal.config;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -18,7 +18,7 @@ import org.apache.commons.lang3.StringUtils;
  * @version 1.0 2013-08-10 12:27 PM
  * @since JDK 1.5
  */
-public class AjaxMessageDto<E> {
+public class AjaxMessage<E> {
 
     /**
      * 请求消息处理状态
@@ -89,7 +89,7 @@ public class AjaxMessageDto<E> {
      * @param message 消息提示
      * @param status  消息状态
      */
-    private AjaxMessageDto(E data, String message, MessageStatus status) {
+    private AjaxMessage(E data, String message, MessageStatus status) {
         this.data = data;
         this.message = message;
         this.status = status;
@@ -104,7 +104,7 @@ public class AjaxMessageDto<E> {
      * @param status    消息状态
      * @param exception 异常信息
      */
-    private AjaxMessageDto(E data, String message, MessageStatus status, Exception exception) {
+    private AjaxMessage(E data, String message, MessageStatus status, Exception exception) {
         this.data = data;
         this.message = message;
         this.status = status;
@@ -119,8 +119,8 @@ public class AjaxMessageDto<E> {
      * @param <E>     数据泛型类型
      * @return 消息内容
      */
-    public static <E> AjaxMessageDto ok(String message, E data) {
-        return new AjaxMessageDto<E>(data, message, MessageStatus.OK);
+    public static <E> AjaxMessage ok(String message, E data) {
+        return new AjaxMessage<E>(data, message, MessageStatus.OK);
     }
 
     /**
@@ -130,7 +130,7 @@ public class AjaxMessageDto<E> {
      * @param <E>  数据泛型类型
      * @return 消息内容
      */
-    public static <E> AjaxMessageDto ok(E data) {
+    public static <E> AjaxMessage ok(E data) {
         return ok(StringUtils.EMPTY, data);
     }
 
@@ -140,7 +140,7 @@ public class AjaxMessageDto<E> {
      * @param message 消息提示
      * @return 消息内容
      */
-    public static AjaxMessageDto ok(String message) {
+    public static AjaxMessage ok(String message) {
         return ok(message, null);
     }
 
@@ -149,7 +149,7 @@ public class AjaxMessageDto<E> {
      *
      * @return 消息内容
      */
-    public static AjaxMessageDto ok() {
+    public static AjaxMessage ok() {
         return ok(SUCCESS_MSG, null);
     }
 
@@ -158,7 +158,7 @@ public class AjaxMessageDto<E> {
      *
      * @return 正在开发提示
      */
-    public static AjaxMessageDto developing() {
+    public static AjaxMessage developing() {
 
         return ok("正在开发中...", null);
     }
@@ -170,8 +170,8 @@ public class AjaxMessageDto<E> {
      * @param <E>  数据泛型类型
      * @return 消息内容
      */
-    public static <E> AjaxMessageDto nodata(E data) {
-        return new AjaxMessageDto<E>(data, NODATA_MSG, MessageStatus.NODATA);
+    public static <E> AjaxMessage nodata(E data) {
+        return new AjaxMessage<E>(data, NODATA_MSG, MessageStatus.NODATA);
     }
 
     /**
@@ -181,8 +181,8 @@ public class AjaxMessageDto<E> {
      * @param <E>  数据泛型类型
      * @return 消息内容
      */
-    public static <E> AjaxMessageDto nodata(String message, E data) {
-        return new AjaxMessageDto<E>(data, message, MessageStatus.NODATA);
+    public static <E> AjaxMessage nodata(String message, E data) {
+        return new AjaxMessage<E>(data, message, MessageStatus.NODATA);
     }
 
     /**
@@ -190,7 +190,7 @@ public class AjaxMessageDto<E> {
      *
      * @return 消息内容
      */
-    public static AjaxMessageDto nodata() {
+    public static AjaxMessage nodata() {
         return nodata(NODATA_MSG, null);
     }
 
@@ -201,8 +201,8 @@ public class AjaxMessageDto<E> {
      * @param <E>  数据泛型类型
      * @return 消息内容
      */
-    public static <E> AjaxMessageDto nologin(E data) {
-        return new AjaxMessageDto<E>(data, NOLOGIN_MSG, MessageStatus.NOLOGIN);
+    public static <E> AjaxMessage nologin(E data) {
+        return new AjaxMessage<E>(data, NOLOGIN_MSG, MessageStatus.NOLOGIN);
     }
 
     /**
@@ -210,7 +210,7 @@ public class AjaxMessageDto<E> {
      *
      * @return 消息内容
      */
-    public static AjaxMessageDto nologin() {
+    public static AjaxMessage nologin() {
         return nologin(null);
     }
 
@@ -221,8 +221,8 @@ public class AjaxMessageDto<E> {
      * @param <E>  数据泛型类型
      * @return 消息内容
      */
-    public static <E> AjaxMessageDto forbidden(E data) {
-        return new AjaxMessageDto<E>(data, FORBIDDEN_MSG, MessageStatus.FORBIDDEN);
+    public static <E> AjaxMessage forbidden(E data) {
+        return new AjaxMessage<E>(data, FORBIDDEN_MSG, MessageStatus.FORBIDDEN);
     }
 
     /**
@@ -230,7 +230,7 @@ public class AjaxMessageDto<E> {
      *
      * @return 消息内容
      */
-    public static AjaxMessageDto forbidden() {
+    public static AjaxMessage forbidden() {
         return forbidden(null);
     }
 
@@ -240,7 +240,7 @@ public class AjaxMessageDto<E> {
      * @param message 消息提示
      * @return 消息内容
      */
-    public static AjaxMessageDto error(String message) {
+    public static AjaxMessage error(String message) {
         return error(message, null, null);
     }
 
@@ -251,7 +251,7 @@ public class AjaxMessageDto<E> {
      * @param exception 异常
      * @return 消息内容
      */
-    public static AjaxMessageDto error(String message, Exception exception) {
+    public static AjaxMessage error(String message, Exception exception) {
         return error(message, null, exception);
     }
 
@@ -263,8 +263,8 @@ public class AjaxMessageDto<E> {
      * @param data      数据
      * @return 消息内容
      */
-    public static <E> AjaxMessageDto error(String message, E data, Exception exception) {
-        return new AjaxMessageDto<E>(data, message, MessageStatus.ERROR, exception);
+    public static <E> AjaxMessage error(String message, E data, Exception exception) {
+        return new AjaxMessage<E>(data, message, MessageStatus.ERROR, exception);
     }
 
     /**
@@ -273,7 +273,7 @@ public class AjaxMessageDto<E> {
      * @param message 消息提示
      * @return 消息内容
      */
-    public static AjaxMessageDto failure(String message) {
+    public static AjaxMessage failure(String message) {
         return failure(message, null, null);
     }
 
@@ -285,7 +285,7 @@ public class AjaxMessageDto<E> {
      * @param exception 异常
      * @return 消息内容
      */
-    public static AjaxMessageDto failure(String message, Exception exception) {
+    public static AjaxMessage failure(String message, Exception exception) {
         return failure(message, null, exception);
     }
 
@@ -297,8 +297,8 @@ public class AjaxMessageDto<E> {
      * @param data      数据
      * @return 消息内容
      */
-    public static <E> AjaxMessageDto failure(String message, E data, Exception exception) {
-        return new AjaxMessageDto<E>(data, message, MessageStatus.FAILURE, exception);
+    public static <E> AjaxMessage failure(String message, E data, Exception exception) {
+        return new AjaxMessage<E>(data, message, MessageStatus.FAILURE, exception);
     }
 
     /**

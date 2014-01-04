@@ -15,6 +15,7 @@ import com.jfinal.config.interceptors.SqlInXmlInterceptor;
 import com.jfinal.config.interceptors.SystemLogProcessor;
 import com.jfinal.ext.ftl.*;
 import com.jfinal.ext.handler.SessionHandler;
+import com.jfinal.ext.interceptor.autoscan.AutoOnLoadInterceptor;
 import com.jfinal.ext.interceptor.syslog.SysLogInterceptor;
 import com.jfinal.ext.plugin.logback.LogbackLoggerFactory;
 import com.jfinal.ext.plugin.monogodb.MongodbPlugin;
@@ -69,6 +70,11 @@ public class AppConfig extends JFinalConfig {
      * Default controller package.
      */
     private static final String CONTROLLER_PACKAGE = "app.controllers";
+
+    /**
+     * Default interceptors package.
+     */
+    private static final String INTERCEPTORS_PACKAGE = "app.interceptors";
 
     /**
      * 默认视图位置
@@ -203,6 +209,8 @@ public class AppConfig extends JFinalConfig {
             interceptors.add(new SqlInXmlInterceptor());
         }
         interceptors.add(new ContextInterceptor());
+
+        new AutoOnLoadInterceptor(interceptors, INTERCEPTORS_PACKAGE).load();
 
     }
 

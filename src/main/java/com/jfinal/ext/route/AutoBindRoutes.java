@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("UnusedDeclaration")
 public class AutoBindRoutes extends Routes {
 
     private boolean autoScan = true;

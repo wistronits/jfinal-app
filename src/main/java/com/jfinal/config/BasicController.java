@@ -7,7 +7,6 @@
 package com.jfinal.config;
 
 import com.google.common.collect.Maps;
-import com.jfinal.config.dto.AjaxMessageDto;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.kit.FreemarkerKit;
 import com.jfinal.ext.render.FreeMarkerXMLRender;
@@ -45,11 +44,11 @@ public abstract class BasicController extends Controller {
      * @param error 错误信息
      */
     protected void renderError(String error) {
-        renderJson(AjaxMessageDto.error(error));
+        renderJson(AjaxMessage.error(error));
     }
 
     protected void renderFailure(String failure) {
-        renderJson(AjaxMessageDto.failure(failure));
+        renderJson(AjaxMessage.failure(failure));
     }
 
     /**
@@ -58,11 +57,11 @@ public abstract class BasicController extends Controller {
      * @param message 提示信息
      */
     protected void renderSuccess(String message) {
-        renderJson(AjaxMessageDto.ok(message));
+        renderJson(AjaxMessage.ok(message));
     }
 
     protected void renderSuccess() {
-        renderJson(AjaxMessageDto.ok());
+        renderJson(AjaxMessage.ok());
     }
 
     /**
@@ -72,7 +71,7 @@ public abstract class BasicController extends Controller {
      * @param e     异常
      */
     protected void renderError(String error, Exception e) {
-        renderJson(AjaxMessageDto.error(error, e));
+        renderJson(AjaxMessage.error(error, e));
     }
 
     /**
@@ -95,6 +94,6 @@ public abstract class BasicController extends Controller {
      * 渲染todo提示
      */
     protected void todo() {
-        renderJson(AjaxMessageDto.developing());
+        renderJson(AjaxMessage.developing());
     }
 }
