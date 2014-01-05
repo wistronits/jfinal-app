@@ -6,6 +6,7 @@
 
 package com.jfinal.config;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -85,7 +86,7 @@ public class AjaxMessage<E> {
     /**
      * 构造函数
      *
-     * @param data       消息数据
+     * @param data    消息数据
      * @param message 消息提示
      * @param status  消息状态
      */
@@ -99,7 +100,7 @@ public class AjaxMessage<E> {
     /**
      * 构造一个包括异常信息的函数
      *
-     * @param data         消息数据
+     * @param data      消息数据
      * @param message   消息提示
      * @param status    消息状态
      * @param exception 异常信息
@@ -326,6 +327,15 @@ public class AjaxMessage<E> {
      */
     public MessageStatus getStatus() {
         return status;
+    }
+
+    /**
+     * 转换为JSON字符串。
+     *
+     * @return JSON字符串
+     */
+    public String toJSON() {
+        return JSON.toJSONString(this);
     }
 
 }

@@ -6,7 +6,7 @@
 
 package com.jfinal.ext.kit;
 
-import com.jfinal.config.AppConfig;
+import com.jfinal.initalizer.AppConfig;
 import com.jfinal.kit.PathKit;
 import com.jfinal.render.FreeMarkerRender;
 import com.jfinal.render.RenderException;

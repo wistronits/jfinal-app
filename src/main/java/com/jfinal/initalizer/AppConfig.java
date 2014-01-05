@@ -4,15 +4,16 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package com.jfinal.config;
+package com.jfinal.initalizer;
 
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.util.JdbcConstants;
 import com.alibaba.druid.wall.WallFilter;
 import com.google.common.base.Strings;
-import com.jfinal.config.interceptors.ContextInterceptor;
-import com.jfinal.config.interceptors.SqlInXmlInterceptor;
-import com.jfinal.config.interceptors.SystemLogProcessor;
+import com.jfinal.config.*;
+import com.jfinal.initalizer.interceptors.ContextInterceptor;
+import com.jfinal.initalizer.interceptors.SqlInXmlInterceptor;
+import com.jfinal.initalizer.interceptors.SystemLogProcessor;
 import com.jfinal.ext.ftl.*;
 import com.jfinal.ext.handler.SessionHandler;
 import com.jfinal.ext.interceptor.autoscan.AutoOnLoadInterceptor;

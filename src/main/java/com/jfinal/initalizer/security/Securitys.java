@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package com.jfinal.config.security;
+package com.jfinal.initalizer.security;
 
 
 import org.apache.shiro.SecurityUtils;

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package com.jfinal.config.interceptors;
+package com.jfinal.initalizer.interceptors;
 
 
 import com.google.common.base.Strings;

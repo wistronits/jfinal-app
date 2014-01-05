@@ -8,7 +8,7 @@ package com.jfinal.initalizer;
 
 import com.google.common.io.InputSupplier;
 import com.google.common.io.Resources;
-import com.jfinal.config.AppConfig;
+import org.apache.shiro.util.StringUtils;
 
 import javax.servlet.*;
 import java.io.IOException;
@@ -31,11 +31,14 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
 
 
     @Override
-    public void onStartup(Set<Class<?>> classSet, ServletContext ctx) throws ServletException {
+    public void onStartup(Set<Class<?>> classSet, ServletContext ctx)
+            throws ServletException {
         URL url = Resources.getResource(AppConfig.APPLICATION_PROP);
         if (url == null) {
             throw new IllegalArgumentException("Parameter of file can not be blank");
         }
+
+        String app_name;
 
         InputSupplier<InputStream> inputSupplier = Resources.newInputStreamSupplier(url);
         try {
@@ -47,6 +50,7 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
                 ctx.addFilter("ShiroFilter", "org.apache.shiro.web.servlet.ShiroFilter")
                         .addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
             }
+            app_name = p.getProperty("app", StringUtils.EMPTY_STRING);
         } catch (IOException e) {
             throw new IllegalArgumentException("Properties file can not be loading: " + url);
         }
@@ -56,6 +60,7 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
         jfinalFilter.setInitParameter("configClass", "com.jfinal.config.AppConfig");
         jfinalFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
 
-        System.out.println("initializer Application ok!");
+
+        System.out.println("initializer " + app_name + " Application ok!");
     }
 }
