@@ -59,6 +59,9 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
 
         jfinalFilter.setInitParameter("configClass", "com.jfinal.config.AppConfig");
         jfinalFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+        // 支持异步请求处理
+        jfinalFilter.setAsyncSupported(true);
+
 
 
         System.out.println("initializer " + app_name + " Application ok!");

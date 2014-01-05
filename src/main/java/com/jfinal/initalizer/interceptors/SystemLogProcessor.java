@@ -25,7 +25,7 @@ import java.util.Set;
  * @version 1.0 2013-12-12 3:45
  * @since JDK 1.5
  */
-public class SystemLogProcessor implements LogProcessor {
+public class  SystemLogProcessor implements LogProcessor {
     @Override
     public void process(SysLog sysLog) {
         // todo save log into db or other storage.

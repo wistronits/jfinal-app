@@ -16,25 +16,25 @@
 
 package com.jfinal.config;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.common.collect.Lists;
 import com.jfinal.aop.Interceptor;
+
+import java.util.List;
 
 /**
  * The interceptors applied to all actions.
  */
 final public class Interceptors {
-	
-	private final List<Interceptor> interceptorList = new ArrayList<Interceptor>();
-	
-	public Interceptors add(Interceptor globalInterceptor) {
-		if (globalInterceptor != null)
-			this.interceptorList.add(globalInterceptor);
-		return this;
-	}
-	
-	public Interceptor[] getInterceptorArray() {
-		Interceptor[] result = interceptorList.toArray(new Interceptor[interceptorList.size()]);
-		return result == null ? new Interceptor[0] : result;
-	}
+
+    private final List<Interceptor> interceptorList = Lists.newArrayList();
+
+    public Interceptors add(Interceptor globalInterceptor) {
+        if (globalInterceptor != null)
+            this.interceptorList.add(globalInterceptor);
+        return this;
+    }
+
+    public Interceptor[] getInterceptorArray() {
+        return interceptorList.toArray(new Interceptor[interceptorList.size()]);
+    }
 }

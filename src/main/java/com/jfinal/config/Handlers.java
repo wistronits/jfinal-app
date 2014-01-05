@@ -16,24 +16,25 @@
 
 package com.jfinal.config;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.common.collect.Lists;
 import com.jfinal.handler.Handler;
+
+import java.util.List;
 
 /**
  * Handlers.
  */
 final public class Handlers {
-	
-	private final List<Handler> handlerList = new ArrayList<Handler>();
-	
-	public Handlers add(Handler handler) {
-		if (handler != null)
-			handlerList.add(handler);
-		return this;
-	}
-	
-	public List<Handler> getHandlerList() {
-		return handlerList;
-	}
+
+    private final List<Handler> handlerList = Lists.newArrayList();
+
+    public Handlers add(Handler handler) {
+        if (handler != null)
+            handlerList.add(handler);
+        return this;
+    }
+
+    public List<Handler> getHandlerList() {
+        return handlerList;
+    }
 }

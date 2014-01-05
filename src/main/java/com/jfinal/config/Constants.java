@@ -34,6 +34,7 @@ import com.jfinal.token.ITokenCache;
 /**
  * The constant for JFinal runtime.
  */
+@SuppressWarnings("UnusedDeclaration")
 final public class Constants {
 	
 	private String fileRenderPath;

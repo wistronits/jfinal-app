@@ -16,9 +16,9 @@
 
 package com.jfinal.config;
 
+import com.google.common.collect.Maps;
 import com.jfinal.core.Controller;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -30,8 +30,8 @@ public abstract class Routes {
 
     public static final String BLANK = "";
     public static final String PREFIX = "/";
-    private final Map<String, Class<? extends Controller>> map = new HashMap<String, Class<? extends Controller>>();
-    private final Map<String, String> viewPathMap = new HashMap<String, String>();
+    private final Map<String, Class<? extends Controller>> map = Maps.newConcurrentMap();
+    private final Map<String, String> viewPathMap = Maps.newHashMap();
 
     /**
      * you must implement config method and use add method to config route

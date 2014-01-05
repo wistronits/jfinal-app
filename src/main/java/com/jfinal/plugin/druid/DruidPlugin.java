@@ -38,7 +38,7 @@ public class DruidPlugin implements IPlugin, IDataSourceProvider {
 	private String driverClass = "com.mysql.jdbc.Driver";
 	
 	// 配置初始化大小、最小、最大
-	private int initialSize = 10;
+	private int initialSize = DruidDataSource.DEFAULT_INITIAL_SIZE;
 	private int minIdle = 10;
 	private int maxActive = 100;
 	
