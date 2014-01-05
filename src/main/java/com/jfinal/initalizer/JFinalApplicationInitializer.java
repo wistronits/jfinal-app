@@ -57,7 +57,7 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
 
         FilterRegistration.Dynamic jfinalFilter = ctx.addFilter("jfinal@app", "com.jfinal.core.JFinalFilter");
 
-        jfinalFilter.setInitParameter("configClass", "com.jfinal.config.AppConfig");
+        jfinalFilter.setInitParameter("configClass", "com.jfinal.initalizer.AppConfig");
         jfinalFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         // 支持异步请求处理
         jfinalFilter.setAsyncSupported(true);
