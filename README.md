@@ -70,7 +70,7 @@ example
 		#mongo.port=27017					# MongoDB的端口
 		#mongo.db=db							# MongoDB的数据库
 		# Enable MongoDB ORM plugin.
-		#mongo.morphia=						# 是否启用Mongodb的Morphia的ORM框架
+		#mongo.moriph=						# 是否启用Mongodb的Morphia的ORM框架
 
 		# Enable Redis Plugin.
 		#redis.url=							# 如果配置该项，则表示启用Redis插件（Jredis），同时表示链接Redis的地址
