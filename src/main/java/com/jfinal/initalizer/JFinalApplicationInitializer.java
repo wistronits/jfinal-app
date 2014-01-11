@@ -8,7 +8,7 @@ package com.jfinal.initalizer;
 
 import com.google.common.io.InputSupplier;
 import com.google.common.io.Resources;
-import org.apache.shiro.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.*;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
                 ctx.addFilter("ShiroFilter", "org.apache.shiro.web.servlet.ShiroFilter")
                         .addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
             }
-            app_name = p.getProperty("app", StringUtils.EMPTY_STRING);
+            app_name = p.getProperty("app", StringUtils.EMPTY);
         } catch (IOException e) {
             throw new IllegalArgumentException("Properties file can not be loading: " + url);
         }

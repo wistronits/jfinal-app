@@ -267,7 +267,7 @@
         <repository>
             <id>aetc</id>
             <name>Aetc Group Releases</name>
-            <url>http://aetc2013.f3322.org:8888/nexus/content/repositories/thirdparty</url>
+            <url>http://aetc2013.f3322.org/nexus/content/repositories/thirdparty</url>
         </repository>
     </distributionManagement>
 
