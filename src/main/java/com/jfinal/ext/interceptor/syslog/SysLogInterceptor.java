@@ -32,9 +32,12 @@ public class SysLogInterceptor implements Interceptor {
     public SysLogInterceptor setLogProcesser(LogProcessor logProcesser, String path) {
         this.logProcesser = logProcesser;
 
-
         try {
             String config = Files.toString(new File(path), Charset.forName("UTF-8"));
+
+            if (Strings.isNullOrEmpty(config)) {
+                return null;
+            }
 
             List<LogPathConfig> pathConfigs = JSON.parseObject(config, new TypeReference<List<LogPathConfig>>() {
             });

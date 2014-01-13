@@ -200,9 +200,11 @@ public class AppConfig extends JFinalConfig {
     public void configInterceptor(Interceptors interceptors) {
         URL config_url = com.google.common.io.Resources.getResource("syslog.json");
         if (config_url != null) {
-            final SysLogInterceptor sysLogInterceptor = new SysLogInterceptor();
-            sysLogInterceptor.setLogProcesser(new SystemLogProcessor(), config_url.getPath());
-            interceptors.add(sysLogInterceptor);
+            SysLogInterceptor sysLogInterceptor = new SysLogInterceptor();
+            sysLogInterceptor = sysLogInterceptor.setLogProcesser(new SystemLogProcessor(), config_url.getPath());
+            if(sysLogInterceptor != null){
+                interceptors.add(sysLogInterceptor);
+            }
         }
 
         if (getPropertyToBoolean("dev.mode", false) && getPropertyToBoolean("db.sqlinxml", false)) {
