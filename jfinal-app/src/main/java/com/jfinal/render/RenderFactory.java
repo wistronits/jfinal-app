@@ -233,7 +233,7 @@ public class RenderFactory {
 			return new FreeMarkerRender(view);
 		}
 		public String getViewExtension() {
-			return ".html";
+			return ".ftl";
 		}
 	}
 	
