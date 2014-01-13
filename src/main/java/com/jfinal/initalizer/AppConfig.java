@@ -11,9 +11,6 @@ import com.alibaba.druid.util.JdbcConstants;
 import com.alibaba.druid.wall.WallFilter;
 import com.google.common.base.Strings;
 import com.jfinal.config.*;
-import com.jfinal.initalizer.interceptors.ContextInterceptor;
-import com.jfinal.initalizer.interceptors.SqlInXmlInterceptor;
-import com.jfinal.initalizer.interceptors.SystemLogProcessor;
 import com.jfinal.ext.ftl.*;
 import com.jfinal.ext.handler.SessionHandler;
 import com.jfinal.ext.interceptor.autoscan.AutoOnLoadInterceptor;
@@ -27,6 +24,9 @@ import com.jfinal.ext.plugin.sqlinxml.SqlInXmlPlugin;
 import com.jfinal.ext.plugin.tablebind.AutoTableBindPlugin;
 import com.jfinal.ext.plugin.tablebind.SimpleNameStyles;
 import com.jfinal.ext.route.AutoBindRoutes;
+import com.jfinal.initalizer.interceptors.ContextInterceptor;
+import com.jfinal.initalizer.interceptors.SqlInXmlInterceptor;
+import com.jfinal.initalizer.interceptors.SystemLogProcessor;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.druid.DruidStatViewHandler;
@@ -52,7 +52,6 @@ import java.util.Properties;
  */
 public class AppConfig extends JFinalConfig {
 
-    public static final String APPLICATION_PROP = "application.conf";
     /**
      * Global routing system configuration.
      */
@@ -103,7 +102,7 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configConstant(Constants constants) {
-        this.properties = loadPropertyFile("application.conf");
+        this.properties = ConfigProperties.getConfigProps();
         constants.setDevMode(getPropertyToBoolean("dev.mode", false));
         constants.setLoggerFactory(new LogbackLoggerFactory());
         view_path = getProperty("view.path", BASE_VIEW_PATH);
@@ -212,7 +211,6 @@ public class AppConfig extends JFinalConfig {
         interceptors.add(new ContextInterceptor());
 
         new AutoOnLoadInterceptor(interceptors, INTERCEPTORS_PACKAGE).load();
-
     }
 
     @Override
