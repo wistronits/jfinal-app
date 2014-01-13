@@ -29,7 +29,7 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
     public void onStartup(Set<Class<?>> classSet, ServletContext ctx)
             throws ServletException {
 
-        Properties p = ConfigProperties.getConfigProps();
+        final Properties p = ConfigProperties.getConfigProps();
 
         boolean security = Boolean.getBoolean(p.getProperty("security", "false"));
         if (security) {

@@ -48,10 +48,24 @@ public class ConfigProperties {
         try {
             Properties p = new Properties();
             p.load(inputSupplier.getInput());
+
+            if (checkNullOrEmpty(p)) {
+                throw new IllegalArgumentException("Properties file can not be empty. " + url);
+            }
             configProps.set(p);
         } catch (IOException e) {
             throw new IllegalArgumentException("Properties file can not be loading: " + url);
         }
+    }
+
+    /**
+     * 如果属性文件为空或者没有内容，则返回true
+     *
+     * @param p 属性信息
+     * @return 是否为空或者没有内容
+     */
+    private static boolean checkNullOrEmpty(Properties p) {
+        return p == null || p.isEmpty();
     }
 
     /**
@@ -70,6 +84,9 @@ public class ConfigProperties {
      * @return 配置信息
      */
     public static String getProp(String key, String default_value) {
+        if (checkNullOrEmpty(configProps.get())) {
+            readConf();
+        }
         return getConfigProps().getProperty(key, default_value);
     }
 
