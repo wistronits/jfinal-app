@@ -16,6 +16,7 @@
 
 package com.jfinal.plugin.activerecord;
 
+import com.google.common.collect.Lists;
 import com.jfinal.plugin.activerecord.cache.ICache;
 
 import java.io.Serializable;
@@ -32,7 +33,7 @@ import static com.jfinal.plugin.activerecord.DbKit.NULL_PARA_ARRAY;
  * A wise person avoids it.
  * A stupid person makes it.
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({"rawtypes", "unchecked", "UnusedDeclaration"})
 public abstract class Model<M extends Model> implements Serializable {
 
     private static final long serialVersionUID = -4890964905769110400L;
@@ -277,14 +278,14 @@ public abstract class Model<M extends Model> implements Serializable {
         TableInfo tableInfo = tableInfoMapping.getTableInfo(getClass());
 
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList<Object>();
+        List<Object> paras = Lists.newArrayList();
         DbKit.dialect.forModelSave(tableInfo, attrs, sql, paras);
         // if (paras.size() == 0)	return false;	// The sql "insert into tableName() values()" works fine, so delete this line
 
         // --------
         Connection conn = null;
         PreparedStatement pst = null;
-        int result = 0;
+        int result;
         try {
             conn = DbKit.getConnection();
             if (DbKit.dialect.isOracle())
@@ -641,11 +642,7 @@ public abstract class Model<M extends Model> implements Serializable {
     }
 
     public boolean equals(Object o) {
-        if (!(o instanceof Model))
-            return false;
-        if (o == this)
-            return true;
-        return this.attrs.equals(((Model) o).attrs);
+        return o instanceof Model && (o == this || this.attrs.equals(((Model) o).attrs));
     }
 
     public int hashCode() {
