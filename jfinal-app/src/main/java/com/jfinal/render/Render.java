@@ -8,6 +8,7 @@ package com.jfinal.render;
 
 import com.jfinal.core.Const;
 import com.jfinal.initalizer.AppConfig;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,7 +54,7 @@ public abstract class Render implements Serializable {
             view = viewPath + view;
         // sogyf added by 2013-01-13 15:15
         if (AppConfig.isSetViewPath() && view.startsWith("/")) {
-            view = AppConfig.getBaseViewPath() + view;
+            view = AppConfig.getBaseViewPath() + view.replaceFirst("/", StringUtils.EMPTY);
         }
         return this;
     }

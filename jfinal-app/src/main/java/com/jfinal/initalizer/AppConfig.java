@@ -115,6 +115,9 @@ public class AppConfig extends JFinalConfig {
         domain = getProperty("domain", DEFAULT_DOMAIN);
         String view_type = getProperty("view.type", "free_marker");
         final ViewType viewType = ViewType.valueOf(view_type.toUpperCase());
+        if(viewType == ViewType.FREE_MARKER){
+            constants.setFreeMarkerViewExtension(".ftl");
+        }
         constants.setViewType(viewType);
 
         if (viewType == ViewType.FREE_MARKER) {
