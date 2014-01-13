@@ -2,9 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jfinal</groupId>
+    <parent>
+        <groupId>com.jfinal</groupId>
+        <artifactId>jfinal-gap</artifactId>
+        <version>0.0.7</version>
+    </parent>
+
     <artifactId>jfinal-app</artifactId>
-    <version>0.0.7</version>
     <packaging>jar</packaging>
 
     <name>jfinal-app</name>
@@ -45,7 +49,7 @@
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>1.9.0</version>
+            <version>1.9.1</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
