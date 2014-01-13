@@ -6,8 +6,8 @@
 
 package com.jfinal.initalizer;
 
-import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.util.JdbcConstants;
+import com.alibaba.druid.util.JdbcUtils;
 import com.alibaba.druid.wall.WallFilter;
 import com.google.common.base.Strings;
 import com.jfinal.config.*;
@@ -27,7 +27,9 @@ import com.jfinal.ext.route.AutoBindRoutes;
 import com.jfinal.initalizer.interceptors.ContextInterceptor;
 import com.jfinal.initalizer.interceptors.SqlInXmlInterceptor;
 import com.jfinal.initalizer.interceptors.SystemLogProcessor;
-import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
+import com.jfinal.plugin.activerecord.dialect.OracleDialect;
+import com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect;
+import com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.druid.DruidStatViewHandler;
 import com.jfinal.plugin.druid.IDruidStatViewAuth;
@@ -141,13 +143,15 @@ public class AppConfig extends JFinalConfig {
     @Override
     public void configPlugin(Plugins plugins) {
         String db_url = getProperty("db.url");
+        final Boolean devMode = getPropertyToBoolean("dev.mode", false);
         if (!Strings.isNullOrEmpty(db_url)) {
             // 如果配置了数据库地址，则启用数据库插件
             final DruidPlugin druidPlugin = new DruidPlugin(
                     db_url
                     , getProperty("db.username")
                     , getProperty("db.password"));
-            druidPlugin.addFilter(new StatFilter());
+            // 增加监控统计和防SQL注入拦截
+            druidPlugin.setFilters("stat,wall");
             final WallFilter wall = new WallFilter();
             wall.setDbType(JdbcConstants.MYSQL);
             druidPlugin.addFilter(wall);
@@ -157,8 +161,20 @@ public class AppConfig extends JFinalConfig {
             final AutoTableBindPlugin atbp = new AutoTableBindPlugin(druidPlugin,
                     SimpleNameStyles.LOWER_UNDERLINE, getProperty("db.models", MODEL_PACKAGE));
 
-            atbp.setDialect(new MysqlDialect());
-            atbp.setShowSql(getPropertyToBoolean("dev.mode", false));
+            // 根据db_url判断是什么数据库,使用druid的方法判断
+            String dbtype = JdbcUtils.getDbType(db_url, "");
+            if (!StringUtils.equals(dbtype, JdbcConstants.MYSQL)) {
+                if (StringUtils.equals(dbtype, JdbcConstants.ORACLE)) {
+                    atbp.setDialect(new OracleDialect());
+                } else if (StringUtils.equals(dbtype, JdbcConstants.POSTGRESQL)) {
+                    atbp.setDialect(new PostgreSqlDialect());
+                } else if (StringUtils.equals(dbtype, "sqlite")) {
+                    atbp.setDialect(new Sqlite3Dialect());
+                } else {
+                    System.err.println("database type is use mysql.");
+                }
+            }
+            atbp.setShowSql(devMode);
             plugins.add(atbp);
             if (getPropertyToBoolean("db.sqlinxml", false)) {
                 plugins.add(new SqlInXmlPlugin());
@@ -202,7 +218,7 @@ public class AppConfig extends JFinalConfig {
         if (config_url != null) {
             SysLogInterceptor sysLogInterceptor = new SysLogInterceptor();
             sysLogInterceptor = sysLogInterceptor.setLogProcesser(new SystemLogProcessor(), config_url.getPath());
-            if(sysLogInterceptor != null){
+            if (sysLogInterceptor != null) {
                 interceptors.add(sysLogInterceptor);
             }
         }

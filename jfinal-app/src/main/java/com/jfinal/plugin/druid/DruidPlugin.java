@@ -29,6 +29,7 @@ import com.jfinal.plugin.activerecord.IDataSourceProvider;
 /**
  * DruidPlugin.
  */
+@SuppressWarnings("UnusedDeclaration")
 public class DruidPlugin implements IPlugin, IDataSourceProvider {
 	
 	// 基本属性 url、user、password
@@ -133,7 +134,7 @@ public class DruidPlugin implements IPlugin, IDataSourceProvider {
 		ds.setTestOnReturn(testOnReturn);
 		
 		ds.setPoolPreparedStatements(poolPreparedStatements);
-		if (poolPreparedStatements == true)
+		if (poolPreparedStatements)
 			ds.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
 		
 		if (StringKit.notBlank(filters))
