@@ -7,6 +7,7 @@
 package app.controllers;
 
 import com.jfinal.config.BasicController;
+import org.joda.time.DateTime;
 
 /**
  * <p>
@@ -20,6 +21,7 @@ import com.jfinal.config.BasicController;
 public class IndexController extends BasicController{
 
     public void index(){
-        render("index");
+        setAttr("now", DateTime.now().toString("yyyy-MM-dd HH:mm:ss"));
+        render("/index");
     }
 }

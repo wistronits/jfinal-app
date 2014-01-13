@@ -12,7 +12,6 @@ import com.alibaba.druid.wall.WallFilter;
 import com.google.common.base.Strings;
 import com.jfinal.config.*;
 import com.jfinal.ext.ftl.*;
-import com.jfinal.ext.handler.SessionHandler;
 import com.jfinal.ext.interceptor.autoscan.AutoOnLoadInterceptor;
 import com.jfinal.ext.interceptor.syslog.SysLogInterceptor;
 import com.jfinal.ext.plugin.logback.LogbackLoggerFactory;
@@ -27,6 +26,7 @@ import com.jfinal.ext.route.AutoBindRoutes;
 import com.jfinal.initalizer.interceptors.ContextInterceptor;
 import com.jfinal.initalizer.interceptors.SqlInXmlInterceptor;
 import com.jfinal.initalizer.interceptors.SystemLogProcessor;
+import com.jfinal.kit.StringKit;
 import com.jfinal.plugin.activerecord.dialect.OracleDialect;
 import com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect;
 import com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect;
@@ -41,7 +41,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URL;
-import java.util.Properties;
 
 /**
  * <p>
@@ -58,10 +57,6 @@ public class AppConfig extends JFinalConfig {
      * Global routing system configuration.
      */
     private Routes routes;
-    /**
-     * System Configuration.
-     */
-    private Properties properties;
 
     /**
      * The default model package.
@@ -88,6 +83,7 @@ public class AppConfig extends JFinalConfig {
     private static String view_path;
 
     private static String domain;
+    private static boolean setViewPath;
 
     /**
      * 系统公用位置
@@ -102,13 +98,20 @@ public class AppConfig extends JFinalConfig {
         return domain;
     }
 
+    public static boolean isSetViewPath() {
+        return setViewPath;
+    }
+
     @Override
     public void configConstant(Constants constants) {
-        this.properties = ConfigProperties.getConfigProps();
+        setProperties(ConfigProperties.getConfigProps());
         constants.setDevMode(getPropertyToBoolean("dev.mode", false));
         constants.setLoggerFactory(new LogbackLoggerFactory());
         view_path = getProperty("view.path", BASE_VIEW_PATH);
-        constants.setBaseViewPath(view_path);
+        if (!StringKit.isBlank(view_path)) {
+            setViewPath = true;
+            constants.setBaseViewPath(view_path);
+        }
         domain = getProperty("domain", DEFAULT_DOMAIN);
         String view_type = getProperty("view.type", "free_marker");
         final ViewType viewType = ViewType.valueOf(view_type.toUpperCase());
@@ -189,7 +192,7 @@ public class AppConfig extends JFinalConfig {
         }
 
         if (getPropertyToBoolean("job", false)) {
-            plugins.add(new QuartzPlugin(properties));
+            plugins.add(new QuartzPlugin(ConfigProperties.getConfigProps()));
         }
 
         final String mongo_host = getProperty("mongo.host", MongodbPlugin.DEFAULT_HOST);
@@ -214,13 +217,17 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configInterceptor(Interceptors interceptors) {
-        URL config_url = com.google.common.io.Resources.getResource("syslog.json");
-        if (config_url != null) {
-            SysLogInterceptor sysLogInterceptor = new SysLogInterceptor();
-            sysLogInterceptor = sysLogInterceptor.setLogProcesser(new SystemLogProcessor(), config_url.getPath());
-            if (sysLogInterceptor != null) {
-                interceptors.add(sysLogInterceptor);
+        try {
+            URL config_url = com.google.common.io.Resources.getResource("syslog.json");
+            if (config_url != null) {
+                SysLogInterceptor sysLogInterceptor = new SysLogInterceptor();
+                sysLogInterceptor = sysLogInterceptor.setLogProcesser(new SystemLogProcessor(), config_url.getPath());
+                if (sysLogInterceptor != null) {
+                    interceptors.add(sysLogInterceptor);
+                }
             }
+        } catch (IllegalArgumentException ignored) {
+            // ingored.
         }
 
         if (getPropertyToBoolean("dev.mode", false) && getPropertyToBoolean("db.sqlinxml", false)) {
@@ -233,7 +240,7 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configHandler(Handlers handlers) {
-        handlers.add(new SessionHandler());
+//        handlers.add(new SessionHandler());
         //访问路径是/admin/monitor
         DruidStatViewHandler dvh = new DruidStatViewHandler("/admin/monitor", new IDruidStatViewAuth() {
             public boolean isPermitted(HttpServletRequest request) {//获得查看权限

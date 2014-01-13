@@ -1,5 +1,7 @@
 package com.jfinal.ext.kit;
 
+import com.google.common.base.Splitter;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -14,6 +16,7 @@ import java.util.*;
  * @version 1.0 2014-01-04 13:52
  * @since JDK 1.6
  */
+@SuppressWarnings("UnusedDeclaration")
 public class PropertiesKit {
     /**
      * 不使用系统属性,这个是默认值
@@ -83,8 +86,8 @@ public class PropertiesKit {
     /**
      * 返回null,如果查值的属性值是empty
      *
-     * @param key
-     * @return
+     * @param key 属性键值
+     * @return 属性键值
      */
     public String getNullIfEmpty(String key) {
         String value = getProperty(key);
@@ -97,7 +100,7 @@ public class PropertiesKit {
     /**
      * 尝试从System.getProperty(key)及System.getenv(key)得到值
      *
-     * @return
+     * @return 属性键值
      */
     public String getAndTryFromSystem(String key) {
         String value = getProperty(key);
@@ -268,7 +271,8 @@ public class PropertiesKit {
         if (v == null) {
             return new String[0];
         } else {
-            return org.springframework.util.StringUtils.tokenizeToStringArray(v, ", \t\n\r\f");
+            List<String> splits = Splitter.on(", \t\n\r\f").omitEmptyStrings().trimResults().splitToList(key);
+            return splits.toArray(new String[splits.size()]);
         }
     }
 

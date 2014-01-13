@@ -145,6 +145,10 @@ public abstract class JFinalConfig {
         if (properties == null)
             throw new RuntimeException("You must load properties file by invoking loadPropertyFile(String) method in configConstant(Constants) method before.");
     }
+
+   protected void setProperties(Properties properties) {
+        this.properties = properties;
+    }
 }
 
 

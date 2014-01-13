@@ -45,7 +45,7 @@ public class StringKit {
 	 * 字符串为 null 或者为  "" 时返回 true
 	 */
 	public static boolean isBlank(String str) {
-		return str == null || "".equals(str.trim()) ? true : false;
+		return str == null || "".equals(str.trim());
 	}
 	
 	/**
