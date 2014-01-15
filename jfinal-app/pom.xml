@@ -287,6 +287,11 @@
             <name>Aetc Group Releases</name>
             <url>http://aetc2013.f3322.org:8888/nexus/content/repositories/thirdparty</url>
         </repository>
+        <snapshotRepository>
+            <id>aetc-snapshots</id>
+            <name>Snapshots</name>
+            <url>http://aetc2013.f3322.org:8888/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <build>
