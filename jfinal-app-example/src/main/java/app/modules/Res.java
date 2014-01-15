@@ -19,5 +19,6 @@ import com.jfinal.plugin.activerecord.Model;
  */
 //@TableBind(tableName = "res")
 public class Res extends Model<Res> {
+    private static final long serialVersionUID = 6808306115371219964L;
     public static Res dao = new Res();
 }

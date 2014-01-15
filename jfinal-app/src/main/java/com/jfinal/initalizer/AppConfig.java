@@ -113,7 +113,21 @@ public class AppConfig extends JFinalConfig {
             constants.setBaseViewPath(view_path);
         }
         domain = getProperty("domain", DEFAULT_DOMAIN);
-        String view_type = getProperty("view.type", "free_marker");
+        String view_type = getProperty("view.type");
+        if(!StringKit.isBlank(view_type)){
+            setViewType(constants, view_type);
+        }
+        String view_404 = getProperty("view.404");
+        if (!Strings.isNullOrEmpty(view_404)) {
+            constants.setError401View(view_404);
+        }
+        String view_500 = getProperty("view.500");
+        if (!Strings.isNullOrEmpty(view_500)) {
+            constants.setError500View(view_500);
+        }
+    }
+
+    private void setViewType(Constants constants, String view_type) {
         final ViewType viewType = ViewType.valueOf(view_type.toUpperCase());
         if(viewType == ViewType.FREE_MARKER){
             constants.setFreeMarkerViewExtension(".ftl");
@@ -129,14 +143,6 @@ public class AppConfig extends JFinalConfig {
             config.setSharedVariable("super", new SuperDirective());
             // 增加日期美化指令（类似 几分钟前）
             config.setSharedVariable("prettyTime", new PrettyTimeDirective());
-        }
-        String view_404 = getProperty("view.404");
-        if (!Strings.isNullOrEmpty(view_404)) {
-            constants.setError401View(view_404);
-        }
-        String view_500 = getProperty("view.500");
-        if (!Strings.isNullOrEmpty(view_500)) {
-            constants.setError500View(view_500);
         }
     }
 

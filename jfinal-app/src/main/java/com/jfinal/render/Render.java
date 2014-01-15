@@ -6,6 +6,7 @@
 
 package com.jfinal.render;
 
+import com.jfinal.config.Routes;
 import com.jfinal.core.Const;
 import com.jfinal.initalizer.AppConfig;
 import org.apache.commons.lang.StringUtils;
@@ -50,11 +51,11 @@ public abstract class Render implements Serializable {
     public final Render setContext(HttpServletRequest request, HttpServletResponse response, String viewPath) {
         this.request = request;
         this.response = response;
-        if (view != null && !view.startsWith("/"))
+        if (view != null && !view.startsWith(Routes.PREFIX))
             view = viewPath + view;
         // sogyf added by 2013-01-13 15:15
-        if (AppConfig.isSetViewPath() && view.startsWith("/")) {
-            view = AppConfig.getBaseViewPath() + view.replaceFirst("/", StringUtils.EMPTY);
+        else if (AppConfig.isSetViewPath() && view.startsWith(Routes.PREFIX)) {
+            view = AppConfig.getBaseViewPath() + view.replaceFirst(Routes.PREFIX, StringUtils.EMPTY);
         }
         return this;
     }

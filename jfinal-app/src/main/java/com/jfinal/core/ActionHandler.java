@@ -54,7 +54,7 @@ final class ActionHandler extends Handler {
 
         isHandled[0] = true;
         String[] urlPara = {null};
-        Action action = actionMapping.getAction(target, urlPara);
+        final Action action = actionMapping.getAction(target, urlPara);
 
         if (action == null) {
             if (log.isWarnEnabled()) {
@@ -66,7 +66,7 @@ final class ActionHandler extends Handler {
         }
 
         try {
-            Controller controller = action.getControllerClass().newInstance();
+            final Controller controller = action.getControllerClass().newInstance();
             controller.init(request, response, urlPara[0]);
 
             if (devMode) {

@@ -6,10 +6,15 @@
 
 package com.jfinal.config;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.kit.FreemarkerKit;
 import com.jfinal.ext.render.FreeMarkerXMLRender;
+import com.jfinal.ext.render.datatables.core.DataSet;
+import com.jfinal.ext.render.datatables.core.DatatablesCriterias;
+import com.jfinal.ext.render.datatables.core.DatatablesResponse;
+import com.jfinal.plugin.activerecord.Page;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -95,5 +100,22 @@ public abstract class BasicController extends Controller {
      */
     protected void todo() {
         renderJson(AjaxMessage.developing());
+    }
+
+    /**
+     * 从Request中获取参数并封装为对象进行处理
+     *
+     * @return jquery DataTables参数信息
+     */
+    protected DatatablesCriterias getCriterias() {
+        return DatatablesCriterias.criteriasWithRequest(getRequest());
+    }
+
+
+    protected <E> void renderDataTables(Page<E> datas, DatatablesCriterias criterias) {
+        Preconditions.checkNotNull(criterias, "datatable criterias is must be not null.");
+        DataSet<E> dataSet = DataSet.newSet(datas.getList(), datas.getTotalRow(), datas.getTotalRow());
+        DatatablesResponse<E> response = DatatablesResponse.build(dataSet, criterias);
+        renderJson(response);
     }
 }
