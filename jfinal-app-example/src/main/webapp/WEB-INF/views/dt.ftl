@@ -6,6 +6,16 @@
     <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
     <link rel="stylesheet" href="${ctx}/assets/css/datatables.css">
     <title>dt示例</title>
+    <style type="text/css">
+        body {
+            padding-top: 50px;
+        }
+
+        .starter-template {
+            padding: 40px 15px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -21,8 +31,8 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="${ctx}/">首页</a></li>
-                <li><a href="${ctx}/dt">bt插件示例</a></li>
+                <li><a href="${ctx}/">首页</a></li>
+                <li class="active"><a href="${ctx}/dt">bt插件示例</a></li>
                 <li><a href="#about">关于我</a></li>
                 <li><a href="#contact">联系我</a></li>
             </ul>
@@ -33,23 +43,24 @@
 
 <div class="container">
 
-    <table cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th width="20%">Rendering engine</th>
-            <th width="25%">Browser</th>
-            <th width="25%">Platform(s)</th>
-            <th width="15%">Engine version</th>
-            <th width="15%">CSS grade</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td colspan="5" class="dataTables_empty">Loading data from server</td>
-        </tr>
-        </tbody>
-    </table>
-
+    <div class="starter-template">
+        <table cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>资源类型</th>
+                <th>资源名称</th>
+                <th>资源地址</th>
+                <th>资源控制器</th>
+                <th>资源状态</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="5" class="dataTables_empty">Loading data from server</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
@@ -62,8 +73,15 @@
         var $datatable = $('.datatable');
         $datatable.dataTable({
             "sPaginationType": "bs_normal",
-            "bServerSide": true,
-            "sAjaxSource": "${ctx}/dts"
+            "bServerSide"    : true,
+            "sAjaxSource"    : "${ctx}/dts",
+            "aoColumns"      : [
+                { "mData": "type" },
+                { "mData": "name" },
+                { "mData": "path" },
+                { "mData": "controller" },
+                { "mData": "status" }
+            ]
         });
         $datatable.each(function () {
             var datatable = $(this);
