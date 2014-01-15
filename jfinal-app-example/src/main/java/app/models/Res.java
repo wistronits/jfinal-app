@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package app.modules;
+package app.models;
 
 import com.jfinal.plugin.activerecord.Model;
 

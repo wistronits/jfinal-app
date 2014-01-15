@@ -51,12 +51,15 @@ public abstract class Render implements Serializable {
     public final Render setContext(HttpServletRequest request, HttpServletResponse response, String viewPath) {
         this.request = request;
         this.response = response;
-        if (view != null && !view.startsWith(Routes.PREFIX))
-            view = viewPath + view;
-        // sogyf added by 2013-01-13 15:15
-        else if (AppConfig.isSetViewPath() && view.startsWith(Routes.PREFIX)) {
-            view = AppConfig.getBaseViewPath() + view.replaceFirst(Routes.PREFIX, StringUtils.EMPTY);
+        // sogyf modify by 2013-01-13 15:15
+        if( view != null ){
+            if(!view.startsWith(Routes.PREFIX)){
+                view = viewPath + view;
+            } else if (AppConfig.isSetViewPath() && view.startsWith(Routes.PREFIX)) {
+                view = AppConfig.getBaseViewPath() + view.replaceFirst(Routes.PREFIX, StringUtils.EMPTY);
+            }
         }
+
         return this;
     }
 

@@ -7,6 +7,7 @@
 package com.jfinal.ext.render.datatables.core;
 
 import com.google.common.collect.Lists;
+import com.google.common.primitives.Ints;
 import com.jfinal.ext.render.datatables.DTConstants;
 import org.apache.commons.lang3.StringUtils;
 
@@ -54,12 +55,13 @@ public final class DatatablesCriterias implements Serializable {
             String sColNumber = request.getParameter(DTConstants.DT_I_COLUMNS);
             String sSortingColNumber = request.getParameter(DTConstants.DT_I_SORTING_COLS);
 
-            Integer iEcho = StringUtils.isNotBlank(sEcho) ? Integer.parseInt(sEcho) : -1;
-            Integer iDisplayStart = StringUtils.isNotBlank(sDisplayStart) ? Integer.parseInt(sDisplayStart) : -1;
-            Integer iDisplayLength = StringUtils.isNotBlank(sDisplayLength) ? Integer.parseInt(sDisplayLength) : -1;
-            Integer colNumber = StringUtils.isNotBlank(sColNumber) ? Integer.parseInt(sColNumber) : -1;
-            Integer sortingColNumber = StringUtils.isNotBlank(sSortingColNumber) ? Integer.parseInt(sSortingColNumber)
-                    : -1;
+            int iEcho = StringUtils.isNotBlank(sEcho) ? Ints.tryParse(sEcho) : -1;
+            int iDisplayStart = StringUtils.isNotBlank(sDisplayStart) ? Ints.tryParse(sDisplayStart) : -1;
+            int iDisplayLength = StringUtils.isNotBlank(sDisplayLength) ? Ints.tryParse(sDisplayLength) : -1;
+            int colNumber = StringUtils.isNotBlank(sColNumber) ? Ints.tryParse(sColNumber) : -1;
+            int sortingColNumber = StringUtils.isNotBlank(sSortingColNumber) ? Ints.tryParse(sSortingColNumber) : -1;
+
+            iDisplayStart = (iDisplayStart == 0) ? 1 : iDisplayStart +1;
 
             List<ColumnDef> columnDefs = Lists.newArrayList();
             List<ColumnDef> sortingColumnDefs = Lists.newArrayList();

@@ -6,7 +6,7 @@
 
 package app.controllers;
 
-import app.modules.Res;
+import app.models.Res;
 import com.jfinal.config.BasicController;
 import com.jfinal.core.ActionKey;
 import com.jfinal.ext.render.datatables.core.DatatablesCriterias;
@@ -29,6 +29,7 @@ public class IndexController extends BasicController {
         setAttr("now", DateTime.now().toString("yyyy-MM-dd HH:mm:ss"));
         render("/index.ftl");
     }
+
 
     public void dt(){
         render("/dt.ftl");

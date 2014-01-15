@@ -34,6 +34,20 @@
 <div class="container">
 
     <table cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th width="20%">Rendering engine</th>
+            <th width="25%">Browser</th>
+            <th width="25%">Platform(s)</th>
+            <th width="15%">Engine version</th>
+            <th width="15%">CSS grade</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td colspan="5" class="dataTables_empty">Loading data from server</td>
+        </tr>
+        </tbody>
     </table>
 
 </div>
@@ -49,7 +63,7 @@
         $datatable.dataTable({
             "sPaginationType": "bs_normal",
             "bServerSide": true,
-            "sAjaxSource": "${ctx}/dt"
+            "sAjaxSource": "${ctx}/dts"
         });
         $datatable.each(function () {
             var datatable = $(this);
