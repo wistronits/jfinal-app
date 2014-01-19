@@ -16,7 +16,6 @@ import com.jfinal.ctxbox.ClassType;
 import com.jfinal.ext.ftl.*;
 import com.jfinal.ext.interceptor.autoscan.AutoOnLoadInterceptor;
 import com.jfinal.ext.interceptor.syslog.SysLogInterceptor;
-import com.jfinal.ext.kit.Reflect;
 import com.jfinal.ext.plugin.logback.LogbackLoggerFactory;
 import com.jfinal.ext.plugin.monogodb.MongodbPlugin;
 import com.jfinal.ext.plugin.quartz.QuartzPlugin;
@@ -62,20 +61,6 @@ public class AppConfig extends JFinalConfig {
      */
     private Routes routes;
 
-    /**
-     * The default model package.
-     */
-    private static final String MODEL_PACKAGE = "app.models";
-
-    /**
-     * Default controller package.
-     */
-    private static final String CONTROLLER_PACKAGE = "app.controllers";
-
-    /**
-     * Default interceptors package.
-     */
-    private static final String INTERCEPTORS_PACKAGE = "app.interceptors";
 
     /**
      * 默认视图位置

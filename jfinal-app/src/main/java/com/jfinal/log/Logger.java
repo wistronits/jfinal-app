@@ -62,7 +62,7 @@ public abstract class Logger {
 	public abstract void debug(String message, Throwable t);
 	
 	public abstract void info(String message);
-	
+
 	public abstract void info(String message, Throwable t);
 	
 	public abstract void warn(String message);
