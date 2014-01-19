@@ -8,6 +8,7 @@ package com.jfinal.ctxbox;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.jfinal.aop.Interceptor;
 import com.jfinal.core.Controller;
 import com.jfinal.initalizer.JFinalAfterLoadEvent;
 import com.jfinal.plugin.activerecord.Model;
@@ -42,74 +43,42 @@ public class ClassBox {
     void push(Class<?> cls) {
         // Check the class categories.
         if (Model.class.isAssignableFrom(cls)) {
-            putModel(cls);
+            initClassWithType(cls, ClassType.MODEL);
         } else if (Controller.class.isAssignableFrom(cls)) {
-            putController(cls);
+            initClassWithType(cls, ClassType.CONTROLLER);
         } else if (Job.class.isAssignableFrom(cls)) {
-            putJob(cls);
+            initClassWithType(cls, ClassType.JOB);
         } else if (JFinalAfterLoadEvent.class.isAssignableFrom(cls)) {
-            pubApp(cls);
+            initClassWithType(cls, ClassType.APP);
+        } else if (Interceptor.class.isAssignableFrom(cls)) {
+            initClassWithType(cls, ClassType.AOP);
         } else {
             //ignore
         }
     }
 
-    private void pubApp(Class<?> cls) {
-        List<Class> apps = CLASS_BOX_MAP.get(ClassType.APP);
-        if (apps == null) {
-            apps = Lists.newArrayList();
+    public void initClassWithType(Class<?> cls, final ClassType type) {
+        List<Class> classes = CLASS_BOX_MAP.get(type);
+        if (classes == null) {
+            classes = Lists.newArrayList();
         } else {
-            if (apps.contains(cls)) {
+            if (classes.contains(cls)) {
                 return;
             }
         }
-        apps.add(cls);
-        CLASS_BOX_MAP.put(ClassType.APP, apps);
-    }
-
-    private void putModel(Class<?> cls) {
-        List<Class> models = CLASS_BOX_MAP.get(ClassType.MODEL);
-        if (models == null) {
-            models = Lists.newArrayList();
-        } else {
-            if (models.contains(cls)) {
-                return;
-            }
-        }
-        models.add(cls);
-        CLASS_BOX_MAP.put(ClassType.MODEL, models);
-    }
-
-    private void putJob(Class<?> cls) {
-        List<Class> jobs = CLASS_BOX_MAP.get(ClassType.JOB);
-        if (jobs == null) {
-            jobs = Lists.newArrayList();
-        } else {
-            if (jobs.contains(cls)) {
-                return;
-            }
-        }
-        jobs.add(cls);
-        CLASS_BOX_MAP.put(ClassType.JOB, jobs);
-    }
-
-    private void putController(Class<?> cls) {
-        List<Class> controllers = CLASS_BOX_MAP.get(ClassType.CONTROLLER);
-        if (controllers == null) {
-            controllers = Lists.newArrayList();
-        } else {
-            if (controllers.contains(cls)) {
-                return;
-            }
-        }
-        controllers.add(cls);
-        CLASS_BOX_MAP.put(ClassType.CONTROLLER, controllers);
+        classes.add(cls);
+        CLASS_BOX_MAP.put(type, classes);
     }
 
     /**
      * 私有构造函数,确保对象只能通过单例方法来调用.
      */
     private ClassBox() {
+    }
+
+    public void clearBox() {
+        CLASS_BOX_MAP.clear();
+
     }
 
     /**

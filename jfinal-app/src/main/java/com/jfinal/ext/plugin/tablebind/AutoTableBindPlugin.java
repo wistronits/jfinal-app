@@ -46,25 +46,27 @@ public class AutoTableBindPlugin extends ActiveRecordPlugin {
     @Override
     public boolean start() {
         List<Class> modelClasses = ClassBox.getInstance().getClasses(ClassType.MODEL);
-        TableBind tb;
-        for (Class modelClass : modelClasses) {
-            tb = (TableBind) modelClass.getAnnotation(TableBind.class);
-            String tableName;
-            if (tb == null) {
-                if (!autoScan) {
-                    continue;
-                }
-                tableName = nameStyle.name(modelClass.getSimpleName());
-                this.addMapping(tableName, modelClass);
-                log.debug("addMapping(" + tableName + ", " + modelClass.getName() + ")");
-            } else {
-                tableName = tb.tableName();
-                if (StringKit.notBlank(tb.pkName())) {
-                    this.addMapping(tableName, tb.pkName(), modelClass);
-                    log.debug("addMapping(" + tableName + ", " + tb.pkName() + "," + modelClass.getName() + ")");
-                } else {
+        if (modelClasses != null && !modelClasses.isEmpty()) {
+            TableBind tb;
+            for (Class modelClass : modelClasses) {
+                tb = (TableBind) modelClass.getAnnotation(TableBind.class);
+                String tableName;
+                if (tb == null) {
+                    if (!autoScan) {
+                        continue;
+                    }
+                    tableName = nameStyle.name(modelClass.getSimpleName());
                     this.addMapping(tableName, modelClass);
                     log.debug("addMapping(" + tableName + ", " + modelClass.getName() + ")");
+                } else {
+                    tableName = tb.tableName();
+                    if (StringKit.notBlank(tb.pkName())) {
+                        this.addMapping(tableName, tb.pkName(), modelClass);
+                        log.debug("addMapping(" + tableName + ", " + tb.pkName() + "," + modelClass.getName() + ")");
+                    } else {
+                        this.addMapping(tableName, modelClass);
+                        log.debug("addMapping(" + tableName + ", " + modelClass.getName() + ")");
+                    }
                 }
             }
         }

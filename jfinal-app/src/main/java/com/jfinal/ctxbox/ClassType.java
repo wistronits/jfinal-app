@@ -33,5 +33,9 @@ public enum ClassType {
     /**
      * System initialization or at the end of the implementation of the class.
      */
-    APP
+    APP,
+    /**
+     * Interceptor System
+     */
+    AOP
 }

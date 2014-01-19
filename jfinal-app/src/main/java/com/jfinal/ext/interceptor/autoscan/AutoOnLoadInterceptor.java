@@ -2,7 +2,8 @@ package com.jfinal.ext.interceptor.autoscan;
 
 import com.jfinal.aop.Interceptor;
 import com.jfinal.config.Interceptors;
-import com.jfinal.ext.kit.ClassSearcher;
+import com.jfinal.ctxbox.ClassBox;
+import com.jfinal.ctxbox.ClassType;
 import com.jfinal.log.Logger;
 
 import java.util.List;
@@ -20,36 +21,33 @@ public class AutoOnLoadInterceptor {
 
     private final Interceptors interceptors;
 
-    private final String aop_package;
-
     private static final Logger logger = Logger.getLogger(AutoOnLoadInterceptor.class);
 
 
-    public AutoOnLoadInterceptor(Interceptors interceptors, String aop_package) {
+    public AutoOnLoadInterceptor(Interceptors interceptors) {
         this.interceptors = interceptors;
-        this.aop_package = aop_package;
     }
 
     public void load() {
-        ClassSearcher searcher = ClassSearcher.of(Interceptor.class, aop_package);
-        List<Class<? extends Interceptor>> interceptorClass = searcher.search();
-        com.jfinal.ext.interceptor.autoscan.Interceptor interceptor;
+        List<Class> interceptorClass = ClassBox.getInstance().getClasses(ClassType.AOP);
+        if (interceptorClass != null && !interceptorClass.isEmpty()) {
+            AppInterceptor interceptor;
 
-        for (Class<? extends Interceptor> interceptorClas : interceptorClass) {
-            interceptor = interceptorClas.getAnnotation(com.jfinal.ext.interceptor.autoscan.Interceptor.class);
-            if (interceptor != null) {
-                try {
-                    interceptors.add(interceptorClas.newInstance());
-                } catch (InstantiationException e) {
-                    logger.error("instance aop interceptor is error!", e);
-                    throw new IllegalArgumentException("instance aop interceptor is error!");
-                } catch (IllegalAccessException e) {
-                    logger.error("instance aop interceptor is error!", e);
-                    throw new IllegalArgumentException("instance aop interceptor is error!");
+            for (Class interceptorClas : interceptorClass) {
+                interceptor = (AppInterceptor) interceptorClas.getAnnotation(AppInterceptor.class);
+                if (interceptor != null) {
+                    try {
+                        interceptors.add((Interceptor) interceptorClas.newInstance());
+                    } catch (InstantiationException e) {
+                        logger.error("instance aop interceptor is error!", e);
+                        throw new IllegalArgumentException("instance aop interceptor is error!");
+                    } catch (IllegalAccessException e) {
+                        logger.error("instance aop interceptor is error!", e);
+                        throw new IllegalArgumentException("instance aop interceptor is error!");
+                    }
                 }
             }
         }
-
 
     }
 }

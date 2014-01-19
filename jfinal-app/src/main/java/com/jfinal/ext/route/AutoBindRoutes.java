@@ -38,22 +38,24 @@ public class AutoBindRoutes extends Routes {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public void config() {
         List<Class> controllerClasses = ClassBox.getInstance().getClasses(ClassType.CONTROLLER);
-        ControllerBind controllerBind;
-        for (Class controller : controllerClasses) {
-            controllerBind = (ControllerBind) controller.getAnnotation(ControllerBind.class);
-            if (controllerBind == null) {
-                if (!autoScan) {
-                    continue;
+        if (controllerClasses != null && !controllerClasses.isEmpty()) {
+            ControllerBind controllerBind;
+            for (Class controller : controllerClasses) {
+                controllerBind = (ControllerBind) controller.getAnnotation(ControllerBind.class);
+                if (controllerBind == null) {
+                    if (!autoScan) {
+                        continue;
+                    }
+                    this.add(controllerKey(controller), controller);
+                    logger.debug("routes.add(" + controllerKey(controller) + ", " + controller.getName() + ")");
+                } else if (StringKit.isBlank(controllerBind.viewPath())) {
+                    this.add(controllerBind.controllerKey(), controller);
+                    logger.debug("routes.add(" + controllerBind.controllerKey() + ", " + controller.getName() + ")");
+                } else {
+                    this.add(controllerBind.controllerKey(), controller, controllerBind.viewPath());
+                    logger.debug("routes.add(" + controllerBind.controllerKey() + ", " + controller + ","
+                            + controllerBind.viewPath() + ")");
                 }
-                this.add(controllerKey(controller), controller);
-                logger.debug("routes.add(" + controllerKey(controller) + ", " + controller.getName() + ")");
-            } else if (StringKit.isBlank(controllerBind.viewPath())) {
-                this.add(controllerBind.controllerKey(), controller);
-                logger.debug("routes.add(" + controllerBind.controllerKey() + ", " + controller.getName() + ")");
-            } else {
-                this.add(controllerBind.controllerKey(), controller, controllerBind.viewPath());
-                logger.debug("routes.add(" + controllerBind.controllerKey() + ", " + controller + ","
-                        + controllerBind.viewPath() + ")");
             }
         }
     }

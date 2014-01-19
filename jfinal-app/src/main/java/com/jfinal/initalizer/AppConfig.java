@@ -11,9 +11,12 @@ import com.alibaba.druid.util.JdbcUtils;
 import com.alibaba.druid.wall.WallFilter;
 import com.google.common.base.Strings;
 import com.jfinal.config.*;
+import com.jfinal.ctxbox.ClassBox;
+import com.jfinal.ctxbox.ClassType;
 import com.jfinal.ext.ftl.*;
 import com.jfinal.ext.interceptor.autoscan.AutoOnLoadInterceptor;
 import com.jfinal.ext.interceptor.syslog.SysLogInterceptor;
+import com.jfinal.ext.kit.Reflect;
 import com.jfinal.ext.plugin.logback.LogbackLoggerFactory;
 import com.jfinal.ext.plugin.monogodb.MongodbPlugin;
 import com.jfinal.ext.plugin.quartz.QuartzPlugin;
@@ -41,6 +44,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URL;
+import java.util.List;
 
 /**
  * <p>
@@ -243,7 +247,7 @@ public class AppConfig extends JFinalConfig {
         }
         interceptors.add(new ContextInterceptor());
 
-        new AutoOnLoadInterceptor(interceptors, INTERCEPTORS_PACKAGE).load();
+        new AutoOnLoadInterceptor(interceptors).load();
     }
 
     @Override
@@ -262,6 +266,24 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void afterJFinalStart() {
+
+        List<Class> appCliasses = ClassBox.getInstance().getClasses(ClassType.APP);
+        if (appCliasses != null && !appCliasses.isEmpty()) {
+            for (Class appCliass : appCliasses) {
+
+                JFinalAfterLoadEvent event;
+                try {
+                    event = (JFinalAfterLoadEvent) appCliass.newInstance();
+                    event.load();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        ClassBox.getInstance().clearBox();
         super.afterJFinalStart();
     }
 

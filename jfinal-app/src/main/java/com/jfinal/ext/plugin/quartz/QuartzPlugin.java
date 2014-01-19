@@ -7,20 +7,13 @@ package com.jfinal.ext.plugin.quartz;
 
 import com.jfinal.ctxbox.ClassBox;
 import com.jfinal.ctxbox.ClassType;
-import com.jfinal.ext.kit.Reflect;
-import com.jfinal.ext.plugin.tablebind.TableBind;
-import com.jfinal.kit.StringKit;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.IPlugin;
-import org.apache.commons.lang3.StringUtils;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
-import java.sql.Ref;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Properties;
 
 import static com.google.common.base.Throwables.propagate;
 import static org.quartz.CronScheduleBuilder.cronSchedule;
@@ -50,20 +43,22 @@ public class QuartzPlugin implements IPlugin {
     @Override
     public boolean start() {
         List<Class> jobClasses = ClassBox.getInstance().getClasses(ClassType.JOB);
-        On on;
-        for (Class jobClass : jobClasses) {
-            on = (On) jobClass.getAnnotation(On.class);
-            if (on == null) {
-                if (!autoScan) {
-                    continue;
+        if (jobClasses != null && !jobClasses.isEmpty()) {
+            On on;
+            for (Class jobClass : jobClasses) {
+                on = (On) jobClass.getAnnotation(On.class);
+                if (on == null) {
+                    if (!autoScan) {
+                        continue;
+                    }
+                    logger.warn("the job class [" + jobClass + "] not config on annotion!");
+                } else {
+                    if (!on.enabled()) {
+                        continue;
+                    }
+                    String jobCronExp = on.value();
+                    addJob(jobClass, jobCronExp, on.name());
                 }
-                logger.warn("the job class [" + jobClass + "] not config on annotion!");
-            } else {
-                if(!on.enabled()){
-                    continue;
-                }
-                String jobCronExp = on.value();
-                addJob(jobClass, jobCronExp, on.name());
             }
         }
         return true;
@@ -71,10 +66,10 @@ public class QuartzPlugin implements IPlugin {
 
     private void addJob(Class<Job> jobClass, String jobCronExp, String jobName) {
         JobDetail job = newJob(jobClass)
-                .withIdentity(jobName,jobName+"group")
+                .withIdentity(jobName, jobName + "group")
                 .build();
         Trigger trigger = newTrigger()
-                .withIdentity(jobName,jobName+"group")
+                .withIdentity(jobName, jobName + "group")
                 .withSchedule(cronSchedule(jobCronExp))
                 .startNow()
                 .build();
