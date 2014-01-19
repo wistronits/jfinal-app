@@ -92,7 +92,6 @@ public class ClassSearcher {
                 : classpath + File.separator + (package_name.replace(".", File.separator));
         FluentIterable<File> iterable = Files.fileTreeTraverser().breadthFirstTraversal(new File(class_path));
         List<String> classFileList = findClassFile(iterable);
-//        List<String> classFileList = findFiles(class_path, "*.class");
         if (classFileList != null && !classFileList.isEmpty()) {
             classFileList.addAll(findjarFiles(libDir, includeJars));
             return extraction(target, classFileList);

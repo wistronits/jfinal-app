@@ -16,7 +16,8 @@
 
 package com.jfinal.plugin.activerecord;
 
-import java.util.HashMap;
+import com.google.common.collect.Maps;
+
 import java.util.Map;
 
 /**
@@ -24,29 +25,29 @@ import java.util.Map;
  */
 public class TableInfoMapping {
 
-	private static final Map<Class<? extends Model<?>>, TableInfo> tableInfoMap = new HashMap<Class<? extends Model<?>>, TableInfo>();
-	
-	private static TableInfoMapping me = new TableInfoMapping(); 
-	
-	private TableInfoMapping() {
-	}
-	
-	public static TableInfoMapping me() {
-		return me;
-	}
-	
-	@SuppressWarnings("rawtypes")
-	public TableInfo getTableInfo(Class<? extends Model> modelClass) {
-		TableInfo result = tableInfoMap.get(modelClass);
-		if (result == null) {
-			throw new RuntimeException("The TableMapping of model: " + modelClass.getName() + " not exists. Please add mapping to ActiveRecordPlugin(activeRecordPlugin.addMapping(tableName, YourModel.class)).");
-		}
-		return result;
-	}
-	
-	public void putTableInfo(Class<? extends Model<?>> modelClass, TableInfo tableInfo) {
-		tableInfoMap.put(modelClass, tableInfo);
-	}
+    private static final Map<Class<? extends Model<?>>, TableInfo> tableInfoMap = Maps.newHashMap();
+
+    private static TableInfoMapping me = new TableInfoMapping();
+
+    private TableInfoMapping() {
+    }
+
+    public static TableInfoMapping me() {
+        return me;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public TableInfo getTableInfo(Class<? extends Model> modelClass) {
+        TableInfo result = tableInfoMap.get(modelClass);
+        if (result == null) {
+            throw new RuntimeException("The TableMapping of model: " + modelClass.getName() + " not exists. Please add mapping to ActiveRecordPlugin(activeRecordPlugin.addMapping(tableName, YourModel.class)).");
+        }
+        return result;
+    }
+
+    public void putTableInfo(Class<? extends Model<?>> modelClass, TableInfo tableInfo) {
+        tableInfoMap.put(modelClass, tableInfo);
+    }
 }
 
 

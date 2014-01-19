@@ -57,6 +57,18 @@ public abstract class Model<M extends Model> implements Serializable {
     }
 
     /**
+     * 增加获取主键的方法
+     * 因为太多地方需要了.
+     *
+     * @param <T> 泛型参数
+     * @return 主键值
+     */
+    protected <T> T pk() {
+        final TableInfo tableInfo = tableInfoMapping.getTableInfo(getClass());
+        return get(tableInfo.getPrimaryKey());
+    }
+
+    /**
      * Set attribute to model.
      *
      * @param attr  the attribute name of the model

@@ -114,7 +114,7 @@ public class AppConfig extends JFinalConfig {
         }
         domain = getProperty("domain", DEFAULT_DOMAIN);
         String view_type = getProperty("view.type");
-        if(!StringKit.isBlank(view_type)){
+        if (!StringKit.isBlank(view_type)) {
             setViewType(constants, view_type);
         }
         String view_404 = getProperty("view.404");
@@ -129,7 +129,7 @@ public class AppConfig extends JFinalConfig {
 
     private void setViewType(Constants constants, String view_type) {
         final ViewType viewType = ViewType.valueOf(view_type.toUpperCase());
-        if(viewType == ViewType.FREE_MARKER){
+        if (viewType == ViewType.FREE_MARKER) {
             constants.setFreeMarkerViewExtension(".ftl");
         }
         constants.setViewType(viewType);
@@ -149,7 +149,7 @@ public class AppConfig extends JFinalConfig {
     @Override
     public void configRoute(Routes routes) {
         this.routes = routes;
-        routes.add(new AutoBindRoutes(CONTROLLER_PACKAGE));
+        routes.add(new AutoBindRoutes());
     }
 
     @Override
@@ -170,8 +170,7 @@ public class AppConfig extends JFinalConfig {
             plugins.add(druidPlugin);
 
             //  setting db table name like 'dev_info'
-            final AutoTableBindPlugin atbp = new AutoTableBindPlugin(druidPlugin,
-                    SimpleNameStyles.LOWER_UNDERLINE, getProperty("db.models", MODEL_PACKAGE));
+            final AutoTableBindPlugin atbp = new AutoTableBindPlugin(druidPlugin, SimpleNameStyles.LOWER_UNDERLINE);
 
             // 根据db_url判断是什么数据库,使用druid的方法判断
             String dbtype = JdbcUtils.getDbType(db_url, "");
@@ -201,7 +200,7 @@ public class AppConfig extends JFinalConfig {
         }
 
         if (getPropertyToBoolean("job", false)) {
-            plugins.add(new QuartzPlugin(ConfigProperties.getConfigProps()));
+            plugins.add(new QuartzPlugin());
         }
 
         final String mongo_host = getProperty("mongo.host", MongodbPlugin.DEFAULT_HOST);
@@ -259,5 +258,15 @@ public class AppConfig extends JFinalConfig {
             }
         });
         handlers.add(dvh);
+    }
+
+    @Override
+    public void afterJFinalStart() {
+        super.afterJFinalStart();
+    }
+
+    @Override
+    public void beforeJFinalStop() {
+        super.beforeJFinalStop();
     }
 }

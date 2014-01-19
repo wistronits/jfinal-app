@@ -6,6 +6,7 @@
 
 package com.jfinal.initalizer;
 
+import com.jfinal.ctxbox.ClassFinder;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.*;
@@ -37,6 +38,10 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
             ctx.addFilter("ShiroFilter", "org.apache.shiro.web.servlet.ShiroFilter")
                     .addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         }
+
+        //Before starting JFinal, lookup class file on the classpath.
+        ClassFinder.find();
+
         String app_name = p.getProperty("app", StringUtils.EMPTY);
 
         FilterRegistration.Dynamic jfinalFilter = ctx.addFilter("jfinal@app", "com.jfinal.core.JFinalFilter");
