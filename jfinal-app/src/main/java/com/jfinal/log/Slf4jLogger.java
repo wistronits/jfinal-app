@@ -4,9 +4,8 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package com.jfinal.ext.plugin.logback;
+package com.jfinal.log;
 
-import com.jfinal.log.Logger;
 import org.slf4j.LoggerFactory;
 
 /**

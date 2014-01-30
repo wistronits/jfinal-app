@@ -1,5 +1,7 @@
 package com.jfinal.kit;
 
+import com.jfinal.core.Const;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -54,7 +56,7 @@ public class TxtKit {
             StringBuilder reStr = new StringBuilder("");
             char[] tempChar = str.toCharArray();
             for (int i = 0; i < tempChar.length; i++) {
-                byte[] b = String.valueOf(tempChar[i]).getBytes("utf-8");
+                byte[] b = String.valueOf(tempChar[i]).getBytes(Const.DEFAULT_ENCODING);
                 toCount -= b.length > 1 ? 2 : 1;
                 if (toCount <= 0) {
                     if (i == tempChar.length - 1) {

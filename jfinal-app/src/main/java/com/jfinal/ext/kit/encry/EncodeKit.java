@@ -4,17 +4,19 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package com.jfinal.ext.kit;
+package com.jfinal.ext.kit.encry;
+
+import com.jfinal.core.Const;
+import com.jfinal.ext.kit.ExceptionKit;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.UUID;
-
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  * <p>
@@ -27,11 +29,19 @@ import org.apache.commons.lang3.StringEscapeUtils;
  */
 public class EncodeKit {
 
-    public static final String HASH_ALGORITHM = "SHA-1";
-    public static final int HASH_INTERATIONS = 1024;
-    public static final int SALT_SIZE = 8;
-    private static final String DEFAULT_URL_ENCODING = "UTF-8";
-    private static final char[] BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
+    /**
+     * sha-算法名称
+     */
+    public static final  String HASH_ALGORITHM   = "SHA-1";
+    /**
+     * 计算次数
+     */
+    public static final  int    HASH_INTERATIONS = 1024;
+    /**
+     * 长度
+     */
+    public static final  int    SALT_SIZE        = 8;
+    private static final char[] BASE62           = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
     /** Hex编码. */
     public static String encodeHex(byte[] input) {
@@ -94,7 +104,7 @@ public class EncodeKit {
     /** URL 编码, Encode默认为UTF-8. */
     public static String urlEncode(String part) {
         try {
-            return URLEncoder.encode(part, DEFAULT_URL_ENCODING);
+            return URLEncoder.encode(part, Const.DEFAULT_ENCODING);
         } catch (UnsupportedEncodingException e) {
             throw ExceptionKit.unchecked(e);
         }
@@ -104,7 +114,7 @@ public class EncodeKit {
     public static String urlDecode(String part) {
 
         try {
-            return URLDecoder.decode(part, DEFAULT_URL_ENCODING);
+            return URLDecoder.decode(part, Const.DEFAULT_ENCODING);
         } catch (UnsupportedEncodingException e) {
             throw ExceptionKit.unchecked(e);
         }

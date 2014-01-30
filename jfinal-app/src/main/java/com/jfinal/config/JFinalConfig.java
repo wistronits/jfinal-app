@@ -16,13 +16,9 @@
 
 package com.jfinal.config;
 
-import com.google.common.io.InputSupplier;
-import com.google.common.io.Resources;
+import com.jfinal.kit.FileKit;
 import com.jfinal.kit.StringKit;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -83,19 +79,8 @@ public abstract class JFinalConfig {
         if (file.contains(".."))
             throw new IllegalArgumentException("Parameter of file can not contains \"..\"");
 
-        URL url = Resources.getResource(file);
-        if (url == null) {
-            throw new IllegalArgumentException("Parameter of file can not be blank");
-        }
+        FileKit.loadFileInProperties(file, properties);
 
-        InputSupplier<InputStream> inputSupplier = Resources.newInputStreamSupplier(url);
-        try {
-            Properties p = new Properties();
-            p.load(inputSupplier.getInput());
-            properties = p;
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Properties file can not be loading: " + url);
-        }
         return properties;
     }
 

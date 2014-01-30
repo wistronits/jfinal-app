@@ -3,9 +3,10 @@
  *
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
-package com.jfinal.ext.kit;
+package com.jfinal.ext.kit.servlet;
 
 import com.google.common.net.HttpHeaders;
+import com.jfinal.ext.kit.encry.EncodeKit;
 import com.jfinal.kit.StringKit;
 import org.apache.commons.lang.Validate;
 

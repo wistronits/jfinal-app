@@ -52,11 +52,7 @@ public class MysqlDialect extends Dialect {
 	
 	public String forModelDeleteById(TableInfo tInfo) {
 		String primaryKey = tInfo.getPrimaryKey();
-		StringBuilder sql = new StringBuilder(45);
-		sql.append("delete from `");
-		sql.append(tInfo.getTableName());
-		sql.append("` where `").append(primaryKey).append("` = ?");
-		return sql.toString();
+        return "delete from `" + tInfo.getTableName() + "` where `" + primaryKey + "` = ?";
 	}
 	
 	public void forModelUpdate(TableInfo tableInfo, Map<String, Object> attrs, Set<String> modifyFlag, String primaryKey, Object id, StringBuilder sql, List<Object> paras) {

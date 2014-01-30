@@ -1,5 +1,7 @@
 package com.jfinal.ext.kit;
 
+import com.jfinal.ext.kit.encry.EncodeKit;
+
 import java.security.SecureRandom;
 import java.util.UUID;
 

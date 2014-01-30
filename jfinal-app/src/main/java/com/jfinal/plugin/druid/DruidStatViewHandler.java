@@ -19,6 +19,7 @@ import com.alibaba.druid.support.http.util.IPRange;
 import com.alibaba.druid.support.logging.Log;
 import com.alibaba.druid.support.logging.LogFactory;
 import com.alibaba.druid.util.Utils;
+import com.jfinal.core.Const;
 import com.jfinal.handler.Handler;
 import com.jfinal.kit.HandlerKit;
 
@@ -79,7 +80,7 @@ public class DruidStatViewHandler extends Handler {
 	        // String servletPath = request.getServletPath();
 	        String requestURI = request.getRequestURI();
 
-	        response.setCharacterEncoding("utf-8");
+	        response.setCharacterEncoding(Const.DEFAULT_ENCODING);
 
 	        if (contextPath == null) { // root context
 	            contextPath = "";

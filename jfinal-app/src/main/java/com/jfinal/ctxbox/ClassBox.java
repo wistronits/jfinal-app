@@ -10,7 +10,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.Controller;
-import com.jfinal.initalizer.JFinalAfterLoadEvent;
+import com.jfinal.initalizer.AppLoadEvent;
 import com.jfinal.plugin.activerecord.Model;
 import org.quartz.Job;
 
@@ -48,7 +48,7 @@ public class ClassBox {
             initClassWithType(cls, ClassType.CONTROLLER);
         } else if (Job.class.isAssignableFrom(cls)) {
             initClassWithType(cls, ClassType.JOB);
-        } else if (JFinalAfterLoadEvent.class.isAssignableFrom(cls)) {
+        } else if (AppLoadEvent.class.isAssignableFrom(cls)) {
             initClassWithType(cls, ClassType.APP);
         } else if (Interceptor.class.isAssignableFrom(cls)) {
             initClassWithType(cls, ClassType.AOP);

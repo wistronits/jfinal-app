@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
-package com.jfinal.ext.kit;
+package com.jfinal.ext.kit.file;
 
 import java.io.InputStreamReader;
 import java.net.URL;

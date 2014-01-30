@@ -15,7 +15,7 @@ package com.jfinal.initalizer;
  * @version 1.0 2014-01-19 22:29
  * @since JDK 1.6
  */
-public interface JFinalAfterLoadEvent {
+public interface AppLoadEvent {
 
     /**
      * run method .

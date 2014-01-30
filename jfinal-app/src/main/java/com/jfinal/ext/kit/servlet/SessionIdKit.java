@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jfinal.ext.kit;
+package com.jfinal.ext.kit.servlet;
 
 import java.security.SecureRandom;
 import java.util.Random;
@@ -47,7 +47,7 @@ public class SessionIdKit {
 		}
     }
     
-    public static final SessionIdKit me() {
+    public static SessionIdKit me() {
     	return me;
     }
     

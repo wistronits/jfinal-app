@@ -1,5 +1,6 @@
 package com.jfinal.kit;
 
+import com.jfinal.core.Const;
 import com.jfinal.log.Logger;
 
 import java.io.*;
@@ -315,7 +316,7 @@ public class FsKit {
         StringBuilder contents = new StringBuilder();
         BufferedReader reader = null;
         try {
-            if (encoding == null || "".equals(encoding)) encoding = "utf-8";
+            if (encoding == null || "".equals(encoding)) encoding = Const.DEFAULT_ENCODING;
             InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);
             reader = new BufferedReader(read);
             String text;
@@ -346,7 +347,7 @@ public class FsKit {
      * @see #writeFile(java.io.File, String, String)
      */
     public static String readFile(File file) throws IOException {
-        return readFile(file, "utf-8");
+        return readFile(file, Const.DEFAULT_ENCODING);
     }
 
 
@@ -395,7 +396,7 @@ public class FsKit {
      * @see #readFile(java.io.File, String)
      */
     public static void writeFile(File file, String str) throws IOException {
-        writeFile(file, str, "utf-8");
+        writeFile(file, str, Const.DEFAULT_ENCODING);
     }
 
     /**

@@ -9,7 +9,7 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
-import com.jfinal.ext.kit.JaxbKit;
+import com.jfinal.ext.kit.map.JaxbKit;
 import com.jfinal.log.Logger;
 import org.apache.commons.lang3.StringUtils;
 

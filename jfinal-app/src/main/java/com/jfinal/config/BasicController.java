@@ -9,7 +9,7 @@ package com.jfinal.config;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.jfinal.core.Controller;
-import com.jfinal.ext.kit.FreemarkerKit;
+import com.jfinal.ext.kit.tpl.FreemarkerKit;
 import com.jfinal.ext.render.FreeMarkerXMLRender;
 import com.jfinal.ext.render.datatables.core.DataSet;
 import com.jfinal.ext.render.datatables.core.DatatablesCriterias;

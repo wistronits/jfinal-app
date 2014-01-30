@@ -1,4 +1,4 @@
-package com.jfinal.ext.kit;
+package com.jfinal.ext.kit.file;
 
 import java.text.DecimalFormat;
 

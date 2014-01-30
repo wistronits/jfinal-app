@@ -1,4 +1,4 @@
-package com.jfinal.ext.kit;
+package com.jfinal.ext.kit.servlet;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.StringUtils;

@@ -1,11 +1,7 @@
 package com.jfinal.initalizer;
 
-import com.google.common.io.InputSupplier;
-import com.google.common.io.Resources;
+import com.jfinal.kit.FileKit;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -21,8 +17,8 @@ import java.util.Properties;
  */
 public class ConfigProperties {
 
-    private static final String APPLICATION_PROP = "application.conf";
-    private static final ThreadLocal<Properties> configProps = new ThreadLocal<Properties>();
+    private static final String                  APPLICATION_PROP = "application.conf";
+    private static final ThreadLocal<Properties> configProps      = new ThreadLocal<Properties>();
 
     static {
         readConf();
@@ -40,22 +36,12 @@ public class ConfigProperties {
      * 读取配置文件
      */
     private static void readConf() {
-        URL url = Resources.getResource(APPLICATION_PROP);
-        if (url == null) {
-            throw new IllegalArgumentException("Parameter of file can not be blank");
+        Properties p = new Properties();
+        FileKit.loadFileInProperties(APPLICATION_PROP, p);
+        if (checkNullOrEmpty(p)) {
+            throw new IllegalArgumentException("Properties file can not be empty. " + APPLICATION_PROP);
         }
-        InputSupplier<InputStream> inputSupplier = Resources.newInputStreamSupplier(url);
-        try {
-            Properties p = new Properties();
-            p.load(inputSupplier.getInput());
-
-            if (checkNullOrEmpty(p)) {
-                throw new IllegalArgumentException("Properties file can not be empty. " + url);
-            }
-            configProps.set(p);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Properties file can not be loading: " + url);
-        }
+        configProps.set(p);
     }
 
     /**

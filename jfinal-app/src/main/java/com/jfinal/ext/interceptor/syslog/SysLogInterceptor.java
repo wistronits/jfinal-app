@@ -14,7 +14,7 @@ import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.interceptor.syslog.config.LogPathConfig;
-import com.jfinal.ext.kit.ServletKit;
+import com.jfinal.ext.kit.servlet.ServletKit;
 import com.jfinal.kit.StringKit;
 
 import java.io.File;

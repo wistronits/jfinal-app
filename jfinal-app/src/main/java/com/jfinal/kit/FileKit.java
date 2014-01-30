@@ -16,7 +16,13 @@
 
 package com.jfinal.kit;
 
+import com.google.common.io.ByteSource;
+import com.google.common.io.Resources;
+
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Properties;
 
 /**
  * FileKit.
@@ -35,6 +41,20 @@ public class FileKit {
                 }
             }
             file.delete();
+        }
+    }
+
+    public static void loadFileInProperties(String file_path, Properties properties){
+        URL url = Resources.getResource(file_path);
+        if (url == null) {
+            throw new IllegalArgumentException("Parameter of file can not be blank");
+        }
+
+        ByteSource byteSource = Resources.asByteSource(url);
+        try {
+            properties.load(byteSource.openStream());
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Properties file can not be loading: " + url);
         }
     }
 }

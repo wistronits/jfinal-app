@@ -16,6 +16,7 @@
 
 package com.jfinal.ext.render;
 
+import com.jfinal.core.Const;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.StringKit;
 import com.jfinal.render.Render;
@@ -224,7 +225,7 @@ public class CaptchaRender extends Render {
         try {
             String result = "";
             MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] bytes = md.digest(srcStr.getBytes("utf-8"));
+            byte[] bytes = md.digest(srcStr.getBytes(Const.DEFAULT_ENCODING));
             for (byte b : bytes) {
                 String hex = Integer.toHexString(b & 0xFF).toUpperCase();
                 result += ((hex.length() == 1) ? "0" : "") + hex;

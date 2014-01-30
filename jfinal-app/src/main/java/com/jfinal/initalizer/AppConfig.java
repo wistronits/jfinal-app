@@ -16,7 +16,6 @@ import com.jfinal.ctxbox.ClassType;
 import com.jfinal.ext.ftl.*;
 import com.jfinal.ext.interceptor.autoscan.AutoOnLoadInterceptor;
 import com.jfinal.ext.interceptor.syslog.SysLogInterceptor;
-import com.jfinal.ext.plugin.logback.LogbackLoggerFactory;
 import com.jfinal.ext.plugin.monogodb.MongodbPlugin;
 import com.jfinal.ext.plugin.quartz.QuartzPlugin;
 import com.jfinal.ext.plugin.redis.JedisPlugin;
@@ -95,7 +94,6 @@ public class AppConfig extends JFinalConfig {
     public void configConstant(Constants constants) {
         setProperties(ConfigProperties.getConfigProps());
         constants.setDevMode(getPropertyToBoolean("dev.mode", false));
-        constants.setLoggerFactory(new LogbackLoggerFactory());
         view_path = getProperty("view.path", BASE_VIEW_PATH);
         if (!StringKit.isBlank(view_path)) {
             setViewPath = true;
@@ -256,9 +254,9 @@ public class AppConfig extends JFinalConfig {
         if (appCliasses != null && !appCliasses.isEmpty()) {
             for (Class appCliass : appCliasses) {
 
-                JFinalAfterLoadEvent event;
+                AppLoadEvent event;
                 try {
-                    event = (JFinalAfterLoadEvent) appCliass.newInstance();
+                    event = (AppLoadEvent) appCliass.newInstance();
                     event.load();
                 } catch (InstantiationException e) {
                     e.printStackTrace();

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package com.jfinal.ext.kit;
+package com.jfinal.ext.kit.encry;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +12,7 @@ import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 
+import com.jfinal.ext.kit.ExceptionKit;
 import org.apache.commons.lang3.Validate;
 
 /**
@@ -24,21 +25,20 @@ import org.apache.commons.lang3.Validate;
  * @since JDK 1.5
  */
 public class DigestsKit {
-    private static final String SHA1 = "SHA-1";
     private static final String MD5 = "MD5";
     private static SecureRandom random = new SecureRandom();
 
     /** 对输入字符串进行sha1散列. */
     public static byte[] sha1(byte[] input) {
-        return digest(input, SHA1, null, 1);
+        return digest(input, EncodeKit.HASH_ALGORITHM, null, 1);
     }
 
     public static byte[] sha1(byte[] input, byte[] salt) {
-        return digest(input, SHA1, salt, 1);
+        return digest(input, EncodeKit.HASH_ALGORITHM, salt, 1);
     }
 
     public static byte[] sha1(byte[] input, byte[] salt, int iterations) {
-        return digest(input, SHA1, salt, iterations);
+        return digest(input, EncodeKit.HASH_ALGORITHM, salt, iterations);
     }
 
     /** 对字符串进行散列, 支持md5与sha1算法. */
@@ -82,7 +82,7 @@ public class DigestsKit {
 
     /** 对文件进行sha1散列. */
     public static byte[] sha1(InputStream input) throws IOException {
-        return digest(input, SHA1);
+        return digest(input, EncodeKit.HASH_ALGORITHM);
     }
 
     private static byte[] digest(InputStream input, String algorithm) throws IOException {

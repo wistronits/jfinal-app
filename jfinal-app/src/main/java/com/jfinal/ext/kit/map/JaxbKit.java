@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
-package com.jfinal.ext.kit;
+package com.jfinal.ext.kit.map;
 
 import com.google.common.base.Throwables;
 import com.jfinal.log.Logger;

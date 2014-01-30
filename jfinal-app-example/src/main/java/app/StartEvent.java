@@ -6,7 +6,7 @@
 
 package app;
 
-import com.jfinal.initalizer.JFinalAfterLoadEvent;
+import com.jfinal.initalizer.AppLoadEvent;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ import com.jfinal.initalizer.JFinalAfterLoadEvent;
  * @version 1.0 2014-01-19 23:23
  * @since JDK 1.6
  */
-public class StartEvent implements JFinalAfterLoadEvent {
+public class StartEvent implements AppLoadEvent {
     @Override
     public void load() {
         System.out.println("OK");

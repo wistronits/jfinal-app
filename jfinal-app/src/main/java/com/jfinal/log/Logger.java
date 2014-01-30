@@ -49,9 +49,9 @@ public abstract class Logger {
 		if (factory != null)
 			return ;
 		try {
-			Class.forName("org.apache.log4j.Logger");
-			Class<?> log4jLoggerFactoryClass = Class.forName("com.jfinal.log.Log4jLoggerFactory");
-			factory = (ILoggerFactory)log4jLoggerFactoryClass.newInstance();	// return new Log4jLoggerFactory();
+			Class.forName("org.slf4j.Logger");
+			Class<?> logbackLoggerFactoryClass = Class.forName("com.jfinal.log.LogbackLoggerFactory");
+			factory = (ILoggerFactory)logbackLoggerFactoryClass.newInstance();	// return new Log4jLoggerFactory();
 		} catch (Exception e) {
 			factory = new JdkLoggerFactory();
 		}

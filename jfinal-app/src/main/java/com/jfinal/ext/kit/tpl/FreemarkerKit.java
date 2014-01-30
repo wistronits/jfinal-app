@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package com.jfinal.ext.kit;
+package com.jfinal.ext.kit.tpl;
 
 import com.jfinal.initalizer.AppConfig;
 import com.jfinal.kit.PathKit;
