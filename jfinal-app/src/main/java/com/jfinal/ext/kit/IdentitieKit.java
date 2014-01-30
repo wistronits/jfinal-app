@@ -29,7 +29,7 @@ public class IdentitieKit {
      * 封装JDK自带的UUID, 通过Random数字生成, 中间无-分割.
      */
     public static String uuid2() {
-        return UUID.randomUUID().toString().replaceAll("-", "");
+        return UUID.randomUUID().toString().replaceAll(StringPool.DASH, "");
     }
 
     /**

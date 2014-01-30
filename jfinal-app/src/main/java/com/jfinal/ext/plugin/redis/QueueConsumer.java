@@ -6,6 +6,7 @@
 package com.jfinal.ext.plugin.redis;
 
 import com.google.common.collect.Maps;
+import com.jfinal.ext.kit.StringPool;
 import com.jfinal.log.Logger;
 
 import java.io.Serializable;
@@ -16,9 +17,8 @@ import java.util.concurrent.TimeUnit;
 public class QueueConsumer {
     final Logger LOG = Logger.getLogger(getClass());
 
-    static final String SEPARATER = "-";
-    static final String PROCESSINGLIST = SEPARATER + "processing";
-    static final String PREFIX = "queue" + SEPARATER;
+    static final String PROCESSINGLIST = StringPool.DASH + "processing";
+    static final String PREFIX         = "queue" + StringPool.DASH;
 
     static Map<String, QueueConsumer> existingConsumers = Maps.newHashMap();
 

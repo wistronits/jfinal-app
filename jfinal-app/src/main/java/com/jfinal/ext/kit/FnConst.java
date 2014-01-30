@@ -23,4 +23,7 @@ public interface FnConst {
     Joiner COMMA_JOINER = Joiner.on(StringPool.COMMA).skipNulls();
 
     Splitter COMMA_SPLITTER = Splitter.on(StringPool.COMMA).trimResults().omitEmptyStrings();
+    Joiner   DASH_JOINER    = Joiner.on(StringPool.DASH).skipNulls();
+
+    Splitter DASH_SPLITTER = Splitter.on(StringPool.DASH).trimResults().omitEmptyStrings();
 }
