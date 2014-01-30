@@ -17,6 +17,7 @@
 package com.jfinal.core;
 
 import com.jfinal.aop.Interceptor;
+import com.jfinal.ext.kit.StringPool;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -87,7 +88,7 @@ final class ActionReporter {
                     sb.append(name).append("[]={");
                     for (int i = 0; i < values.length; i++) {
                         if (i > 0)
-                            sb.append(",");
+                            sb.append(StringPool.COMMA);
                         sb.append(values[i]);
                     }
                     sb.append("}");

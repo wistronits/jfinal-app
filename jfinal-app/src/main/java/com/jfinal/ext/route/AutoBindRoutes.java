@@ -10,6 +10,7 @@ import com.jfinal.config.Routes;
 import com.jfinal.core.Controller;
 import com.jfinal.ctxbox.ClassBox;
 import com.jfinal.ctxbox.ClassType;
+import com.jfinal.ext.kit.StringPool;
 import com.jfinal.kit.StringKit;
 import com.jfinal.log.Logger;
 
@@ -53,7 +54,7 @@ public class AutoBindRoutes extends Routes {
                     logger.debug("routes.add(" + controllerBind.controllerKey() + ", " + controller.getName() + ")");
                 } else {
                     this.add(controllerBind.controllerKey(), controller, controllerBind.viewPath());
-                    logger.debug("routes.add(" + controllerBind.controllerKey() + ", " + controller + ","
+                    logger.debug("routes.add(" + controllerBind.controllerKey() + ", " + controller + StringPool.COMMA
                             + controllerBind.viewPath() + ")");
                 }
             }

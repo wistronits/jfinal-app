@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+
+import com.jfinal.ext.kit.StringPool;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 /**
@@ -65,7 +67,7 @@ public class MultipartRequest extends HttpServletRequestWrapper {
 	 * 2: 其它路径被认为是相对路径, 需要 JFinalConfig.uploadedFileSaveDirectory 结合
 	 */
 	private String handleSaveDirectory(String saveDirectory) {
-		if (saveDirectory.startsWith("/") || saveDirectory.indexOf(":") == 1)
+		if (saveDirectory.startsWith("/") || saveDirectory.indexOf(StringPool.COLON) == 1)
 			return saveDirectory;
 		else 
 			return MultipartRequest.saveDirectory + saveDirectory;

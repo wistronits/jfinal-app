@@ -10,6 +10,7 @@ import com.google.common.collect.Maps;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.kit.ModelExt;
 import com.jfinal.ext.kit.Reflect;
+import com.jfinal.ext.kit.StringPool;
 import com.jfinal.kit.StringKit;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.activerecord.*;
@@ -39,7 +40,7 @@ public class PageInfoKit {
         if (StringKit.isBlank(pageInfoInterceptor.columns())) {
             Set<String> set = columnTypeMap.keySet();
             for (String item : set) {
-                select += item + ",";
+                select += item + StringPool.COMMA;
             }
             if (!pageInfoInterceptor.relations().isEmpty()) {
                 for (RelationInfo relation : pageInfoInterceptor.relations()) {
@@ -52,21 +53,21 @@ public class PageInfoKit {
                         if (pageInfoInterceptor.useColumnLabel()
                                 || columnConflict(item, model, modelClass, pageInfoInterceptor.relations())) {
                             if (!select.contains(StringKit.firstCharToLowerCase(model.getSimpleName()) + "." + item)) {
-                                if (select.contains("," + item + ",")) {
-                                    select = select.replace("," + item + ",",
-                                            "," + StringKit.firstCharToLowerCase(model.getSimpleName()) + "." + item
-                                                    + ",");
+                                if (select.contains(StringPool.COMMA+ item + StringPool.COMMA)) {
+                                    select = select.replace(StringPool.COMMA+ item + StringPool.COMMA,
+                                            StringPool.COMMA+ StringKit.firstCharToLowerCase(model.getSimpleName()) + "." + item
+                                                    + StringPool.COMMA);
                                 }
-                                if (select.contains(" " + item + ",")) {
-                                    select = select.replace(" " + item + ",",
+                                if (select.contains(" " + item + StringPool.COMMA)) {
+                                    select = select.replace(" " + item + StringPool.COMMA,
                                             " " + StringKit.firstCharToLowerCase(model.getSimpleName()) + "." + item
-                                                    + ",");
+                                                    + StringPool.COMMA);
                                 }
                             }
                             select += StringKit.firstCharToLowerCase(modelClass.getSimpleName()) + "." + item + " "
-                                    + StringKit.firstCharToLowerCase(modelClass.getSimpleName()) + "_" + item + ",";
+                                    + StringKit.firstCharToLowerCase(modelClass.getSimpleName()) + "_" + item + StringPool.COMMA;
                         } else {
-                            select += item + ",";
+                            select += item + StringPool.COMMA;
                         }
                     }
                 }

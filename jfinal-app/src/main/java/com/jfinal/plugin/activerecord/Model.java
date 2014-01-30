@@ -17,6 +17,7 @@
 package com.jfinal.plugin.activerecord;
 
 import com.google.common.collect.Lists;
+import com.jfinal.ext.kit.StringPool;
 import com.jfinal.plugin.activerecord.cache.ICache;
 
 import java.io.Serializable;
@@ -647,7 +648,7 @@ public abstract class Model<M extends Model> implements Serializable {
             Object value = e.getValue();
             if (value != null)
                 value = value.toString();
-            sb.append(e.getKey()).append(":").append(value);
+            sb.append(e.getKey()).append(StringPool.COLON).append(value);
         }
         sb.append("}");
         return sb.toString();

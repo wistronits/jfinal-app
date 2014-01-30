@@ -5,8 +5,9 @@
  */
 package com.jfinal.ext.plugin.redis;
 
+import com.jfinal.ext.kit.StringPool;
+
 public class TopicNest {
-    private static final String COLON = ":";
     private StringBuilder sb;
     private String key;
 
@@ -26,21 +27,21 @@ public class TopicNest {
         if (sb == null) {
             sb = new StringBuilder();
             sb.append(key);
-            sb.append(COLON);
+            sb.append(StringPool.COLON);
         }
     }
 
     public TopicNest cat(int id) {
         prefix();
         sb.append(id);
-        sb.append(COLON);
+        sb.append(StringPool.COLON);
         return this;
     }
 
     public TopicNest cat(String field) {
         prefix();
         sb.append(field);
-        sb.append(COLON);
+        sb.append(StringPool.COLON);
         return this;
     }
 }

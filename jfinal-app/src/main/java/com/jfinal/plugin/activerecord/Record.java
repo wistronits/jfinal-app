@@ -6,6 +6,8 @@
 
 package com.jfinal.plugin.activerecord;
 
+import com.jfinal.ext.kit.StringPool;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -256,7 +258,7 @@ public class Record implements Serializable {
             Object value = e.getValue();
             if (value != null)
                 value = value.toString();
-            sb.append(e.getKey()).append(":").append(value);
+            sb.append(e.getKey()).append(StringPool.COLON).append(value);
         }
         sb.append("}");
         return sb.toString();

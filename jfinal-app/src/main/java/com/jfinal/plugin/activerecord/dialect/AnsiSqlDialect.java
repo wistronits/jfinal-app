@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import com.jfinal.ext.kit.StringPool;
 import com.jfinal.plugin.activerecord.ActiveRecordException;
 import com.jfinal.plugin.activerecord.CPI;
 import com.jfinal.plugin.activerecord.DbKit;
@@ -95,7 +97,7 @@ public class AnsiSqlDialect extends Dialect {
 			sql.append(columns);
 		}
 		else {
-			String[] columnsArray = columns.split(",");
+			String[] columnsArray = columns.split(StringPool.COMMA);
 			for (int i=0; i<columnsArray.length; i++) {
 				if (i > 0)
 					sql.append(", ");
@@ -114,7 +116,7 @@ public class AnsiSqlDialect extends Dialect {
 			sql.append(columns);
 		}
 		else {
-			String[] columnsArray = columns.split(",");
+			String[] columnsArray = columns.split(StringPool.COMMA);
 			for (int i=0; i<columnsArray.length; i++) {
 				if (i > 0)
 					sql.append(", ");

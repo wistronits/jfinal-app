@@ -35,7 +35,7 @@ public class JVMKit {
      */
     public static int getPid() {
         String name = ManagementFactory.getRuntimeMXBean().getName();
-        int indexOf = name.indexOf("@");
+        int indexOf = name.indexOf(StringPool.AT);
         if (indexOf > 0) {
             return Integer.parseInt(name.substring(0, indexOf));
         } else {

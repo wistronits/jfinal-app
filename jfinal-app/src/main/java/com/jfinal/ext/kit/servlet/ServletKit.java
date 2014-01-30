@@ -6,6 +6,7 @@
 package com.jfinal.ext.kit.servlet;
 
 import com.google.common.net.HttpHeaders;
+import com.jfinal.ext.kit.StringPool;
 import com.jfinal.ext.kit.encry.EncodeKit;
 import com.jfinal.kit.StringKit;
 import org.apache.commons.lang.Validate;
@@ -107,8 +108,8 @@ public class ServletKit {
         String headerValue = request.getHeader(HttpHeaders.IF_NONE_MATCH);
         if (headerValue != null) {
             boolean conditionSatisfied = false;
-            if (!"*".equals(headerValue)) {
-                StringTokenizer commaTokenizer = new StringTokenizer(headerValue, ",");
+            if (!StringPool.ASTERISK.equals(headerValue)) {
+                StringTokenizer commaTokenizer = new StringTokenizer(headerValue, StringPool.COMMA);
 
                 while (!conditionSatisfied && commaTokenizer.hasMoreTokens()) {
                     String currentToken = commaTokenizer.nextToken();
@@ -202,7 +203,7 @@ public class ServletKit {
      * 客户端对Http Basic验证的 Header进行编码.
      */
     public static String encodeHttpBasic(String userName, String password) {
-        String encode = userName + ":" + password;
+        String encode = userName + StringPool.COLON + password;
         return "Basic " + EncodeKit.encodeBase64(encode.getBytes());
     }
 

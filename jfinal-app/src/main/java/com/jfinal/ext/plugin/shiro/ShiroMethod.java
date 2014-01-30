@@ -5,6 +5,7 @@
  */
 package com.jfinal.ext.plugin.shiro;
 
+import com.jfinal.ext.kit.StringPool;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
@@ -14,8 +15,6 @@ import org.apache.shiro.subject.Subject;
  * @author dafei (myaniu AT gmail DOT com)
  */
 public class ShiroMethod {
-
-	private static final String NAMES_DELIMETER = ",";
 
 	/**
 	 * 禁止初始化
@@ -67,7 +66,7 @@ public class ShiroMethod {
 		if (subject != null && roleNames != null && roleNames.length() > 0) {
 			// Iterate through roles and check to see if the user has one of the
 			// roles
-			for (String role : roleNames.split(NAMES_DELIMETER)) {
+			for (String role : roleNames.split(StringPool.COMMA)) {
 				if (subject.hasRole(role.trim())) {
 					hasAnyRole = true;
 					break;
@@ -90,7 +89,7 @@ public class ShiroMethod {
 		if (subject != null && roleNames != null && roleNames.length() > 0) {
 			// Iterate through roles and check to see if the user has one of the
 			// roles
-			for (String role : roleNames.split(NAMES_DELIMETER)) {
+			for (String role : roleNames.split(StringPool.COMMA)) {
 				if (!subject.hasRole(role.trim())) {
 					hasAllRole = false;
 					break;

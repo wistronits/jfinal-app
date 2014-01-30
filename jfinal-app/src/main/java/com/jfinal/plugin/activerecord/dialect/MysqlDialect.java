@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+
+import com.jfinal.ext.kit.StringPool;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.TableInfo;
 
@@ -76,7 +78,7 @@ public class MysqlDialect extends Dialect {
 			sql.append(columns);
 		}
 		else {
-			String[] columnsArray = columns.split(",");
+			String[] columnsArray = columns.split(StringPool.COMMA);
 			for (int i=0; i<columnsArray.length; i++) {
 				if (i > 0)
 					sql.append(", ");
@@ -95,7 +97,7 @@ public class MysqlDialect extends Dialect {
 			sql.append(columns);
 		}
 		else {
-			String[] columnsArray = columns.split(",");
+			String[] columnsArray = columns.split(StringPool.COMMA);
 			for (int i=0; i<columnsArray.length; i++) {
 				if (i > 0)
 					sql.append(", ");

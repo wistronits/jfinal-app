@@ -7,6 +7,7 @@ package com.jfinal.ext.plugin.tablebind;
 
 import com.jfinal.ctxbox.ClassBox;
 import com.jfinal.ctxbox.ClassType;
+import com.jfinal.ext.kit.StringPool;
 import com.jfinal.kit.StringKit;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
@@ -62,7 +63,7 @@ public class AutoTableBindPlugin extends ActiveRecordPlugin {
                     tableName = tb.tableName();
                     if (StringKit.notBlank(tb.pkName())) {
                         this.addMapping(tableName, tb.pkName(), modelClass);
-                        log.debug("addMapping(" + tableName + ", " + tb.pkName() + "," + modelClass.getName() + ")");
+                        log.debug("addMapping(" + tableName + ", " + tb.pkName() + StringPool.COMMA + modelClass.getName() + ")");
                     } else {
                         this.addMapping(tableName, modelClass);
                         log.debug("addMapping(" + tableName + ", " + modelClass.getName() + ")");

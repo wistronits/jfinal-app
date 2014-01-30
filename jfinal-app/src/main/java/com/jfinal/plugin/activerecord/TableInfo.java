@@ -16,6 +16,7 @@
 
 package com.jfinal.plugin.activerecord;
 
+import com.jfinal.ext.kit.StringPool;
 import com.jfinal.kit.StringKit;
 
 import java.util.Map;
@@ -79,7 +80,7 @@ public class TableInfo {
     }
 
     private void setPrimaryKey(String primaryKey) {
-        String[] keyArr = primaryKey.split(",");
+        String[] keyArr = primaryKey.split(StringPool.COMMA);
         if (keyArr.length > 1) {
             if (StringKit.isBlank(keyArr[0]) || StringKit.isBlank(keyArr[1]))
                 throw new IllegalArgumentException("The composite primary key can not be blank.");

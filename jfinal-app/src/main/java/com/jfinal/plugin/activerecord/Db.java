@@ -6,6 +6,7 @@
 
 package com.jfinal.plugin.activerecord;
 
+import com.jfinal.ext.kit.StringPool;
 import com.jfinal.plugin.activerecord.cache.ICache;
 
 import javax.sql.DataSource;
@@ -976,7 +977,7 @@ public class Db {
             throw new IllegalArgumentException("The batchSize must more than 0.");
         boolean isModel = element instanceof Model;
 
-        String[] columnArray = columns.split(",");
+        String[] columnArray = columns.split(StringPool.COMMA);
         for (int i = 0; i < columnArray.length; i++)
             columnArray[i] = columnArray[i].trim();
 

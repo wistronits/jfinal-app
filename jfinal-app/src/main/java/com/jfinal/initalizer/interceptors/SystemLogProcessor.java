@@ -12,6 +12,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.ext.interceptor.syslog.LogConfig;
 import com.jfinal.ext.interceptor.syslog.LogProcessor;
 import com.jfinal.ext.interceptor.syslog.SysLog;
+import com.jfinal.ext.kit.StringPool;
 
 import java.util.Map;
 import java.util.Set;
@@ -57,7 +58,7 @@ public class  SystemLogProcessor implements LogProcessor {
             for (Map.Entry<String, String> entry : entrySet) {
                 String key = entry.getKey();
                 String value = entry.getValue();
-                result += key + ":" + value;
+                result += key + StringPool.COLON + value;
             }
         }
         return result;

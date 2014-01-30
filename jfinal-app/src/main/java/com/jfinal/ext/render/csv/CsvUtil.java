@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.jfinal.ext.kit.StringPool;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Record;
 
@@ -60,7 +61,7 @@ public class CsvUtil {
                     if (objs != null) {
                         for (short i = 0; i < objs.length; i++) {
                             createCol(strOut, objs[i]);
-                            strOut.append(",");
+                            strOut.append(StringPool.COMMA);
                         }
                         strOut = strOut.deleteCharAt(strOut.length() - 1); // 去点多余逗号
                         strOut.append("\n");
@@ -73,7 +74,7 @@ public class CsvUtil {
                 } else {
                     for (int i = 0; i < columns.size(); i++) {
                         createCol(strOut, objlist.get((Integer) columns.get(i)));
-                        strOut.append(",");
+                        strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
                     strOut.append("\n");
@@ -84,14 +85,14 @@ public class CsvUtil {
                     Set keyset = objmap.keySet();
                     for (Object key : keyset) {
                         createCol(strOut, objmap.get(key));
-                        strOut.append(",");
+                        strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
                     strOut.append("\n");
                 } else {
                     for (int i = 0; i < columns.size(); i++) {
                         createCol(strOut, objmap.get(columns.get(i)));
-                        strOut.append(",");
+                        strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
                     strOut.append("\n");
@@ -102,14 +103,14 @@ public class CsvUtil {
                     Set<Entry<String, Object>> entries = objmodel.getAttrsEntrySet();
                     for (Entry entry : entries) {
                         createCol(strOut, entry.getValue());
-                        strOut.append(",");
+                        strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
                     strOut.append("\n");
                 } else {
                     for (int i = 0; i < columns.size(); i++) {
                         createCol(strOut, objmodel.get(columns.get(i) + ""));
-                        strOut.append(",");
+                        strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
                     strOut.append("\n");
@@ -121,14 +122,14 @@ public class CsvUtil {
                     Set<String> keys = map.keySet();
                     for (String key : keys) {
                         createCol(strOut, objrecord.get(key));
-                        strOut.append(",");
+                        strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
                     strOut.append("\n");
                 } else {
                     for (int i = 0; i < columns.size(); i++) {
                         createCol(strOut, objrecord.get(columns.get(i) + ""));
-                        strOut.append(",");
+                        strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
                     strOut.append("\n");
@@ -159,7 +160,7 @@ public class CsvUtil {
         if (null != list && !list.isEmpty()) { // 如果文本不为空则添加到csv字符串中
             for (short i = 0; i < list.size(); i++) {
                 createCol(strOut, list.get(i));
-                strOut.append(",");
+                strOut.append(StringPool.COMMA);
             }
             strOut = strOut.deleteCharAt(strOut.length() - 1);
             strOut.append("\n");
