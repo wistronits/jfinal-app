@@ -21,6 +21,7 @@ import com.google.common.io.Resources;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
@@ -57,4 +58,13 @@ public class FileKit {
             throw new IllegalArgumentException("Properties file can not be loading: " + url);
         }
     }
+
+    /**
+     * Converts file to URL in a correct way.
+     * Returns <code>null</code> in case of error.
+     */
+    public static URL toURL(File file) throws MalformedURLException {
+        return file.toURI().toURL();
+    }
+
 }

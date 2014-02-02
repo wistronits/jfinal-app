@@ -55,4 +55,43 @@ public class ExceptionKit {
         }
         return false;
     }
+
+
+    /**
+     * Build a message for the given base message and its cause.
+     */
+    public static String buildMessage(String message, Throwable cause) {
+        if (cause != null) {
+            cause = getRootCause(cause);
+            StringBuilder buf = new StringBuilder();
+            if (message != null) {
+                buf.append(message).append("; ");
+            }
+            buf.append("<--- ").append(cause);
+            return buf.toString();
+        } else {
+            return message;
+        }
+    }
+
+
+    /**
+     * Introspects the <code>Throwable</code> to obtain the root cause.
+     * <p>
+     * This method walks through the exception chain to the last element,
+     * "root" of the tree, and returns that exception. If no root cause found
+     * returns provided throwable.
+     */
+    public static Throwable getRootCause(Throwable throwable) {
+        Throwable cause = throwable.getCause();
+        if (cause == null) {
+            return throwable;
+        }
+        throwable = cause;
+        while ((throwable = throwable.getCause()) != null) {
+            cause = throwable;
+        }
+        return cause;
+    }
+
 }

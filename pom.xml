@@ -12,8 +12,8 @@
 
     <modules>
         <module>jfinal-app</module>
-        <module>jfinal-app-example</module>
         <module>jfinal-app-parent</module>
+        <module>jfinal-app-example</module>
     </modules>
 
     <scm>

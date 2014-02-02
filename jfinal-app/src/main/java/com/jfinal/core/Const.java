@@ -17,6 +17,8 @@
 package com.jfinal.core;
 
 import com.jfinal.render.ViewType;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.io.File;
 
@@ -58,6 +60,11 @@ public interface Const {
     int DEFAULT_SECONDS_OF_TOKEN_TIME_OUT = 900;            // 900 seconds ---> 15 minutes
 
     int MIN_SECONDS_OF_TOKEN_TIME_OUT = 300;                // 300 seconds ---> 5 minutes
+
+
+    String DEFAULT_FORMAT = "YYYY-MM-DD hh:mm:ss.mss";
+
+    DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern(DEFAULT_FORMAT);
 }
 
 

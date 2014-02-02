@@ -29,6 +29,51 @@ import java.util.Map;
  * @author Lukas Eder
  */
 public class Reflect {
+    /**
+     * Dynamic version of <code>instanceof</code>.
+     *
+     * @param o			object to match
+     * @param target	target class
+     * @return			<code>true</code> if object is an instance of target class
+     */
+    public static boolean isInstanceOf(Object o, Class target) {
+        return isSubclass(o.getClass(), target);
+    }
+
+    /**
+     * Determines if first class match the destination and simulates kind
+     * of <code>instanceof</code>. All subclasses and interface of first class
+     * are examined against second class. Method is not symmetric.
+     */
+    public static boolean isSubclass(Class thisClass, Class target) {
+        if (target.isInterface() != false) {
+            return isInterfaceImpl(thisClass, target);
+        }
+        for (Class x = thisClass; x != null; x = x.getSuperclass()) {
+            if (x == target) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns <code>true</code> if provided class is interface implementation.
+     */
+    public static boolean isInterfaceImpl(Class thisClass, Class targetInterface) {
+        for (Class x = thisClass; x != null; x = x.getSuperclass()) {
+            Class[] interfaces = x.getInterfaces();
+            for (Class i : interfaces) {
+                if (i == targetInterface) {
+                    return true;
+                }
+                if (isInterfaceImpl(i, targetInterface)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     // ---------------------------------------------------------------------
     // Static API used as entrance points to the fluent API
