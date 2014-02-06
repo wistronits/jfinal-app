@@ -7,6 +7,8 @@
 package com.jfinal.sog.ftl;
 
 import com.google.common.base.Strings;
+import com.jfinal.sog.kit.cst.FnConst;
+import com.jfinal.sog.kit.date.DateProvider;
 import freemarker.core.Environment;
 import freemarker.template.*;
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +32,6 @@ import java.util.Map;
  */
 public class PrettyTimeDirective implements TemplateDirectiveModel {
 
-    private static final DateTimeFormatter DEFAULT_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
 
     @Override
@@ -66,7 +67,7 @@ public class PrettyTimeDirective implements TemplateDirectiveModel {
             String time = timeScalar.getAsString();
             String ftime = StringUtils.EMPTY;
             if (!Strings.isNullOrEmpty(time)) {
-                final DateTime p_date = DateTime.parse(time, DEFAULT_FORMAT);
+                final DateTime p_date = DateTime.parse(time, FnConst.DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM_SS);
                 final DateTime today = DateTime.now();
                 Days d = Days.daysBetween(p_date, today);
                 int days = d.getDays();
@@ -83,7 +84,7 @@ public class PrettyTimeDirective implements TemplateDirectiveModel {
                 } else if (days > 2 && days <= 10) {
                     ftime = days + "天前";
                 } else {
-                    ftime = p_date.toString("yyyy-MM-dd");
+                    ftime = p_date.toString(DateProvider.YYYY_MM_DD);
                 }
             }
             Writer out = env.getOut();

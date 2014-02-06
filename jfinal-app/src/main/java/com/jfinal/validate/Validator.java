@@ -9,6 +9,7 @@ package com.jfinal.validate;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
 import com.jfinal.core.Controller;
+import com.jfinal.sog.kit.date.DateProvider;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -198,7 +199,7 @@ public abstract class Validator implements Interceptor {
     protected void validateDate(String field, Date min, Date max, String errorKey, String errorMessage) {
         try {
             String value = controller.getPara(field);
-            Date temp = new SimpleDateFormat(datePattern).parse(value);    // Date temp = Date.valueOf(value); 为了兼容 64位 JDK
+            Date temp = new SimpleDateFormat(DateProvider.YYYY_MM_DD).parse(value);    // Date temp = Date.valueOf(value); 为了兼容 64位 JDK
             if (temp.before(min) || temp.after(max))
                 addError(errorKey, errorMessage);
         } catch (Exception e) {
@@ -206,8 +207,7 @@ public abstract class Validator implements Interceptor {
         }
     }
 
-    // TODO set in Const and config it in Constants. TypeConverter do the same thing.
-    private static final String datePattern = "yyyy-MM-dd";
+
 
     /**
      * Validate date. Date formate: yyyy-MM-dd
@@ -215,7 +215,7 @@ public abstract class Validator implements Interceptor {
     protected void validateDate(String field, String min, String max, String errorKey, String errorMessage) {
         // validateDate(field, Date.valueOf(min), Date.valueOf(max), errorKey, errorMessage);  为了兼容 64位 JDK
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat(datePattern);
+            SimpleDateFormat sdf = new SimpleDateFormat(DateProvider.YYYY_MM_DD);
             validateDate(field, sdf.parse(min), sdf.parse(max), errorKey, errorMessage);
         } catch (ParseException e) {
             addError(errorKey, errorMessage);

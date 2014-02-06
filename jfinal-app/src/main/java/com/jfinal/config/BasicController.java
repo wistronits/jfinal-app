@@ -9,6 +9,7 @@ package com.jfinal.config;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.jfinal.core.Controller;
+import com.jfinal.sog.kit.date.DateProvider;
 import com.jfinal.sog.kit.tpl.FreemarkerKit;
 import com.jfinal.ext.render.FreeMarkerXMLRender;
 import com.jfinal.sog.render.datatables.core.DataSet;
@@ -32,7 +33,6 @@ import java.util.Map;
  */
 public abstract class BasicController extends Controller {
 
-    protected static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
      * 在jfinal基础上增加渲染XML格式的数据.

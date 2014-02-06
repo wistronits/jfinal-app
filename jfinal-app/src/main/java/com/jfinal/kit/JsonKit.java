@@ -18,6 +18,7 @@ package com.jfinal.kit;
 
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.sog.kit.date.DateProvider;
 
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
@@ -37,9 +38,9 @@ import java.util.*;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class JsonKit {
 
-    private static int convertDepth = 8;
-    private static String timestampPattern = "yyyy-MM-dd HH:mm:ss";
-    private static String datePattern = "yyyy-MM-dd";
+    private static int    convertDepth     = 8;
+    private static String timestampPattern = DateProvider.YYYY_MM_DD_HH_MM_SS;
+    private static String datePattern      = DateProvider.YYYY_MM_DD;
 
     public static void setConvertDepth(int convertDepth) {
         if (convertDepth < 2)

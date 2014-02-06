@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.jfinal.sog.kit.cst.FnConst;
 import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Record;
@@ -32,7 +33,7 @@ public class CsvUtil {
 
     /**
      * 将文本头与数据共同转成csv字符串
-     * 
+     *
      * @param headers
      *            列属性
      * @param data
@@ -41,7 +42,7 @@ public class CsvUtil {
      *            需要显示列的key值
      * @return csv字符串
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static String createCSV(List headers, List data, List columns) {
         StringBuffer strOut = new StringBuffer("");
         if (null != headers && !headers.isEmpty()) { // 如果文本不为空则添加到csv字符串中
@@ -178,9 +179,9 @@ public class CsvUtil {
             } else if (obj instanceof Calendar) {
                 content = ((Calendar) obj).toString();
             } else if (obj instanceof Timestamp) {
-                content = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date(((Timestamp) obj).getTime()));
+                content = FnConst.DATE_FORMAT_YYYY_MM_DD_HH_MM.format(new Date(((Timestamp) obj).getTime()));
             } else if (obj instanceof Date) {
-                content = new SimpleDateFormat("yyyy-MM-dd HH:mm").format((Date) obj);
+                content = FnConst.DATE_FORMAT_YYYY_MM_DD_HH_MM.format((Date) obj);
             } else {
                 content = write(String.valueOf(obj));
             }

@@ -24,8 +24,8 @@ import com.jfinal.kit.StringKit;
  */
 public class DateKit {
 	
-	public static String dateFormat = "yyyy-MM-dd";
-	public static String timeFormat = "yyyy-MM-dd HH:mm:ss";
+	public static String dateFormat = DateProvider.YYYY_MM_DD;
+	public static String timeFormat = DateProvider.YYYY_MM_DD_HH_MM_SS;
 	
 	public static void setDateFromat(String dateFormat) {
 		if (StringKit.isBlank(dateFormat))

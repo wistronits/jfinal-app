@@ -10,6 +10,7 @@ import com.jfinal.i18n.I18N;
 import com.jfinal.kit.StringKit;
 import com.jfinal.render.Render;
 import com.jfinal.render.RenderFactory;
+import com.jfinal.sog.kit.date.DateProvider;
 import com.jfinal.upload.MultipartRequest;
 import com.jfinal.upload.UploadFile;
 
@@ -317,7 +318,7 @@ public abstract class Controller {
         if (value == null || "".equals(value.trim()))
             return defaultValue;
         try {
-            return new java.text.SimpleDateFormat("yyyy-MM-dd").parse(value);
+            return new java.text.SimpleDateFormat(DateProvider.YYYY_MM_DD).parse(value);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

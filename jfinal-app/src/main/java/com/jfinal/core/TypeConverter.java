@@ -16,6 +16,8 @@
 
 package com.jfinal.core;
 
+import com.jfinal.sog.kit.date.DateProvider;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -25,9 +27,7 @@ import java.text.SimpleDateFormat;
 final class TypeConverter {
 	
 	private static final int timeStampLen = "2011-01-18 16:18:18".length();
-	private static final String timeStampPattern = "yyyy-MM-dd HH:mm:ss";
-	private static final String datePattern = "yyyy-MM-dd";
-	
+
 	/**
 	 * test for all types of mysql
 	 * 
@@ -66,22 +66,22 @@ final class TypeConverter {
         	if (s.length() >= timeStampLen) {	// if (x < timeStampLen) 改用 datePattern 转换，更智能
         		// Timestamp format must be yyyy-mm-dd hh:mm:ss[.fffffffff]
         		// result = new java.util.Date(java.sql.Timestamp.valueOf(s).getTime());	// error under jdk 64bit(maybe)
-        		result = new SimpleDateFormat(timeStampPattern).parse(s);
+        		result = new SimpleDateFormat(DateProvider.YYYY_MM_DD_HH_MM_SS).parse(s);
         	}
 			else {
 				// result = new java.util.Date(java.sql.Date.valueOf(s).getTime());	// error under jdk 64bit
-				result = new SimpleDateFormat(datePattern).parse(s);
+				result = new SimpleDateFormat(DateProvider.YYYY_MM_DD).parse(s);
 			}
         }
 		// mysql type: date, year
         else if (clazz == java.sql.Date.class) {
         	if (s.length() >= timeStampLen) {	// if (x < timeStampLen) 改用 datePattern 转换，更智能
         		// result = new java.sql.Date(java.sql.Timestamp.valueOf(s).getTime());	// error under jdk 64bit(maybe)
-        		result = new java.sql.Date(new SimpleDateFormat(timeStampPattern).parse(s).getTime());
+        		result = new java.sql.Date(new SimpleDateFormat(DateProvider.YYYY_MM_DD_HH_MM_SS).parse(s).getTime());
         	}
         	else {
         		// result = new java.sql.Date(java.sql.Date.valueOf(s).getTime());	// error under jdk 64bit
-        		result = new java.sql.Date(new SimpleDateFormat(datePattern).parse(s).getTime());
+        		result = new java.sql.Date(new SimpleDateFormat(DateProvider.YYYY_MM_DD).parse(s).getTime());
         	}
         }
 		// mysql type: time

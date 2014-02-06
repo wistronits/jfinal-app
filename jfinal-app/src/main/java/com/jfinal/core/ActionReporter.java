@@ -17,10 +17,10 @@
 package com.jfinal.core;
 
 import com.jfinal.aop.Interceptor;
+import com.jfinal.sog.kit.cst.FnConst;
 import com.jfinal.sog.kit.cst.StringPool;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 
@@ -29,7 +29,6 @@ import java.util.Enumeration;
  */
 final class ActionReporter {
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
      * Report action before action invoking when the common request coming
@@ -51,7 +50,9 @@ final class ActionReporter {
     }
 
     private static void doReport(Controller controller, Action action) {
-        StringBuilder sb = new StringBuilder("\nJFinal action report -------- ").append(sdf.format(new Date())).append(" ------------------------------\n");
+        StringBuilder sb = new StringBuilder("\nJFinal action report -------- ")
+                .append(FnConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS.format(new Date()))
+                .append(" ------------------------------\n");
         Class<? extends Controller> cc = action.getControllerClass();
         sb.append("Controller  : ").append(cc.getName()).append(".(").append(cc.getSimpleName()).append(".java:1)");
         sb.append("\nMethod      : ").append(action.getMethodName()).append("\n");

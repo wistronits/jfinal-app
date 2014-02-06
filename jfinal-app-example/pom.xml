@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.jfinal</groupId>
     <artifactId>jfinal-app-example</artifactId>
-    <version>0.0.8-SNAPSHOT</version>
+    <version>0.0.8</version>
     <packaging>war</packaging>
     <name>JFinal app example Maven Webapp</name>
     <url>http://www.jfinal.com</url>
@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.jfinal</groupId>
             <artifactId>jfinal-app</artifactId>
-            <version>0.0.8-SNAPSHOT</version>
+            <version>0.0.8</version>
         </dependency>
     </dependencies>
 
