@@ -1,56 +1,325 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.jfinal</groupId>
-        <artifactId>jfinal-app-parent</artifactId>
-        <version>0.0.8-SNAPSHOT</version>
-        <relativePath>../jfinal-app-parent/pom.xml</relativePath>
-    </parent>
+    <groupId>com.jfinal</groupId>
     <artifactId>jfinal-app</artifactId>
+    <version>0.0.8-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>jfinal-app</name>
     <url>http://sogyf.github.io</url>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <org.jodd.version>3.4.10</org.jodd.version>
+        <shiro.version>1.2.2</shiro.version>
+        <com.jfinal.version>1.5</com.jfinal.version>
+        <druid.version>1.0.1</druid.version>
+        <logback-core.version>1.0.13</logback-core.version>
+        <slf4j-api.version>1.7.5</slf4j-api.version>
+        <quartz.version>2.2.1</quartz.version>
+        <jedis.version>2.2.1</jedis.version>
+        <mail.version>1.4.7</mail.version>
+        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <log4j.version>1.2.16</log4j.version>
+        <fastjson.version>1.1.38</fastjson.version>
+        <joda-time.version>2.3</joda-time.version>
+        <freemarker.version>2.3.20</freemarker.version>
+        <velocity.version>1.7</velocity.version>
+        <commons-beanutils.version>1.9.1</commons-beanutils.version>
+        <commons-collections.version>3.2.1</commons-collections.version>
+        <commons-pool.version>1.6</commons-pool.version>
+        <commons-codec.version>1.9</commons-codec.version>
+        <commons-logging.version>1.1.3</commons-logging.version>
+        <commons-lang3.version>3.1</commons-lang3.version>
+
+        <dom4j.version>1.6.1</dom4j.version>
+        <jsoup.version>1.7.3</jsoup.version>
+
+        <ehcache-core.version>2.6.7</ehcache-core.version>
+        <thumbnailator.version>0.4.7</thumbnailator.version>
+        <junit.version>4.11</junit.version>
+        <mysql-connector-java.version>5.1.27</mysql-connector-java.version>
+        <guava.version>16.0</guava.version>
+        <httpclient.version>4.3.2</httpclient.version>
+        <commons-io.version>2.4</commons-io.version>
+    </properties>
+
     <dependencies>
+
+        <dependency>
+            <groupId>com.jfinal</groupId>
+            <artifactId>jfinal-app</artifactId>
+            <version>0.0.8-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>${mail.version}</version>
+        </dependency>
+        <!-- commons utils and google guava -->
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commons-collections.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+            <version>${commons-pool.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons-codec.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>${dom4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.0.b2</version>
+        </dependency>
+
+        <!-- view template -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>${freemarker.version}</version>
+        </dependency>
+        <!--http utils-->
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+
+        <!--db pools-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <!-- the file upload -->
+        <dependency>
+            <groupId>com.jfinal</groupId>
+            <artifactId>cos</artifactId>
+            <version>26Dec2008</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda-time.version}</version>
+        </dependency>
+
+        <!--mysql db -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
+        <!-- redis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
+        <!-- mongoDB -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.11.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb.morphia</groupId>
+            <artifactId>morphia</artifactId>
+            <version>0.105</version>
+        </dependency>
+
+
+        <!--log -->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${commons-logging.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+        <!--Jobs-->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>c3p0</groupId>
+                    <artifactId>c3p0</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz-jobs</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>${ehcache-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>${thumbnailator.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- servlet -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax.servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!--Shiro -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
-            <version>${shiro.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
-            <version>${shiro.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
-            <version>${shiro.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
-            <version>${velocity.version}</version>
-            <scope>provided</scope>
         </dependency>
 
 
         <dependency>
             <groupId>com.jfinal</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>8.1.8</version>
-            <scope>provided</scope>
         </dependency>
-
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+
+
+            <dependency>
+                <groupId>com.jfinal</groupId>
+                <artifactId>jetty-server</artifactId>
+                <version>8.1.8</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jodd</groupId>
+                <artifactId>jodd-core</artifactId>
+                <version>${org.jodd.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jodd</groupId>
+                <artifactId>jodd-upload</artifactId>
+                <version>${org.jodd.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jodd</groupId>
+                <artifactId>jodd-http</artifactId>
+                <version>${org.jodd.version}</version>
+            </dependency>
+
+
+            <!--Shiro -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-web</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-ehcache</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
     <distributionManagement>
         <repository>
@@ -65,8 +334,16 @@
         </snapshotRepository>
     </distributionManagement>
 
+    <repositories>
+        <repository>
+            <id>osc</id>
+            <name>os-china</name>
+            <url>http://maven.oschina.net/content/groups/public/</url>
+        </repository>
+    </repositories>
+
     <build>
-        <finalName>JFinal.app</finalName>
+        <finalName>JFinal-app</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
