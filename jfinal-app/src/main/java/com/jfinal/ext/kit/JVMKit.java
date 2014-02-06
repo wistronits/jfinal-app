@@ -1,6 +1,7 @@
 package com.jfinal.ext.kit;
 
 import com.jfinal.log.Logger;
+import com.jfinal.sog.kit.cst.StringPool;
 
 import java.io.File;
 import java.io.FileOutputStream;

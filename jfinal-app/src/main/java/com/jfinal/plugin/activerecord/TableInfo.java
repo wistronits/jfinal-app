@@ -16,7 +16,7 @@
 
 package com.jfinal.plugin.activerecord;
 
-import com.jfinal.ext.kit.StringPool;
+import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.kit.StringKit;
 
 import java.util.Map;

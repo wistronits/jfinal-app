@@ -39,7 +39,7 @@ public interface Const {
 
     String DEFAULT_JSP_EXTENSION = ".jsp";
 
-    // sogyf 修改默认的freemarker后缀
+    // sog 修改默认的freemarker后缀
     String DEFAULT_FREE_MARKER_EXTENSION = ".ftl";            // The original is ".ftl", Recommend ".html"
 
     String DEFAULT_VELOCITY_EXTENSION = ".vm";

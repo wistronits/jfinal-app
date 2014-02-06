@@ -6,7 +6,7 @@
 
 package app;
 
-import com.jfinal.initalizer.AppLoadEvent;
+import com.jfinal.sog.initalizer.AppLoadEvent;
 
 /**
  * <p>

@@ -8,7 +8,7 @@ package com.jfinal.render;
 
 import com.jfinal.config.Routes;
 import com.jfinal.core.Const;
-import com.jfinal.initalizer.AppConfig;
+import com.jfinal.sog.initalizer.AppConfig;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +51,7 @@ public abstract class Render implements Serializable {
     public final Render setContext(HttpServletRequest request, HttpServletResponse response, String viewPath) {
         this.request = request;
         this.response = response;
-        // sogyf modify by 2013-01-13 15:15
+        // sog modify by 2013-01-13 15:15
         if( view != null ){
             if(!view.startsWith(Routes.PREFIX)){
                 view = viewPath + view;

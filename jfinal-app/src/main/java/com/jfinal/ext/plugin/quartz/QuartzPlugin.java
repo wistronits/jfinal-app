@@ -5,8 +5,8 @@
  */
 package com.jfinal.ext.plugin.quartz;
 
-import com.jfinal.ctxbox.ClassBox;
-import com.jfinal.ctxbox.ClassType;
+import com.jfinal.sog.ctxbox.ClassBox;
+import com.jfinal.sog.ctxbox.ClassType;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.IPlugin;
 import org.quartz.*;

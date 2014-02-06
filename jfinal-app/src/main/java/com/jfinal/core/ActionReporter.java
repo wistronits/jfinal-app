@@ -17,7 +17,7 @@
 package com.jfinal.core;
 
 import com.jfinal.aop.Interceptor;
-import com.jfinal.ext.kit.StringPool;
+import com.jfinal.sog.kit.cst.StringPool;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;

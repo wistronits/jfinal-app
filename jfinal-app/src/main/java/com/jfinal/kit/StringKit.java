@@ -16,6 +16,7 @@
 
 package com.jfinal.kit;
 
+import com.jfinal.sog.kit.lang.CharKit;
 import org.apache.commons.lang.StringUtils;
 
 /**

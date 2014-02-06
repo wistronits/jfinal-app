@@ -17,7 +17,7 @@
 package com.jfinal.plugin.activerecord;
 
 import com.google.common.collect.Lists;
-import com.jfinal.ext.kit.StringPool;
+import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.plugin.activerecord.cache.ICache;
 
 import java.io.Serializable;
