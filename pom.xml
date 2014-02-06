@@ -22,6 +22,19 @@
         <url>http://github.com/sogyf/jfinal-gap</url>
     </scm>
 
+    <distributionManagement>
+        <repository>
+            <id>aetc</id>
+            <name>Aetc Group Releases</name>
+            <url>http://aetc2013.f3322.org:8888/nexus/content/repositories/thirdparty</url>
+        </repository>
+        <snapshotRepository>
+            <id>aetc-dev</id>
+            <name>Snapshots</name>
+            <url>http://aetc2013.f3322.org:8888/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>

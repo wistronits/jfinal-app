@@ -314,7 +314,7 @@
             <url>http://aetc2013.f3322.org:8888/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-    
+
     <repositories>
         <repository>
             <id>osc</id>
