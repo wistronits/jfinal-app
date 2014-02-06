@@ -25,14 +25,60 @@ import java.text.SimpleDateFormat;
  */
 public interface FnConst {
 
+    /**
+     * 将集合类合并为逗号分割的字符串 处理函数
+     */
     Joiner COMMA_JOINER = Joiner.on(StringPool.COMMA).skipNulls();
+    /**
+     * 将集合类合并为-分割的字符串 处理函数
+     */
+    Joiner DASH_JOINER  = Joiner.on(StringPool.DASH).skipNulls();
 
+    /**
+     * 将逗号分割的字符传转换为集合的处理函数。
+     */
     Splitter COMMA_SPLITTER = Splitter.on(StringPool.COMMA).trimResults().omitEmptyStrings();
-    Joiner   DASH_JOINER    = Joiner.on(StringPool.DASH).skipNulls();
+    /**
+     * 将-分割的字符传转换为集合的处理函数。
+     */
+    Splitter DASH_SPLITTER  = Splitter.on(StringPool.DASH).trimResults().omitEmptyStrings();
 
-    Splitter         DASH_SPLITTER                = Splitter.on(StringPool.DASH).trimResults().omitEmptyStrings();
-    SimpleDateFormat DATE_FORMAT_YYYY_MM_DD_HH_MM = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+    /**
+     * 日期格式化方法
+     * <pre>
+     *     yyyy-MM-dd HH:mm
+     * </pre>
+     */
+    SimpleDateFormat DATE_FORMAT_YYYY_MM_DD_HH_MM = new SimpleDateFormat(DateProvider.YYYY_MM_DD_HH_MM);
+
+    /**
+     * 日期格式化方法
+     * <pre>
+     *     yyyy-MM-dd HH:mm:ss
+     * </pre>
+     */
     SimpleDateFormat DATE_FORMAT_YYYY_MM_DD_HH_MM_SS = new SimpleDateFormat(DateProvider.YYYY_MM_DD_HH_MM_SS);
 
-    DateTimeFormatter DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM_SS = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+    /**
+     * Joda的日期格式化方法
+     * <pre>
+     *     yyyy-MM-dd HH:mm:ss
+     * </pre>
+     */
+    DateTimeFormatter DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM_SS = DateTimeFormat.forPattern(DateProvider.YYYY_MM_DD_HH_MM_SS);
+    /**
+     * Joda的日期格式化方法
+     * <pre>
+     *     yyyy-MM-dd HH:mm
+     * </pre>
+     */
+    DateTimeFormatter DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM    = DateTimeFormat.forPattern(DateProvider.YYYY_MM_DD_HH_MM);
+    /**
+     * Joda的日期格式化方法
+     * <pre>
+     *     yyyy-MM-dd
+     * </pre>
+     */
+    DateTimeFormatter DATE_TIME_PATTERN_YYYY_MM_DD          = DateTimeFormat.forPattern(DateProvider.YYYY_MM_DD);
 }

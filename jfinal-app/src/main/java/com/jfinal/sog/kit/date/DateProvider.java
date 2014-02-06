@@ -10,6 +10,7 @@ import java.util.Date;
 public interface DateProvider {
 
     String YYYY_MM_DD = "yyyy-MM-dd";
+    String YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
 
     String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
