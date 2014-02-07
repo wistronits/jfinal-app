@@ -117,4 +117,12 @@
 
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>osc</id>
+            <name>os-china</name>
+            <url>http://maven.oschina.net/content/groups/public/</url>
+        </repository>
+    </repositories>
 </project>
