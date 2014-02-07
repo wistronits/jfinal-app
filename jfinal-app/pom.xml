@@ -119,14 +119,23 @@
             <artifactId>freemarker</artifactId>
             <version>${freemarker.version}</version>
         </dependency>
-        <!--http utils-->
 
+        <!--http utils-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.3.1</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${httpclient.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
         <!--db pools-->
         <dependency>
             <groupId>com.alibaba</groupId>
