@@ -9,7 +9,7 @@ package com.jfinal.sog.typeconverter.impl;
 
 import com.jfinal.sog.typeconverter.TypeConversionException;
 import com.jfinal.sog.typeconverter.TypeConverter;
-import com.jfinal.sog.kit.FileKit;
+import com.jfinal.kit.FileKit;
 
 import java.io.File;
 import java.net.URI;

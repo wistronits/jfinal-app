@@ -6,7 +6,7 @@
 
 package com.jfinal.sog.typeconverter.impl;
 
-import com.jfinal.sog.kit.CsvKit;
+import com.jfinal.sog.kit.common.CsvKit;
 import com.jfinal.sog.typeconverter.TypeConverter;
 import com.jfinal.sog.typeconverter.TypeConverterManagerBean;
 

@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
-package com.jfinal.sog.kit.file;
+package com.jfinal.sog.kit.io;
 
 import java.io.InputStreamReader;
 import java.net.URL;

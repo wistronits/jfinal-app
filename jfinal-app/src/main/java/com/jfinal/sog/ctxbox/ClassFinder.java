@@ -39,6 +39,19 @@ public class ClassFinder {
             ClassBox.getInstance().push(classInFile);
         }
     }
+    /**
+     * find class files.
+     */
+    public static void findWithTest() {
+        String class_path = PathKit.getRootClassPath();
+        class_path = class_path.replace("test-", "");
+        FluentIterable<File> iterable = Files.fileTreeTraverser().breadthFirstTraversal(new File(class_path));
+        List<String> classFileList = findClassFile(iterable);
+        for (String classFile : classFileList) {
+            Class<?> classInFile = Reflect.on(classFile).get();
+            ClassBox.getInstance().push(classInFile);
+        }
+    }
 
     /**
      * Find files use Guava way to find the Class file under classpath.

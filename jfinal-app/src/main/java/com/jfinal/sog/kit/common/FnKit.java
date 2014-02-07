@@ -1,11 +1,11 @@
-package com.jfinal.sog.kit;
+package com.jfinal.sog.kit.common;
 
 import java.util.Calendar;
 import java.util.Date;
 
 /**
  * <p>
- * .
+ * 一些常用的函数方法.
  * </p>
  *
  * @author sagyf yang

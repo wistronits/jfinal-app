@@ -7,7 +7,7 @@
 package com.jfinal.sog.typeconverter.impl;
 
 
-import com.jfinal.sog.kit.CsvKit;
+import com.jfinal.sog.kit.common.CsvKit;
 import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.sog.typeconverter.TypeConversionException;
 import com.jfinal.sog.typeconverter.TypeConverter;

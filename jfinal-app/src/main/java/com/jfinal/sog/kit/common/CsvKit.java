@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package com.jfinal.sog.kit;
+package com.jfinal.sog.kit.common;
 
 import com.google.common.collect.Lists;
 import com.jfinal.sog.kit.cst.StringPool;

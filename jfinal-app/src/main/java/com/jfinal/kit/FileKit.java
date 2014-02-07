@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jfinal.sog.kit;
+package com.jfinal.kit;
 
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;

@@ -1,6 +1,6 @@
 package com.jfinal.sog.initalizer;
 
-import com.jfinal.sog.kit.FileKit;
+import com.jfinal.kit.FileKit;
 
 import java.util.Properties;
 

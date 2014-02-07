@@ -1,4 +1,4 @@
-package com.jfinal.sog.kit;
+package com.jfinal.sog.kit.common;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

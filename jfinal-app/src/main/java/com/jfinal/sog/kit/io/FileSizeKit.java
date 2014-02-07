@@ -1,4 +1,4 @@
-package com.jfinal.sog.kit.file;
+package com.jfinal.sog.kit.io;
 
 import java.text.DecimalFormat;
 

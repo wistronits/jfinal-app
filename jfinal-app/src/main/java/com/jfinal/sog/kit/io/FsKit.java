@@ -1,4 +1,4 @@
-package com.jfinal.sog.kit;
+package com.jfinal.sog.kit.io;
 
 import com.jfinal.core.Const;
 import com.jfinal.log.Logger;
@@ -11,7 +11,7 @@ import java.util.Properties;
 
 /**
  * <p>
- * .
+ * 文件操作常用方法.
  * </p>
  *
  * @author sagyf yang

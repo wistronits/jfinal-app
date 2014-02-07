@@ -56,8 +56,8 @@ public final class DatatablesCriterias implements Serializable {
             String sSortingColNumber = request.getParameter(DTConstants.DT_I_SORTING_COLS);
 
             int iEcho = StringUtils.isNotBlank(sEcho) ? Ints.tryParse(sEcho) : -1;
-            int iDisplayStart = StringUtils.isNotBlank(sDisplayStart) ? Ints.tryParse(sDisplayStart) : -1;
-            int iDisplayLength = StringUtils.isNotBlank(sDisplayLength) ? Ints.tryParse(sDisplayLength) : -1;
+            int iDisplayStart = StringUtils.isNotBlank(sDisplayStart) ? Ints.tryParse(sDisplayStart) : 1;
+            int iDisplayLength = StringUtils.isNotBlank(sDisplayLength) ? Ints.tryParse(sDisplayLength) : 10;
             int colNumber = StringUtils.isNotBlank(sColNumber) ? Ints.tryParse(sColNumber) : -1;
             int sortingColNumber = StringUtils.isNotBlank(sSortingColNumber) ? Ints.tryParse(sSortingColNumber) : -1;
 

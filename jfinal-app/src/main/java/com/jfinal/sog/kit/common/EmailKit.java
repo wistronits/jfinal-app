@@ -1,4 +1,4 @@
-package com.jfinal.sog.kit;
+package com.jfinal.sog.kit.common;
 
 
 import javax.activation.DataHandler;
@@ -13,7 +13,7 @@ import java.util.Properties;
 
 /**
  * <p>
- * .
+ * 电子邮件操作工具类.
  * </p>
  *
  * @author sagyf yang

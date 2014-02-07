@@ -27,7 +27,7 @@ import org.eclipse.jetty.server.session.HashSessionManager;
 import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 import com.jfinal.core.Const;
-import com.jfinal.sog.kit.FileKit;
+import com.jfinal.kit.FileKit;
 import com.jfinal.kit.PathKit;
 import com.jfinal.kit.StringKit;
 

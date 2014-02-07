@@ -16,7 +16,7 @@
 
 package com.jfinal.config;
 
-import com.jfinal.sog.kit.FileKit;
+import com.jfinal.kit.FileKit;
 import com.jfinal.kit.StringKit;
 
 import java.util.Properties;

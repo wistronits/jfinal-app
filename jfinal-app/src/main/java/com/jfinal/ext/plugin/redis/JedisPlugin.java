@@ -5,7 +5,7 @@
  */
 package com.jfinal.ext.plugin.redis;
 
-import com.jfinal.sog.kit.file.ResourceKit;
+import com.jfinal.sog.kit.io.ResourceKit;
 import com.jfinal.kit.StringKit;
 import com.jfinal.plugin.IPlugin;
 import org.apache.commons.pool.impl.GenericObjectPool;
