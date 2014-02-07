@@ -9,7 +9,7 @@ package com.jfinal.render;
 import com.jfinal.config.Routes;
 import com.jfinal.core.Const;
 import com.jfinal.sog.initalizer.AppConfig;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

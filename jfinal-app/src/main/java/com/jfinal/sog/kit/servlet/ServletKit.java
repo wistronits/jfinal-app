@@ -9,7 +9,7 @@ import com.google.common.net.HttpHeaders;
 import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.sog.kit.encry.EncodeKit;
 import com.jfinal.kit.StringKit;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;

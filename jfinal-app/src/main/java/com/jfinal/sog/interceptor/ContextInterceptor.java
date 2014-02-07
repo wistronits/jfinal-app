@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
  * @since JDK 1.5
  */
 public class ContextInterceptor implements Interceptor {
-    private static final  String contextPathKey = "ctx";
-    private static final  String namespaceKey = "NAME_SPACE";
+    private static final String contextPathKey = "ctx";
+//    private static final  String namespaceKey = "NAME_SPACE";
 
 
     @Override
@@ -30,7 +30,7 @@ public class ContextInterceptor implements Interceptor {
         ai.invoke();
         HttpServletRequest request = ai.getController().getRequest();
         request.setAttribute(contextPathKey, request.getContextPath());
-        request.setAttribute(namespaceKey, ai.getControllerKey());
+//        request.setAttribute(namespaceKey, ai.getControllerKey());
     }
 
 }

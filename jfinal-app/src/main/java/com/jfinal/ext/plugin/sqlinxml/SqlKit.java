@@ -9,39 +9,47 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
-import com.jfinal.sog.kit.map.JaxbKit;
 import com.jfinal.log.Logger;
+import com.jfinal.sog.initalizer.ConfigProperties;
+import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.map.JaxbKit;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.monitor.FileAlterationMonitor;
+import org.apache.commons.io.monitor.FileAlterationObserver;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class SqlKit {
 
     protected static final Logger logger = Logger.getLogger(SqlKit.class);
 
-    private static final Map<String, String> sqlMap = Maps.newConcurrentMap();
+    private static final Map<String, String> SQL_MAP = Maps.newHashMap();
 
     private static final String CONFIG_SUFFIX = "sql.xml";
 
     public static String sql(String groupNameAndsqlId) {
 
-        return sqlMap.get(groupNameAndsqlId);
+        return SQL_MAP.get(groupNameAndsqlId);
     }
 
     static void clearSqlMap() {
-        sqlMap.clear();
+        SQL_MAP.clear();
     }
 
-    public static void reload() {
-        sqlMap.clear();
-        init();
+    static void putOver(String name, String value) {
+        SQL_MAP.put(name, value);
     }
+
 
     static void init() {
-        final URL resource = SqlKit.class.getClassLoader().getResource("");
+        final URL resource = SqlKit.class.getClassLoader().getResource(StringPool.EMPTY);
         if (resource == null) {
             throw new NullPointerException("the resources is null.");
         }
@@ -61,9 +69,59 @@ public class SqlKit {
                 name = xmlfile.getName();
             }
             for (SqlItem sqlItem : group.sqlItems) {
-                sqlMap.put(name + "." + sqlItem.id, sqlItem.value);
+                SQL_MAP.put(name + "." + sqlItem.id, sqlItem.value);
             }
         }
-        logger.debug("sqlMap" + sqlMap);
+        if (logger.isDebugEnabled())
+            logger.debug("SQL_MAP" + SQL_MAP);
+        final Properties configProps = ConfigProperties.getConfigProps();
+        if (BooleanUtils.toBoolean(configProps.getProperty("dev.mode", "false"))) {
+            // 启动文件监控
+            runWatch();
+        }
+    }
+
+    private static void runWatch() {
+        final URL resource = SqlKit.class.getClassLoader().getResource(StringPool.EMPTY);
+        if (resource == null) {
+            return;
+        }
+        // 轮询间隔 3 秒
+        long interval = TimeUnit.SECONDS.toMillis(3);
+        final String path = resource.getPath();
+
+        File config_file = new File(path);
+        List<FileAlterationObserver> observerList = Lists.newArrayList();
+        final File[] childrenfiles = config_file.listFiles();
+        if (childrenfiles != null) {
+            for (File child : childrenfiles) {
+                if (child.isDirectory()) {
+                    final FileAlterationObserver observer = new FileAlterationObserver(
+                            child.getAbsolutePath(),
+                            FileFilterUtils.and(
+                                    FileFilterUtils.fileFileFilter(),
+                                    FileFilterUtils.suffixFileFilter(CONFIG_SUFFIX)),
+                            null);
+
+                    observer.addListener(new SqlXmlFileListener(SQL_MAP));
+                    observerList.add(observer);
+
+                }
+            }
+        }
+
+        final FileAlterationObserver[] observers = observerList.toArray(new FileAlterationObserver[observerList.size()]);
+        FileAlterationMonitor monitor = new FileAlterationMonitor(interval, observers);
+        // 开始监控
+        try {
+            monitor.start();
+        } catch (Exception e) {
+            logger.error("file monitor is error!", e);
+        }
+
+    }
+
+    static void remove(String s) {
+        SQL_MAP.remove(s);
     }
 }

@@ -25,7 +25,6 @@ import com.jfinal.ext.plugin.tablebind.AutoTableBindPlugin;
 import com.jfinal.ext.plugin.tablebind.SimpleNameStyles;
 import com.jfinal.ext.route.AutoBindRoutes;
 import com.jfinal.sog.interceptor.ContextInterceptor;
-import com.jfinal.sog.ci.SqlInXmlInterceptor;
 import com.jfinal.sog.interceptor.SystemLogProcessor;
 import com.jfinal.kit.StringKit;
 import com.jfinal.plugin.activerecord.dialect.OracleDialect;
@@ -142,7 +141,7 @@ public class AppConfig extends JFinalConfig {
     @Override
     public void configPlugin(Plugins plugins) {
         String db_url = getProperty("db.url");
-        final Boolean devMode = getPropertyToBoolean("dev.mode", false);
+        final boolean devMode = getPropertyToBoolean("dev.mode", false);
         if (!Strings.isNullOrEmpty(db_url)) {
             // 如果配置了数据库地址，则启用数据库插件
             final DruidPlugin druidPlugin = new DruidPlugin(
@@ -225,9 +224,6 @@ public class AppConfig extends JFinalConfig {
             // ingored.
         }
 
-        if (getPropertyToBoolean("dev.mode", false) && getPropertyToBoolean("db.sqlinxml", false)) {
-            interceptors.add(new SqlInXmlInterceptor());
-        }
         interceptors.add(new ContextInterceptor());
 
         new AutoOnLoadInterceptor(interceptors).load();
