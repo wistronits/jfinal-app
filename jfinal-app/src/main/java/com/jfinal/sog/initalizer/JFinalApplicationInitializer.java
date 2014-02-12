@@ -32,7 +32,7 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
 
         final Properties p = ConfigProperties.getConfigProps();
 
-        boolean security = Boolean.getBoolean(p.getProperty("security", "false"));
+        boolean security = Boolean.getBoolean(p.getProperty(InitConst.SECURITY, "false"));
         if (security) {
             ctx.addListener("org.apache.shiro.web.env.EnvironmentLoaderListener");
             ctx.addFilter("ShiroFilter", "org.apache.shiro.web.servlet.ShiroFilter")
@@ -42,7 +42,7 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
         //Before starting JFinal, lookup class file on the classpath.
         ClassFinder.find();
 
-        String app_name = p.getProperty("app", StringUtils.EMPTY);
+        String app_name = p.getProperty(InitConst.APP, StringUtils.EMPTY);
 
         FilterRegistration.Dynamic jfinalFilter = ctx.addFilter("jfinal@app", "com.jfinal.core.JFinalFilter");
 

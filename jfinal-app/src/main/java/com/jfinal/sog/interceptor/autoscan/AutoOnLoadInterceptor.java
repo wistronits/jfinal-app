@@ -2,15 +2,15 @@ package com.jfinal.sog.interceptor.autoscan;
 
 import com.jfinal.aop.Interceptor;
 import com.jfinal.config.Interceptors;
+import com.jfinal.log.Logger;
 import com.jfinal.sog.ctxbox.ClassBox;
 import com.jfinal.sog.ctxbox.ClassType;
-import com.jfinal.log.Logger;
 
 import java.util.List;
 
 /**
  * <p>
- * .
+ * Interceptor annotation scan.
  * </p>
  *
  * @author sagyf yang

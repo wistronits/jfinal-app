@@ -12,42 +12,51 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <org.jodd.version>3.4.10</org.jodd.version>
         <shiro.version>1.2.2</shiro.version>
-        <com.jfinal.version>1.5</com.jfinal.version>
-        <druid.version>1.0.1</druid.version>
-        <logback-core.version>1.0.13</logback-core.version>
-        <slf4j-api.version>1.7.5</slf4j-api.version>
+        <druid.version>1.0.2</druid.version>
+        <logback-core.version>1.1.1</logback-core.version>
+        <slf4j-api.version>1.7.6</slf4j-api.version>
         <quartz.version>2.2.1</quartz.version>
-        <jedis.version>2.2.1</jedis.version>
-        <mail.version>1.4.7</mail.version>
-        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-        <log4j.version>1.2.16</log4j.version>
+        <jedis.version>2.3.1</jedis.version>
         <fastjson.version>1.1.38</fastjson.version>
         <joda-time.version>2.3</joda-time.version>
+
         <freemarker.version>2.3.20</freemarker.version>
         <velocity.version>1.7</velocity.version>
+
         <commons-beanutils.version>1.9.1</commons-beanutils.version>
         <commons-collections.version>3.2.1</commons-collections.version>
         <commons-pool.version>1.6</commons-pool.version>
         <commons-codec.version>1.9</commons-codec.version>
-        <commons-logging.version>1.1.3</commons-logging.version>
         <commons-lang3.version>3.1</commons-lang3.version>
+        <commons-io.version>2.4</commons-io.version>
+        <httpclient.version>4.3.2</httpclient.version>
 
+        <mail.version>1.4.7</mail.version>
         <dom4j.version>1.6.1</dom4j.version>
         <jsoup.version>1.7.3</jsoup.version>
+        <thumbnailator.version>0.4.7</thumbnailator.version>
+
 
         <ehcache-core.version>2.6.7</ehcache-core.version>
-        <thumbnailator.version>0.4.7</thumbnailator.version>
-        <junit.version>4.11</junit.version>
         <mysql-connector-java.version>5.1.27</mysql-connector-java.version>
-        <guava.version>16.0</guava.version>
-        <httpclient.version>4.3.2</httpclient.version>
-        <commons-io.version>2.4</commons-io.version>
+        <guava.version>16.0.1</guava.version>
+
+        <junit.version>4.11</junit.version>
+        <org.jodd.version>3.4.10</org.jodd.version>
+
+        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <mongo-java-driver.version>2.11.3</mongo-java-driver.version>
+        <morphia.version>0.106</morphia.version>
     </properties>
 
     <dependencies>
 
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1</version>
+        </dependency>
         <dependency>
             <groupId>com.jfinal</groupId>
             <artifactId>jfinal-app</artifactId>
@@ -80,6 +89,12 @@
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>${commons-beanutils.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
@@ -130,11 +145,23 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${httpclient.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>fluent-hc</artifactId>
             <version>${httpclient.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--db pools-->
         <dependency>
@@ -177,21 +204,16 @@
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
-            <version>2.11.3</version>
+            <version>${mongo-java-driver.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mongodb.morphia</groupId>
             <artifactId>morphia</artifactId>
-            <version>0.105</version>
+            <version>${morphia.version}</version>
         </dependency>
 
 
         <!--log -->
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>${commons-logging.version}</version>
-        </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
@@ -205,6 +227,20 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+
+        <!-- 代码直接调用commons-logging会被桥接到slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+
+        <!-- 代码直接调用java.util.logging会被桥接到slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
             <version>${slf4j-api.version}</version>
         </dependency>
         <!--Jobs-->
@@ -223,6 +259,12 @@
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz-jobs</artifactId>
             <version>${quartz.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.10-FINAL</version>
         </dependency>
 
         <dependency>
@@ -339,28 +381,6 @@
         </dependencies>
     </dependencyManagement>
 
-
-    <distributionManagement>
-        <repository>
-            <id>aetc</id>
-            <name>Aetc Group Releases</name>
-            <url>http://aetc2013.f3322.org:8888/nexus/content/repositories/thirdparty</url>
-        </repository>
-        <snapshotRepository>
-            <id>aetc-dev</id>
-            <name>Snapshots</name>
-            <url>http://aetc2013.f3322.org:8888/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
-    <repositories>
-        <repository>
-            <id>osc</id>
-            <name>os-china</name>
-            <url>http://maven.oschina.net/content/groups/public/</url>
-        </repository>
-    </repositories>
-
     <build>
         <finalName>JFinal-app</finalName>
         <plugins>
@@ -407,4 +427,26 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>osc</id>
+            <name>os-china</name>
+            <url>http://maven.oschina.net/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>sogyf-mvn-repo</id>
+            <url>https://raw.github.com/sogyf/sparta-helpers/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub ${project.artifactId} Repository</name>
+            <url>https://raw.github.com/sogyf/${project.artifactId}/mvn-repo</url>
+        </repository>
+    </distributionManagement>
 </project>

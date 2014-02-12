@@ -9,8 +9,8 @@ package app.controllers;
 import app.models.Res;
 import com.jfinal.config.BasicController;
 import com.jfinal.core.ActionKey;
-import com.jfinal.sog.render.datatables.core.DatatablesCriterias;
 import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.sog.render.datatables.core.DatatablesCriterias;
 import org.joda.time.DateTime;
 
 /**
@@ -31,7 +31,7 @@ public class IndexController extends BasicController {
     }
 
 
-    public void dt(){
+    public void dt() {
         render("/dt.ftl");
     }
 
@@ -41,5 +41,9 @@ public class IndexController extends BasicController {
         final Page<Res> res = Res.dao.paginate(dtc.getDisplayStart(),
                 dtc.getDisplaySize(), "select * ", " from res");
         renderDataTables(res, dtc);
+    }
+
+    public void down() {
+
     }
 }

@@ -81,4 +81,9 @@ public interface FnConst {
      * </pre>
      */
     DateTimeFormatter DATE_TIME_PATTERN_YYYY_MM_DD          = DateTimeFormat.forPattern(DateProvider.YYYY_MM_DD);
+
+    /**
+     * 默认的数据库主键
+     */
+    String TABLE_PK_COLUMN = "id";
 }

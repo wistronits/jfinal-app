@@ -4,7 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * <p>
- * .
+ * Global interceptor annotation.
  * </p>
  *
  * @author sagyf yang
@@ -13,6 +13,6 @@ import java.lang.annotation.*;
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 public @interface AppInterceptor {
 }

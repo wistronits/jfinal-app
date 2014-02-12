@@ -11,11 +11,6 @@ import com.alibaba.druid.util.JdbcUtils;
 import com.alibaba.druid.wall.WallFilter;
 import com.google.common.base.Strings;
 import com.jfinal.config.*;
-import com.jfinal.sog.ctxbox.ClassBox;
-import com.jfinal.sog.ctxbox.ClassType;
-import com.jfinal.sog.ftl.*;
-import com.jfinal.sog.interceptor.autoscan.AutoOnLoadInterceptor;
-import com.jfinal.sog.interceptor.syslog.SysLogInterceptor;
 import com.jfinal.ext.plugin.monogodb.MongodbPlugin;
 import com.jfinal.ext.plugin.quartz.QuartzPlugin;
 import com.jfinal.ext.plugin.redis.JedisPlugin;
@@ -24,8 +19,6 @@ import com.jfinal.ext.plugin.sqlinxml.SqlInXmlPlugin;
 import com.jfinal.ext.plugin.tablebind.AutoTableBindPlugin;
 import com.jfinal.ext.plugin.tablebind.SimpleNameStyles;
 import com.jfinal.ext.route.AutoBindRoutes;
-import com.jfinal.sog.interceptor.ContextInterceptor;
-import com.jfinal.sog.interceptor.SystemLogProcessor;
 import com.jfinal.kit.StringKit;
 import com.jfinal.plugin.activerecord.dialect.OracleDialect;
 import com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect;
@@ -36,12 +29,21 @@ import com.jfinal.plugin.druid.IDruidStatViewAuth;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.render.FreeMarkerRender;
 import com.jfinal.render.ViewType;
+import com.jfinal.sog.ctxbox.ClassBox;
+import com.jfinal.sog.ctxbox.ClassType;
+import com.jfinal.sog.ftl.*;
+import com.jfinal.sog.interceptor.ContextInterceptor;
+import com.jfinal.sog.interceptor.SystemLogProcessor;
+import com.jfinal.sog.interceptor.autoscan.AutoOnLoadInterceptor;
+import com.jfinal.sog.interceptor.syslog.SysLogInterceptor;
 import freemarker.template.Configuration;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URL;
 import java.util.List;
+
+import static com.jfinal.sog.initalizer.InitConst.*;
 
 /**
  * <p>
@@ -59,24 +61,18 @@ public class AppConfig extends JFinalConfig {
      */
     private Routes routes;
 
-
-    /**
-     * 默认视图位置
-     */
-    private static final String BASE_VIEW_PATH = "/WEB-INF/views/";
-
     private static final String DEFAULT_DOMAIN = "http://127.0.0.1:8080/";
 
     private static String view_path;
 
-    private static String domain;
+    private static String  domain;
     private static boolean setViewPath;
+    private static String  appName;
 
-    /**
-     * 系统公用位置
-     *
-     * @return 公用位置
-     */
+    public static String getAppName() {
+        return appName;
+    }
+
     public static String getBaseViewPath() {
         return view_path;
     }
@@ -92,22 +88,23 @@ public class AppConfig extends JFinalConfig {
     @Override
     public void configConstant(Constants constants) {
         setProperties(ConfigProperties.getConfigProps());
-        constants.setDevMode(getPropertyToBoolean("dev.mode", false));
-        view_path = getProperty("view.path", BASE_VIEW_PATH);
+        constants.setDevMode(getPropertyToBoolean(DEV_MODE, false));
+        view_path = getProperty(VIEW_PATH, "/WEB-INF/views/");
         if (!StringKit.isBlank(view_path)) {
             setViewPath = true;
             constants.setBaseViewPath(view_path);
         }
-        domain = getProperty("domain", DEFAULT_DOMAIN);
-        String view_type = getProperty("view.type");
+        appName = getProperty(APP, "app");
+        domain = getProperty(DOMAIN, DEFAULT_DOMAIN);
+        String view_type = getProperty(VIEW_TYPE);
         if (!StringKit.isBlank(view_type)) {
             setViewType(constants, view_type);
         }
-        String view_404 = getProperty("view.404");
+        String view_404 = getProperty(VIEW_404);
         if (!Strings.isNullOrEmpty(view_404)) {
             constants.setError401View(view_404);
         }
-        String view_500 = getProperty("view.500");
+        String view_500 = getProperty(VIEW_500);
         if (!Strings.isNullOrEmpty(view_500)) {
             constants.setError500View(view_500);
         }
@@ -140,14 +137,14 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configPlugin(Plugins plugins) {
-        String db_url = getProperty("db.url");
-        final boolean devMode = getPropertyToBoolean("dev.mode", false);
+        String db_url = getProperty(DB_URL);
+        final boolean devMode = getPropertyToBoolean(DEV_MODE, false);
         if (!Strings.isNullOrEmpty(db_url)) {
             // 如果配置了数据库地址，则启用数据库插件
             final DruidPlugin druidPlugin = new DruidPlugin(
                     db_url
-                    , getProperty("db.username")
-                    , getProperty("db.password"));
+                    , getProperty(DB_USERNAME)
+                    , getProperty(DB_PASSWORD));
             // 增加监控统计和防SQL注入拦截
             druidPlugin.setFilters("stat,wall");
             final WallFilter wall = new WallFilter();
@@ -159,7 +156,7 @@ public class AppConfig extends JFinalConfig {
             final AutoTableBindPlugin atbp = new AutoTableBindPlugin(druidPlugin, SimpleNameStyles.LOWER_UNDERLINE);
 
             // 根据db_url判断是什么数据库,使用druid的方法判断
-            String dbtype = JdbcUtils.getDbType(db_url, "");
+            String dbtype = JdbcUtils.getDbType(db_url, StringUtils.EMPTY);
             if (!StringUtils.equals(dbtype, JdbcConstants.MYSQL)) {
                 if (StringUtils.equals(dbtype, JdbcConstants.ORACLE)) {
                     atbp.setDialect(new OracleDialect());
@@ -173,41 +170,40 @@ public class AppConfig extends JFinalConfig {
             }
             atbp.setShowSql(devMode);
             plugins.add(atbp);
-            if (getPropertyToBoolean("db.sqlinxml", false)) {
+            if (getPropertyToBoolean(DB_SQLINXML, false)) {
                 plugins.add(new SqlInXmlPlugin());
             }
         }
 
-        if (getPropertyToBoolean("security", false)) {
+        if (getPropertyToBoolean(SECURITY, false)) {
             plugins.add(new ShiroPlugin(this.routes));
         }
-        if (getPropertyToBoolean("cache", false)) {
+        if (getPropertyToBoolean(CACHE, false)) {
             plugins.add(new EhCachePlugin());
         }
 
-        if (getPropertyToBoolean("job", false)) {
+        if (getPropertyToBoolean(JOB, false)) {
             plugins.add(new QuartzPlugin());
         }
 
-        final String mongo_host = getProperty("mongo.host", MongodbPlugin.DEFAULT_HOST);
-        final String mongo_url = getProperty("mongo.url", StringUtils.EMPTY);
+        final String mongo_host = getProperty(MONGO_HOST, MongodbPlugin.DEFAULT_HOST);
+        final String mongo_url = getProperty(MONGO_URL, StringUtils.EMPTY);
         if (!Strings.isNullOrEmpty(mongo_host) || !Strings.isNullOrEmpty(mongo_url)) {
-            int mongo_port = getPropertyToInt("mongo.port", MongodbPlugin.DEFAUL_PORT);
-            String mongo_db = getProperty("mongo.db", "test");
-            boolean moriph = getPropertyToBoolean("mongo.moriph", false);
+            int mongo_port = getPropertyToInt(MONGO_PORT, MongodbPlugin.DEFAUL_PORT);
+            String mongo_db = getProperty(MONGO_DB, "test");
+            boolean moriph = getPropertyToBoolean(MONGO_MORIPH, false);
             final MongodbPlugin mongodb = new MongodbPlugin(mongo_host, mongo_port, mongo_db, moriph);
             plugins.add(mongodb);
         }
 
-        final String redis_host = getProperty("redis.host", StringUtils.EMPTY);
+        final String redis_host = getProperty(REDIS_HOST, StringUtils.EMPTY);
         if (!Strings.isNullOrEmpty(redis_host)) {
-            int port = getPropertyToInt("redis.port", JedisPlugin.DEFAULT_PORT);
+            int port = getPropertyToInt(REDIS_PORT, JedisPlugin.DEFAULT_PORT);
             final JedisPlugin jedis = new JedisPlugin(redis_host, port, 2000);
             plugins.add(jedis);
         }
 
     }
-
 
     @Override
     public void configInterceptor(Interceptors interceptors) {
