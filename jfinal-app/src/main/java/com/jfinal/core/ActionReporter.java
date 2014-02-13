@@ -17,7 +17,7 @@
 package com.jfinal.core;
 
 import com.jfinal.aop.Interceptor;
-import com.jfinal.sog.kit.cst.FnConst;
+import com.jfinal.sog.kit.cst.AppConst;
 import com.jfinal.sog.kit.cst.StringPool;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +51,7 @@ final class ActionReporter {
 
     private static void doReport(Controller controller, Action action) {
         StringBuilder sb = new StringBuilder("\nJFinal action report -------- ")
-                .append(FnConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS.format(new Date()))
+                .append(AppConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS.format(new Date()))
                 .append(" ------------------------------\n");
         Class<? extends Controller> cc = action.getControllerClass();
         sb.append("Controller  : ").append(cc.getName()).append(".(").append(cc.getSimpleName()).append(".java:1)");

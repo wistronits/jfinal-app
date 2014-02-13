@@ -414,11 +414,13 @@ public class MockServletContext implements ServletContext {
 
     @Override
     public void log(Exception arg0, String arg1) {
-
+        arg0.printStackTrace();
+        System.out.println(arg1);
     }
 
     @Override
     public void log(String arg0) {
+        System.out.println(arg0);
 
     }
 

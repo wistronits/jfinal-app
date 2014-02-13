@@ -6,7 +6,6 @@
 package com.jfinal.ext.render.csv;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -15,7 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.jfinal.sog.kit.cst.FnConst;
+import com.jfinal.sog.kit.cst.AppConst;
 import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Record;
@@ -179,9 +178,9 @@ public class CsvUtil {
             } else if (obj instanceof Calendar) {
                 content = ((Calendar) obj).toString();
             } else if (obj instanceof Timestamp) {
-                content = FnConst.DATE_FORMAT_YYYY_MM_DD_HH_MM.format(new Date(((Timestamp) obj).getTime()));
+                content = AppConst.DATE_FORMAT_YYYY_MM_DD_HH_MM.format(new Date(((Timestamp) obj).getTime()));
             } else if (obj instanceof Date) {
-                content = FnConst.DATE_FORMAT_YYYY_MM_DD_HH_MM.format((Date) obj);
+                content = AppConst.DATE_FORMAT_YYYY_MM_DD_HH_MM.format((Date) obj);
             } else {
                 content = write(String.valueOf(obj));
             }

@@ -13,7 +13,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.Region;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 import java.util.List;
 import java.util.Map;
@@ -55,8 +55,8 @@ public class PoiKit {
         Preconditions.checkArgument(cellWidth >= 0, "cellWidth < 0");
         HSSFWorkbook wb = new HSSFWorkbook();
         HSSFSheet sheet = wb.createSheet(sheetName);
-        HSSFRow row = null;
-        HSSFCell cell = null;
+        HSSFRow row;
+        HSSFCell cell;
         if (headers.length > 0) {
             row = sheet.createRow(0);
             if (headerRow <= 0) {
@@ -64,8 +64,7 @@ public class PoiKit {
             }
             headerRow = Math.min(headerRow, MAX_ROWS);
             for (int h = 0, lenH = headers.length; h < lenH; h++) {
-                @SuppressWarnings("deprecation")
-                Region region = new Region(0, (short) h, (short) headerRow - 1, (short) h);// 合并从第rowFrom行columnFrom列
+                CellRangeAddress region = new CellRangeAddress(0, (short) h, (short) headerRow - 1, (short) h);// 合并从第rowFrom行columnFrom列
                 sheet.addMergedRegion(region);// 到rowTo行columnTo的区域
                 // 得到所有区域
                 sheet.getNumMergedRegions();

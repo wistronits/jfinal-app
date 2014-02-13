@@ -5,13 +5,14 @@
  */
 package com.jfinal.ext.plugin.redis;
 
-import com.jfinal.sog.kit.io.ResourceKit;
 import com.jfinal.kit.StringKit;
 import com.jfinal.plugin.IPlugin;
-import org.apache.commons.pool.impl.GenericObjectPool;
+import com.jfinal.sog.kit.io.ResourceKit;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
+import redis.clients.jedis.Protocol;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -23,35 +24,40 @@ public class JedisPlugin implements IPlugin {
     private String config = "RedisConnector.properties";
 
     public static final String DEFAULT_HOST = "127.0.0.1";
-    public static final int DEFAULT_PORT = 6379;
+    public static final int    DEFAULT_PORT = Protocol.DEFAULT_PORT;
 
-    private String host = DEFAULT_HOST;
-    private int port = DEFAULT_PORT;
-    private int timeout = 2000;
+    private final String host;
+    private final int    port;
+    private final int    timeout;
+
     private String password;
-    private int maxactive = GenericObjectPool.DEFAULT_MAX_ACTIVE;
-    private int maxidle = GenericObjectPool.DEFAULT_MAX_ACTIVE;
-    private long maxwait = GenericObjectPool.DEFAULT_MAX_WAIT;
-    private long minevictableidletimemillis = GenericObjectPool.DEFAULT_MIN_EVICTABLE_IDLE_TIME_MILLIS;
-    private int minidle = GenericObjectPool.DEFAULT_MIN_IDLE;
-    private int numtestsperevictionrun = GenericObjectPool.DEFAULT_NUM_TESTS_PER_EVICTION_RUN;
-    private long softminevictableidletimemillis = GenericObjectPool.DEFAULT_SOFT_MIN_EVICTABLE_IDLE_TIME_MILLIS;
-    private long timebetweenevictionrunsmillis = GenericObjectPool.DEFAULT_TIME_BETWEEN_EVICTION_RUNS_MILLIS;
-    private byte whenexhaustedaction = GenericObjectPool.DEFAULT_WHEN_EXHAUSTED_ACTION;
-    private boolean testwhileidle = GenericObjectPool.DEFAULT_TEST_WHILE_IDLE;
-    private boolean testonreturn = GenericObjectPool.DEFAULT_TEST_ON_RETURN;
-    private boolean testonborrow = GenericObjectPool.DEFAULT_TEST_ON_BORROW;
+    private int     maxidle                        = GenericObjectPoolConfig.DEFAULT_MAX_IDLE;
+    private int     maxTotal                       = GenericObjectPoolConfig.DEFAULT_MAX_TOTAL;
+    private long    minevictableidletimemillis     = GenericObjectPoolConfig.DEFAULT_MIN_EVICTABLE_IDLE_TIME_MILLIS;
+    private int     minidle                        = GenericObjectPoolConfig.DEFAULT_MIN_IDLE;
+    private int     numtestsperevictionrun         = GenericObjectPoolConfig.DEFAULT_NUM_TESTS_PER_EVICTION_RUN;
+    private long    softminevictableidletimemillis = GenericObjectPoolConfig.DEFAULT_SOFT_MIN_EVICTABLE_IDLE_TIME_MILLIS;
+    private long    timebetweenevictionrunsmillis  = GenericObjectPoolConfig.DEFAULT_TIME_BETWEEN_EVICTION_RUNS_MILLIS;
+    private boolean testwhileidle                  = GenericObjectPoolConfig.DEFAULT_TEST_WHILE_IDLE;
+    private boolean testonreturn                   = GenericObjectPoolConfig.DEFAULT_TEST_ON_RETURN;
+    private boolean testonborrow                   = GenericObjectPoolConfig.DEFAULT_TEST_ON_BORROW;
 
     public JedisPlugin() {
+        host = DEFAULT_HOST;
+        port = Protocol.DEFAULT_PORT;
+        timeout = Protocol.DEFAULT_TIMEOUT;
     }
 
     public JedisPlugin(String host) {
         this.host = host;
+        port = Protocol.DEFAULT_PORT;
+        timeout = Protocol.DEFAULT_TIMEOUT;
     }
 
     public JedisPlugin(String host, int port) {
         this.host = host;
         this.port = port;
+        timeout = Protocol.DEFAULT_TIMEOUT;
     }
 
     public JedisPlugin(String host, int port, int timeout) {
@@ -85,15 +91,13 @@ public class JedisPlugin implements IPlugin {
     }
 
     private void setPoolConfig(JedisPoolConfig poolConfig) {
-        poolConfig.setMaxActive(maxactive);
         poolConfig.setMaxIdle(maxidle);
-        poolConfig.setMaxWait(maxwait);
+        poolConfig.setMaxTotal(maxTotal);
         poolConfig.setMinEvictableIdleTimeMillis(minevictableidletimemillis);
         poolConfig.setMinIdle(minidle);
         poolConfig.setNumTestsPerEvictionRun(numtestsperevictionrun);
         poolConfig.setSoftMinEvictableIdleTimeMillis(softminevictableidletimemillis);
         poolConfig.setTimeBetweenEvictionRunsMillis(timebetweenevictionrunsmillis);
-        poolConfig.setWhenExhaustedAction(whenexhaustedaction);
         poolConfig.setTestWhileIdle(testwhileidle);
         poolConfig.setTestOnReturn(testonreturn);
         poolConfig.setTestOnBorrow(testonborrow);
@@ -111,18 +115,12 @@ public class JedisPlugin implements IPlugin {
     }
 
     private void parseSetting(String key, String value) {
-        if ("timeout".equalsIgnoreCase(key)) {
-            timeout = Integer.valueOf(value);
-        } else if ("password".equalsIgnoreCase(key)) {
+        if ("password".equalsIgnoreCase(key)) {
             password = value;
-        } else if ("host".equalsIgnoreCase(key)) {
-            host = value;
-        } else if ("maxactive".equalsIgnoreCase(key)) {
-            maxactive = Integer.valueOf(value);
+        } else if ("maxtotal".equalsIgnoreCase(key)) {
+            maxTotal = Integer.valueOf(value);
         } else if ("maxidle".equalsIgnoreCase(key)) {
             maxidle = Integer.valueOf(value);
-        } else if ("maxwait".equalsIgnoreCase(key)) {
-            maxwait = Integer.valueOf(value);
         } else if ("minevictableidletimemillis".equalsIgnoreCase(key)) {
             minevictableidletimemillis = Long.valueOf(value);
         } else if ("minidle".equalsIgnoreCase(key)) {
@@ -133,14 +131,6 @@ public class JedisPlugin implements IPlugin {
             softminevictableidletimemillis = Long.valueOf(value);
         } else if ("timebetweenevictionrunsmillis".equalsIgnoreCase(key)) {
             timebetweenevictionrunsmillis = Long.valueOf(value);
-        } else if ("whenexhaustedaction".equalsIgnoreCase(key)) {
-            if ("WHEN_EXHAUSTED_BLOCK".equalsIgnoreCase(value)) {
-                whenexhaustedaction = GenericObjectPool.WHEN_EXHAUSTED_BLOCK;
-            } else if ("WHEN_EXHAUSTED_FAIL".equalsIgnoreCase(value)) {
-                whenexhaustedaction = GenericObjectPool.WHEN_EXHAUSTED_FAIL;
-            } else if ("WHEN_EXHAUSTED_GROW".equalsIgnoreCase(value)) {
-                whenexhaustedaction = GenericObjectPool.WHEN_EXHAUSTED_GROW;
-            }
         } else if ("testwhileidle".equalsIgnoreCase(key)) {
             testwhileidle = Boolean.getBoolean(value);
         } else if ("testonreturn".equalsIgnoreCase(key)) {
