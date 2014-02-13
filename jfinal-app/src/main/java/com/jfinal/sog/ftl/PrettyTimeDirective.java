@@ -7,7 +7,7 @@
 package com.jfinal.sog.ftl;
 
 import com.google.common.base.Strings;
-import com.jfinal.sog.kit.cst.AppConst;
+import com.jfinal.sog.kit.cst.AppFunc;
 import com.jfinal.sog.kit.date.DateProvider;
 import freemarker.core.Environment;
 import freemarker.template.*;
@@ -65,7 +65,7 @@ public class PrettyTimeDirective implements TemplateDirectiveModel {
             String time = timeScalar.getAsString();
             String ftime = StringUtils.EMPTY;
             if (!Strings.isNullOrEmpty(time)) {
-                final DateTime p_date = DateTime.parse(time, AppConst.DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM_SS);
+                final DateTime p_date = DateTime.parse(time, AppFunc.DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM_SS);
                 final DateTime today = DateTime.now();
                 Days d = Days.daysBetween(p_date, today);
                 int days = d.getDays();

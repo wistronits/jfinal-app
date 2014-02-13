@@ -103,7 +103,6 @@ public class FnKit {
      * @param datetime 指定日期时间.
      * @return 添加指定间隔之后的日期时间
      */
-    @SuppressWarnings("unused")
     public static Date dateadd(interval interval, int number, Date datetime) {
         if (number == 0) return datetime;
         Calendar cd1 = Calendar.getInstance();

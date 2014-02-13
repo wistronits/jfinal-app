@@ -61,7 +61,7 @@ public class AppConfig extends JFinalConfig {
      */
     private Routes routes;
 
-    private static final String DEFAULT_DOMAIN = "http://127.0.0.1:8080/";
+    private static final String DEFAULT_DOMAIN = "http://127.0.0.1:8080/app";
 
     private static String view_path;
 
@@ -99,6 +99,9 @@ public class AppConfig extends JFinalConfig {
         String view_type = getProperty(VIEW_TYPE);
         if (!StringKit.isBlank(view_type)) {
             setViewType(constants, view_type);
+        } else {
+            // default freemarker view.
+            setFtlSharedVariable();
         }
         String view_404 = getProperty(VIEW_404);
         if (!Strings.isNullOrEmpty(view_404)) {
@@ -110,23 +113,30 @@ public class AppConfig extends JFinalConfig {
         }
     }
 
+    /**
+     * set view type.
+     *
+     * @param constants jfinal constant.
+     * @param view_type view type.
+     */
     private void setViewType(Constants constants, String view_type) {
         final ViewType viewType = ViewType.valueOf(view_type.toUpperCase());
         if (viewType == ViewType.FREE_MARKER) {
             constants.setFreeMarkerViewExtension(".ftl");
+            setFtlSharedVariable();
         }
         constants.setViewType(viewType);
+    }
 
-        if (viewType == ViewType.FREE_MARKER) {
-            // custmer variable
-            final Configuration config = FreeMarkerRender.getConfiguration();
-            config.setSharedVariable("block", new BlockDirective());
-            config.setSharedVariable("extends", new ExtendsDirective());
-            config.setSharedVariable("override", new OverrideDirective());
-            config.setSharedVariable("super", new SuperDirective());
-            // 增加日期美化指令（类似 几分钟前）
-            config.setSharedVariable("prettyTime", new PrettyTimeDirective());
-        }
+    private void setFtlSharedVariable() {
+        // custmer variable
+        final Configuration config = FreeMarkerRender.getConfiguration();
+        config.setSharedVariable("block", new BlockDirective());
+        config.setSharedVariable("extends", new ExtendsDirective());
+        config.setSharedVariable("override", new OverrideDirective());
+        config.setSharedVariable("super", new SuperDirective());
+        // 增加日期美化指令（类似 几分钟前）
+        config.setSharedVariable("prettyTime", new PrettyTimeDirective());
     }
 
     @Override

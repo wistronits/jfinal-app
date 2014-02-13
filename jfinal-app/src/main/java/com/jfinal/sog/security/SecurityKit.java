@@ -10,7 +10,7 @@ import com.google.common.base.Function;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.ehcache.CacheKit;
 import com.jfinal.sog.initalizer.AppConfig;
-import com.jfinal.sog.kit.cst.AppConst;
+import com.jfinal.sog.kit.cst.AppFunc;
 import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.sog.kit.encry.DigestsKit;
 import com.jfinal.sog.kit.encry.EncodeKit;
@@ -104,7 +104,7 @@ public class SecurityKit {
         } else {
             T user = getLoginUser(req);
             if (user != null) {
-                CacheKit.remove(LOGIN_CACHE_SESSION, LOGIN_CACHE_SESSION + user.getLong(AppConst.TABLE_PK_COLUMN));
+                CacheKit.remove(LOGIN_CACHE_SESSION, LOGIN_CACHE_SESSION + user.getLong(AppFunc.TABLE_PK_COLUMN));
             }
         }
         //清除session
@@ -173,7 +173,7 @@ public class SecurityKit {
     private static <T extends Model> void setLoginMember(HttpServletRequest request, HttpServletResponse response,
                                                          T user, boolean remember) {
         request.getSession().setAttribute(LOGIN_SESSION_KEY, user);
-        request.getSession().setAttribute(LOGIN_MEMBER_ID, user.getLong(AppConst.TABLE_PK_COLUMN));
+        request.getSession().setAttribute(LOGIN_MEMBER_ID, user.getLong(AppFunc.TABLE_PK_COLUMN));
         saveMemberInCookie(user, remember, request, response);
     }
 
@@ -216,7 +216,7 @@ public class SecurityKit {
      * @return User login identification string
      */
     private static <T extends Model> String getLoginKey(T user, String ip, String user_agent) {
-        return encrypt(String.valueOf(user.getLong(AppConst.TABLE_PK_COLUMN)) + '|'
+        return encrypt(String.valueOf(user.getLong(AppFunc.TABLE_PK_COLUMN)) + '|'
                 + user.getStr("password") + '|' + ip + '|' + ((user_agent == null) ? 0 : user_agent.hashCode()) + '|' + System.currentTimeMillis());
     }
 

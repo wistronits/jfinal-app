@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
  * @version 1.0 2014-01-31 2:16
  * @since JDK 1.6
  */
-public interface AppConst {
+public interface AppFunc {
 
     /**
      * 将集合类合并为逗号分割的字符串 处理函数
