@@ -6,9 +6,6 @@
 2. 需要使用`JDK-1.6` 以及 `Servlet 3.0` 以上版本
 3. 通过`javax.servlet.ServletContainerInitializer`(需要`Servlet3.0`以上容器)的方式去掉了`web.xml`的配置
 
-# TODO
-
-example
 
 ## 一、Maven 使用说明
 

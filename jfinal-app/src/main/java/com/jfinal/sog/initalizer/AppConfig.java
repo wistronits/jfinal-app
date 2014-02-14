@@ -128,6 +128,9 @@ public class AppConfig extends JFinalConfig {
         constants.setViewType(viewType);
     }
 
+    /**
+     * set freemarker variable.
+     */
     private void setFtlSharedVariable() {
         // custmer variable
         final Configuration config = FreeMarkerRender.getConfiguration();

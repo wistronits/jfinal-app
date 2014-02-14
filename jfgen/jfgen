@@ -1,0 +1,181 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# coding=utf-8
+#
+# Copyright 2012-2013 by yfyang. All Rights Reserved.
+import os
+import getopt
+import sys
+# import urllib2
+import os.path
+import shutil
+import errno
+import uuid
+
+from jinja2 import Environment, FileSystemLoader
+
+gen_path = os.path.normpath(os.path.dirname(os.path.realpath(sys.argv[0])))
+
+sys.path.append(os.path.join(gen_path, 'pym'))
+
+
+def project_layout_gen(project_dir, project_name):
+    # Maven layout project.
+    _src = os.path.join(project_dir, project_name, 'src')
+    if os.path.exists(_src):
+        print 'the %s is exist!' % _src
+        sys.exit(1)
+    os.makedirs(_src)
+    main_ = os.path.join(_src, "main")
+    os.mkdir(main_)
+    java_ = os.path.join(main_, 'java')
+    os.mkdir(java_)
+    os.mkdir(os.path.join(java_, 'app'))
+    os.mkdir(os.path.join(java_, "app", "controllers"))
+
+    webapp_ = os.path.join(main_, 'webapp')
+    os.mkdir(webapp_)
+    os.mkdir(os.path.join(webapp_, 'static'))
+    web_inf_ = os.path.join(webapp_, 'WEB-INF')
+    os.mkdir(web_inf_)
+    os.mkdir(os.path.join(web_inf_, 'views'))
+    # os.mkdir(web_inf_ + os.sep + "lib")
+
+    resources_ = os.path.join(main_, 'resources')
+    os.mkdir(resources_)
+    os.mkdir(os.path.join(resources_, 'sqlcnf'))
+
+    test_ = os.path.join(_src, 'test')
+    os.mkdir(test_)
+    test_java_ = os.path.join(test_, 'java')
+    os.mkdir(test_java_)
+    os.mkdir(os.path.join(test_java_, 'app'))
+    os.mkdir(os.path.join(test_, 'resources'))
+
+
+def copy_deps_lib(proj_dir):
+    storage_path = os.path.join(
+        proj_dir, 'src', 'main', 'webapp', 'WEB-INF', 'lib')
+    copy_directory(os.path.join(gen_path, 'deps', 'compile'), storage_path)
+
+    storage_path = os.path.join(proj_dir, 'src', 'test', 'lib')
+    copy_directory(os.path.join(gen_path, 'deps', 'test'), storage_path)
+
+
+# def down_dep_to_lib(urls, proj_dir):
+#     storage_path = proj_dir + "src" + os.sep + "main" + os.sep + \
+#         "webapp" + os.sep + "WEB-INF" + os.sep + "lib" + os.sep
+#     for url in urls:
+#         down_with_url(storage_path, url)
+
+
+def gen_idea(directory, project_name):
+    idea_ipr = project_name + '.ipr'
+    idea_iws = project_name + '.iws'
+    idea_iml = project_name + '.iml'
+    params = {'appName': project_name, 'appSN': uuid.uuid4()}
+    file_content = render_config_file('idea/app.iml', params)
+    _storage_file(directory, file_content, idea_iml)
+    file_content = render_config_file('idea/app.ipr', params)
+    _storage_file(directory, file_content, idea_ipr)
+    file_content = render_config_file('idea/app.iws', params)
+    _storage_file(directory, file_content, idea_iws)
+    pass
+
+
+def gen_config(directory, application_name):
+    storage_path = os.path.join(directory, 'src', 'main', 'resources')
+    params = {'appName': application_name}
+
+    file_content = render_config_file('conf/application.conf', params)
+    _storage_file(storage_path, file_content, 'application.conf')
+
+    file_content = render_config_file('conf/ehcache.xml', params)
+    _storage_file(storage_path, file_content, 'ehcache.xml')
+
+    file_content = render_config_file('conf/logback.xml', params)
+    _storage_file(storage_path, file_content, 'logback.xml')
+
+
+def _storage_file(storage_path, content, file_name):
+    output = open(storage_path + os.sep + file_name, 'wb')
+    output.write(content)
+    output.close()
+
+
+def render_config_file(template_name, kwargs):
+    env = Environment(
+        # loader是加载器类，用来加载模板文件。
+        loader=FileSystemLoader(os.path.join(gen_path, 'templates')),
+        auto_reload=True,  # 自动重载，调试用
+        # 还有许多参数，例如缓存大小，详细见jinja2文档
+    )
+    # 创建一个template对象。
+    template = env.get_template(template_name)
+    # 进行渲染，返回HTML字符串。
+    return template.render(kwargs)
+
+
+def copy_directory(source_dir, dest_dir):
+    try:
+        shutil.copytree(source_dir, dest_dir)
+    except OSError as exc:  # python >2.5
+        if exc.errno == errno.ENOTDIR:
+            shutil.copy(source_dir, dest_dir)
+        else:
+            raise
+
+
+def init_default_code(directory, project_name):
+    storage_path = os.path.join(
+        directory, "src", "main", "java", "app", "controllers")
+
+    params = {'appName': project_name}
+
+    file_content = render_config_file('code/IndexController.java', params)
+    _storage_file(storage_path, file_content, 'IndexController.java')
+
+    storage_path = os.path.join(
+        directory, "src", "main", "webapp", "WEB-INF", "views")
+
+    file_content = render_config_file('code/index.ftl', params)
+    _storage_file(storage_path, file_content, 'index.ftl')
+
+
+def usage():
+    print "~ Usage: jfgen -n appName [-d project_path] [-h help]"
+    print "~"
+
+if __name__ == "__main__":
+
+    try:
+        options, args = getopt.getopt(
+            sys.argv[1:], "hn:d:", ["help", "name=", "dir="])
+    except getopt.GetoptError:
+        sys.exit()
+
+    app_name = None
+    app_dir = os.getcwd()
+    for name, value in options:
+        if name in ("-h", "--help"):
+            usage()
+        if name in ("-n", "--name"):
+            app_name = value
+        if name in ("-d", "--dir"):
+            app_dir = value
+
+    if app_name is None:
+        usage()
+    else:
+        project_layout_gen(app_dir, app_name)
+
+        project_folder = os.path.join(app_dir, app_name)
+        copy_deps_lib(project_folder)
+
+        gen_config(project_folder, app_name)
+
+        init_default_code(project_folder, app_name)
+
+        gen_idea(project_folder, app_name)
+
+        print '%s project create Suceess!' % app_name
