@@ -144,24 +144,22 @@ def init_default_code(directory, project_name):
 
 
 def usage():
-    print "~ Usage: jfgen -n appName [-d project_path] [-h help]"
+    print "~ Usage: jfgen appName [-d project_path] [-h help]"
     print "~"
 
 if __name__ == "__main__":
 
     try:
         options, args = getopt.getopt(
-            sys.argv[1:], "hn:d:", ["help", "name=", "dir="])
+            sys.argv[1:], "hd:", ["help", "dir="])
     except getopt.GetoptError:
         sys.exit()
 
-    app_name = None
+    app_name = sys.argv[1]
     app_dir = os.getcwd()
     for name, value in options:
         if name in ("-h", "--help"):
             usage()
-        if name in ("-n", "--name"):
-            app_name = value
         if name in ("-d", "--dir"):
             app_dir = value
 
