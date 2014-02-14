@@ -177,6 +177,6 @@ if __name__ == "__main__":
 
         init_default_code(project_folder, app_name)
 
-        # gen_idea(project_folder, app_name)
+        gen_idea(project_folder, app_name)
 
         print '%s project create Suceess!' % app_name
