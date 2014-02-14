@@ -75,11 +75,11 @@ def gen_idea(directory, project_name):
     idea_iws = project_name + '.iws'
     idea_iml = project_name + '.iml'
     params = {'appName': project_name, 'appSN': uuid.uuid4()}
-    file_content = render_config_file('idea/app.iml', params)
+    file_content = render_config_file(os.path.join('idea','app.iml'), params)
     _storage_file(directory, file_content, idea_iml)
-    file_content = render_config_file('idea/app.ipr', params)
+    file_content = render_config_file(os.path.join('idea','app.ipr'), params)
     _storage_file(directory, file_content, idea_ipr)
-    file_content = render_config_file('idea/app.iws', params)
+    file_content = render_config_file(os.path.join('idea','app.iws'), params)
     _storage_file(directory, file_content, idea_iws)
     pass
 
@@ -88,13 +88,13 @@ def gen_config(directory, application_name):
     storage_path = os.path.join(directory, 'src', 'main', 'resources')
     params = {'appName': application_name}
 
-    file_content = render_config_file('conf/application.conf', params)
+    file_content = render_config_file(os.path.join('conf','application.conf'), params)
     _storage_file(storage_path, file_content, 'application.conf')
 
-    file_content = render_config_file('conf/ehcache.xml', params)
+    file_content = render_config_file(os.path.join('conf','ehcache.xml'), params)
     _storage_file(storage_path, file_content, 'ehcache.xml')
 
-    file_content = render_config_file('conf/logback.xml', params)
+    file_content = render_config_file(os.path.join('conf','logback.xml'), params)
     _storage_file(storage_path, file_content, 'logback.xml')
 
 
@@ -133,13 +133,13 @@ def init_default_code(directory, project_name):
 
     params = {'appName': project_name}
 
-    file_content = render_config_file('code/IndexController.java', params)
+    file_content = render_config_file(os.path.join('code','IndexController.java'), params)
     _storage_file(storage_path, file_content, 'IndexController.java')
 
     storage_path = os.path.join(
         directory, "src", "main", "webapp", "WEB-INF", "views")
 
-    file_content = render_config_file('code/index.ftl', params)
+    file_content = render_config_file(os.path.join('code','index.ftl'), params)
     _storage_file(storage_path, file_content, 'index.ftl')
 
 
