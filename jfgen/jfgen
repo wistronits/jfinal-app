@@ -75,11 +75,11 @@ def gen_idea(directory, project_name):
     idea_iws = project_name + '.iws'
     idea_iml = project_name + '.iml'
     params = {'appName': project_name, 'appSN': uuid.uuid4()}
-    file_content = render_config_file('idea/app.iml', params)
+    file_content = render_config_file('idea/app.module', params)
     _storage_file(directory, file_content, idea_iml)
-    file_content = render_config_file('idea/app.ipr', params)
+    file_content = render_config_file('idea/app.project', params)
     _storage_file(directory, file_content, idea_ipr)
-    file_content = render_config_file('idea/app.iws', params)
+    file_content = render_config_file('idea/app.workspace', params)
     _storage_file(directory, file_content, idea_iws)
     pass
 
@@ -177,6 +177,6 @@ if __name__ == "__main__":
 
         init_default_code(project_folder, app_name)
 
-        gen_idea(project_folder, app_name)
+        # gen_idea(project_folder, app_name)
 
         print '%s project create Suceess!' % app_name

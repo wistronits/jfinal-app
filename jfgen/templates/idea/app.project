@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactManager">
+    <artifact type="exploded-war" build-on-make="true" name="{{appName}}:war exploded">
+      <output-path>$PROJECT_DIR$/out/artifacts/{{appName}}_war_exploded</output-path>
+      <root id="root">
+        <element id="javaee-facet-resources" facet="{{appName}}/web/Web" />
+        <element id="directory" name="WEB-INF">
+          <element id="directory" name="classes">
+            <element id="module-output" name="{{appName}}" />
+          </element>
+          <element id="directory" name="lib">
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/xml-apis-1.0.b2.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/activation-1.1.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/commons-beanutils-1.9.1.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/commons-codec-1.9.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/commons-collections-3.2.1.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/commons-io-2.4.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/commons-lang3-3.2.1.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/thumbnailator-0.4.7.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/httpclient-4.3.2.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/httpcore-4.3.1.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jcl-over-slf4j-1.7.6.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jedis-2.3.1.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jfinal-app-0.0.8.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/joda-time-2.3.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jsoup-1.7.3.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jul-to-slf4j-1.7.6.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/logback-classic-1.1.1.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/logback-core-1.1.1.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/mail-1.4.7.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/mongo-java-driver-2.11.4.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/morphia-0.106.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/mysql-connector-java-5.1.29.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/poi-3.10-FINAL.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/quartz-2.2.1.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/quartz-jobs-2.2.1.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/slf4j-api-1.7.6.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/commons-pool2-2.0.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/cos-26Dec2008.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/dom4j-1.6.1.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/druid-1.0.2.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/ehcache-core-2.6.7.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/fastjson-1.1.38.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/fluent-hc-4.3.2.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/freemarker-2.3.20.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/guava-16.0.1.jar" />
+          </element>
+        </element>
+      </root>
+    </artifact>
+  </component>
+  <component name="CompilerConfiguration">
+    <option name="DEFAULT_COMPILER" value="Javac" />
+    <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+    </wildcardResourcePatterns>
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="CopyrightManager" default="me">
+    <copyright>
+      <option name="notice" value="DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.&#10;&#10;Copyright (c) 2013-&amp;#36;today.year sagyf Yang. Aetc Group." />
+      <option name="keyword" value="Copyright" />
+      <option name="allowReplaceKeyword" value="" />
+      <option name="myName" value="work" />
+      <option name="myLocal" value="true" />
+    </copyright>
+    <copyright>
+      <option name="notice" value="DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.&#10;&#10;Copyright (c) 2013-&amp;#36;today.year sagyf Yang. The Four Group." />
+      <option name="keyword" value="Copyright" />
+      <option name="allowReplaceKeyword" value="" />
+      <option name="myName" value="me" />
+      <option name="myLocal" value="true" />
+    </copyright>
+    <copyright>
+      <option name="notice" value="DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.&#10;&#10;Copyright (c) 2013-&amp;#36;today.year sagyf Yang. All rights reserved.&#10;Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);&#10;you may not use this file except in compliance with the License.&#10;You may obtain a copy of the License at&#10;&#10;http://www.apache.org/licenses/LICENSE-2.0&#10;&#10;Unless required by applicable law or agreed to in writing, software&#10;distributed under the License is distributed on an &quot;AS IS&quot; BASIS,&#10;WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.&#10;See the License for the specific language governing permissions and&#10;limitations under the License." />
+      <option name="keyword" value="Copyright" />
+      <option name="allowReplaceKeyword" value="" />
+      <option name="myName" value="openSource" />
+      <option name="myLocal" value="true" />
+    </copyright>
+    <module2copyright />
+  </component>
+  <component name="DependencyValidationManager">
+    <option name="SKIP_IMPORT_STATEMENTS" value="false" />
+  </component>
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+  <component name="InspectionProjectProfileManager">
+    <profiles>
+      <profile version="1.0" is_locked="false">
+        <option name="myName" value="Project Default" />
+        <option name="myLocal" value="false" />
+        <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false">
+          <option name="processCode" value="true" />
+          <option name="processLiterals" value="true" />
+          <option name="processComments" value="true" />
+        </inspection_tool>
+      </profile>
+    </profiles>
+    <option name="PROJECT_PROFILE" value="Project Default" />
+    <option name="USE_PROJECT_PROFILE" value="true" />
+    <version value="1.0" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>JSP Inspections</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Spelling</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/{{appName}}.iml" filepath="$PROJECT_DIR$/{{appName}}.iml" />
+    </modules>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7.0_51" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="" />
+  </component>
+</project>
+
