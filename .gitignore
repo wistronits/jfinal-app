@@ -17,3 +17,6 @@ build
 .gradle
 
 
+*.pyc
+*.7z
+

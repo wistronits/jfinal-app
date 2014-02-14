@@ -12,12 +12,13 @@ import shutil
 import errno
 import uuid
 
-from jinja2 import Environment, FileSystemLoader
 
 gen_path = os.path.normpath(os.path.dirname(os.path.realpath(sys.argv[0])))
 
 sys.path.append(os.path.join(gen_path, 'pym'))
 
+
+from jinja2 import Environment, FileSystemLoader
 
 def project_layout_gen(project_dir, project_name):
     # Maven layout project.
