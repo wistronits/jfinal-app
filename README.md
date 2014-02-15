@@ -7,30 +7,9 @@
 3. 通过`javax.servlet.ServletContainerInitializer`(需要`Servlet3.0`以上容器)的方式去掉了`web.xml`的配置
 
 
-## 一、Maven 使用说明
+## 一、`JFgen`（推荐）
 
-由于中心仓库中对`Ehcache@2.6.7`版本不存在，需要使用`OSC`的Maven仓库来替换掉中心仓库，步骤如下：
-
-1. 创建个人目录文件夹下的 `.m2/settings.xml`（如果已有，则忽略）
-> 如果这个目录不存在或者这个`settings.xml`文件不存在的话，手动创建`.m2`目录，然后在`Maven`工具的`conf`包下找到`settings.xml`配置文件，比如我的在 ` /usr/local/Cellar/maven/3.1.1/libexec/conf/settings.xml`， 这个目录为 ` /usr/local/Cellar/maven/3.1.1/libexec/`为 `Maven_HOME`,将这个文件拷贝到 `~/.m2/settings.xml`中
-2. 修改`settings.xml`配置
-
-	在xml配置文件中的`mirros`节点，修改为如下内容：
-	
-		<mirrors>
-			<mirror>
-				<id>nexus-osc</id>
-				<mirrorOf>central</mirrorOf> # 替换中心仓库
-				<name>Nexus osc</name>
-				<url>http://maven.oschina.net/content/groups/public/</url>
-			</mirror>
-		</mirrors>
-	
-3. 重新加载工程POM
-
-## 二、`JFgen`（推荐）
-
-一个为了方便使用idea和不喜欢`Maven`的脚本工具。
+一个为了方便使用idea和不喜欢`Maven`的脚本工具。可点击[这里](http://www.kuaipan.cn/file/id_8331287366505665.htm)进行下载。
 
 	$ jfgen help
 	~
@@ -130,3 +109,24 @@
 		3. 在需要拦截的方法或者类上增加 `@Before({TopicConditionInceptor.class})`
 
 4. `validators`使用说明
+
+## 三、Maven 使用说明
+
+由于中心仓库中对`Ehcache@2.6.7`版本不存在，需要使用`OSC`的Maven仓库来替换掉中心仓库，步骤如下：
+
+1. 创建个人目录文件夹下的 `.m2/settings.xml`（如果已有，则忽略）
+> 如果这个目录不存在或者这个`settings.xml`文件不存在的话，手动创建`.m2`目录，然后在`Maven`工具的`conf`包下找到`settings.xml`配置文件，比如我的在 ` /usr/local/Cellar/maven/3.1.1/libexec/conf/settings.xml`， 这个目录为 ` /usr/local/Cellar/maven/3.1.1/libexec/`为 `Maven_HOME`,将这个文件拷贝到 `~/.m2/settings.xml`中
+2. 修改`settings.xml`配置
+
+	在xml配置文件中的`mirros`节点，修改为如下内容：
+	
+		<mirrors>
+			<mirror>
+				<id>nexus-osc</id>
+				<mirrorOf>central</mirrorOf> # 替换中心仓库
+				<name>Nexus osc</name>
+				<url>http://maven.oschina.net/content/groups/public/</url>
+			</mirror>
+		</mirrors>
+	
+3. 重新加载工程POM
