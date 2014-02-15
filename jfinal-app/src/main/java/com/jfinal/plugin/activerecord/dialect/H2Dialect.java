@@ -8,12 +8,15 @@ package com.jfinal.plugin.activerecord.dialect;
 
 /**
  * <p>
- * 扩展对DB2的支持.
+ * H2 Database.
  * </p>
  *
  * @author sagyf yang
- * @version 1.0 2014-01-22 16:30
+ * @version 1.0 2014-02-15 23:47
  * @since JDK 1.6
  */
-public class DB2Dialect extends AnsiSqlDialect {
+public class H2Dialect extends AnsiSqlDialect {
+    public boolean isSupportReturning() {
+        return true;
+    }
 }

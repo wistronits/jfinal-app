@@ -20,10 +20,7 @@ import com.jfinal.ext.plugin.tablebind.AutoTableBindPlugin;
 import com.jfinal.ext.plugin.tablebind.SimpleNameStyles;
 import com.jfinal.ext.route.AutoBindRoutes;
 import com.jfinal.kit.StringKit;
-import com.jfinal.plugin.activerecord.dialect.H2Dialect;
-import com.jfinal.plugin.activerecord.dialect.OracleDialect;
-import com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect;
-import com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect;
+import com.jfinal.plugin.activerecord.dialect.*;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.druid.DruidStatViewHandler;
 import com.jfinal.plugin.druid.IDruidStatViewAuth;
@@ -209,7 +206,9 @@ public class AppConfig extends JFinalConfig {
                     atbp.setDialect(new OracleDialect());
                 } else if (StringUtils.equals(dbtype, JdbcConstants.POSTGRESQL)) {
                     atbp.setDialect(new PostgreSqlDialect());
-                }else if (StringUtils.equals(dbtype, JdbcConstants.H2)) {
+                } else if (StringUtils.equals(dbtype, JdbcConstants.DB2)) {
+                    atbp.setDialect(new DB2Dialect());
+                } else if (StringUtils.equals(dbtype, JdbcConstants.H2)) {
                     atbp.setDialect(new H2Dialect());
                 } else if (StringUtils.equals(dbtype, "sqlite")) {
                     atbp.setDialect(new Sqlite3Dialect());
