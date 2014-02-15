@@ -20,6 +20,7 @@ import com.jfinal.ext.plugin.tablebind.AutoTableBindPlugin;
 import com.jfinal.ext.plugin.tablebind.SimpleNameStyles;
 import com.jfinal.ext.route.AutoBindRoutes;
 import com.jfinal.kit.StringKit;
+import com.jfinal.plugin.activerecord.dialect.H2Dialect;
 import com.jfinal.plugin.activerecord.dialect.OracleDialect;
 import com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect;
 import com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect;
@@ -152,41 +153,7 @@ public class AppConfig extends JFinalConfig {
     public void configPlugin(Plugins plugins) {
         String db_url = getProperty(DB_URL);
         final boolean devMode = getPropertyToBoolean(DEV_MODE, false);
-        if (!Strings.isNullOrEmpty(db_url)) {
-            // 如果配置了数据库地址，则启用数据库插件
-            final DruidPlugin druidPlugin = new DruidPlugin(
-                    db_url
-                    , getProperty(DB_USERNAME)
-                    , getProperty(DB_PASSWORD));
-            // 增加监控统计和防SQL注入拦截
-            druidPlugin.setFilters("stat,wall");
-            final WallFilter wall = new WallFilter();
-            wall.setDbType(JdbcConstants.MYSQL);
-            druidPlugin.addFilter(wall);
-            plugins.add(druidPlugin);
-
-            //  setting db table name like 'dev_info'
-            final AutoTableBindPlugin atbp = new AutoTableBindPlugin(druidPlugin, SimpleNameStyles.LOWER_UNDERLINE);
-
-            // 根据db_url判断是什么数据库,使用druid的方法判断
-            String dbtype = JdbcUtils.getDbType(db_url, StringUtils.EMPTY);
-            if (!StringUtils.equals(dbtype, JdbcConstants.MYSQL)) {
-                if (StringUtils.equals(dbtype, JdbcConstants.ORACLE)) {
-                    atbp.setDialect(new OracleDialect());
-                } else if (StringUtils.equals(dbtype, JdbcConstants.POSTGRESQL)) {
-                    atbp.setDialect(new PostgreSqlDialect());
-                } else if (StringUtils.equals(dbtype, "sqlite")) {
-                    atbp.setDialect(new Sqlite3Dialect());
-                } else {
-                    System.err.println("database type is use mysql.");
-                }
-            }
-            atbp.setShowSql(devMode);
-            plugins.add(atbp);
-            if (getPropertyToBoolean(DB_SQLINXML, false)) {
-                plugins.add(new SqlInXmlPlugin());
-            }
-        }
+        initDataSource(plugins, db_url, devMode);
 
         if (getPropertyToBoolean(SECURITY, false)) {
             plugins.add(new ShiroPlugin(this.routes));
@@ -216,6 +183,46 @@ public class AppConfig extends JFinalConfig {
             plugins.add(jedis);
         }
 
+    }
+
+    private void initDataSource(Plugins plugins, String db_url, boolean devMode) {
+        if (!Strings.isNullOrEmpty(db_url)) {
+            // 如果配置了数据库地址，则启用数据库插件
+            final DruidPlugin druidPlugin = new DruidPlugin(
+                    db_url
+                    , getProperty(DB_USERNAME)
+                    , getProperty(DB_PASSWORD));
+            // 增加监控统计和防SQL注入拦截
+            druidPlugin.setFilters("stat,wall");
+            final WallFilter wall = new WallFilter();
+            wall.setDbType(JdbcConstants.MYSQL);
+            druidPlugin.addFilter(wall);
+            plugins.add(druidPlugin);
+
+            //  setting db table name like 'dev_info'
+            final AutoTableBindPlugin atbp = new AutoTableBindPlugin(druidPlugin, SimpleNameStyles.LOWER_UNDERLINE);
+
+            // 根据db_url判断是什么数据库,使用druid的方法判断
+            String dbtype = JdbcUtils.getDbType(db_url, StringUtils.EMPTY);
+            if (!StringUtils.equals(dbtype, JdbcConstants.MYSQL)) {
+                if (StringUtils.equals(dbtype, JdbcConstants.ORACLE)) {
+                    atbp.setDialect(new OracleDialect());
+                } else if (StringUtils.equals(dbtype, JdbcConstants.POSTGRESQL)) {
+                    atbp.setDialect(new PostgreSqlDialect());
+                }else if (StringUtils.equals(dbtype, JdbcConstants.H2)) {
+                    atbp.setDialect(new H2Dialect());
+                } else if (StringUtils.equals(dbtype, "sqlite")) {
+                    atbp.setDialect(new Sqlite3Dialect());
+                } else {
+                    System.err.println("database type is use mysql.");
+                }
+            }
+            atbp.setShowSql(devMode);
+            plugins.add(atbp);
+            if (getPropertyToBoolean(DB_SQLINXML, false)) {
+                plugins.add(new SqlInXmlPlugin());
+            }
+        }
     }
 
     @Override
