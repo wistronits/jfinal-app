@@ -17,8 +17,8 @@ gen_path = os.path.normpath(os.path.dirname(os.path.realpath(sys.argv[0])))
 
 sys.path.append(os.path.join(gen_path, 'pym'))
 
-
 from jinja2 import Environment, FileSystemLoader
+
 
 def project_layout_gen(project_dir, project_name):
     # Maven layout project.
@@ -31,8 +31,14 @@ def project_layout_gen(project_dir, project_name):
     os.mkdir(main_)
     java_ = os.path.join(main_, 'java')
     os.mkdir(java_)
-    os.mkdir(os.path.join(java_, 'app'))
-    os.mkdir(os.path.join(java_, "app", "controllers"))
+    app_path = os.path.join(java_, 'app')
+    os.mkdir(app_path)
+    os.mkdir(os.path.join(app_path, "controllers"))
+    os.mkdir(os.path.join(app_path, "models"))
+    os.mkdir(os.path.join(app_path, "jobs"))
+    os.mkdir(os.path.join(app_path, "interceptors"))
+    os.mkdir(os.path.join(app_path, "validators"))
+    os.mkdir(os.path.join(app_path, "dtos"))
 
     webapp_ = os.path.join(main_, 'webapp')
     os.mkdir(webapp_)
@@ -61,13 +67,6 @@ def copy_deps_lib(proj_dir):
 
     storage_path = os.path.join(proj_dir, 'src', 'test', 'lib')
     copy_directory(os.path.join(gen_path, 'deps', 'test'), storage_path)
-
-
-# def down_dep_to_lib(urls, proj_dir):
-#     storage_path = proj_dir + "src" + os.sep + "main" + os.sep + \
-#         "webapp" + os.sep + "WEB-INF" + os.sep + "lib" + os.sep
-#     for url in urls:
-#         down_with_url(storage_path, url)
 
 
 def gen_idea(directory, project_name):
@@ -143,29 +142,80 @@ def init_default_code(directory, project_name):
     _storage_file(storage_path, file_content, 'index.ftl')
 
 
+def pack_war(project_dir):
+    import subprocess
+
+    # 1. get project name with application.conf
+    app_config_file = os.path.join(project_dir, 'src', 'main', 'resources', 'application.conf')
+
+    application_name = 'app'
+    app_config = file(app_config_file, 'rU')
+    for prop_line in app_config:
+        prop_def = prop_line.strip()
+        if len(prop_def) == 0:
+            continue
+        if prop_def[0] in ('!', '#'):
+            continue
+        punctuation = [prop_def.find(c) for c in ':= '] + [len(prop_def)]
+        found = min([pos for pos in punctuation if pos != -1])
+        prop_name = prop_def[:found].rstrip()
+        if prop_name == 'app':
+            application_name = prop_def[found:].lstrip(":= ").rstrip()
+            break
+
+    # 2. render build.xml file into project dir.
+    build_xml_content = render_config_file('ci/build.xml', {'appName': application_name})
+    build_xml_file = os.path.join(project_dir, 'build.xml')
+    _storage_file(project_dir, build_xml_content, 'build.xml')
+
+    # 3. call ant run subprocess.
+    ant_path = os.path.join(gen_path, 'ci', 'ant', 'bin', 'ant')
+    ant_cmds = '%s clean package' % ant_path
+    compile_process = subprocess.Popen(ant_cmds, shell=True, stdout=subprocess.PIPE)
+    while compile_process.poll() is None:
+        print compile_process.stdout.readline()
+    # 4. clean build file.
+    os.remove(build_xml_file)
+
+
 def usage():
-    print "~ Usage: jfgen appName [-d project_path] [-h help]"
+    print "~ "
+    print "~ JFinal App gen."
+    print "~ Usage: jfgen cmd application_name [-options]"
     print "~"
+    print '~ with,  new      Create a new application'
+    print '~        war      Export the application as a standalone WAR archive'
+    print '~        help     Show jfgen help'
+    print '~'
+
 
 if __name__ == "__main__":
-
+    if len(sys.argv) < 2:
+        usage()
+        sys.exit()
     try:
         options, args = getopt.getopt(
-            sys.argv[1:], "hd:", ["help", "dir="])
+            sys.argv[2:], "hd:", ["help", "dir="])
     except getopt.GetoptError:
         sys.exit()
 
-    app_name = sys.argv[1]
-    app_dir = os.getcwd()
+    cmd = sys.argv[1].lower()
+    if cmd is None:
+        usage()
+        sys.exit()
+
     for name, value in options:
         if name in ("-h", "--help"):
             usage()
         if name in ("-d", "--dir"):
             app_dir = value
+    app_dir = os.getcwd()
 
-    if app_name is None:
-        usage()
-    else:
+    if cmd == 'new':
+        app_name = sys.argv[2]
+        if app_name is None:
+            usage()
+            sys.exit()
         project_layout_gen(app_dir, app_name)
 
         project_folder = os.path.join(app_dir, app_name)
@@ -178,3 +228,16 @@ if __name__ == "__main__":
         gen_idea(project_folder, app_name)
 
         print '%s project create Suceess!' % app_name
+        sys.exit()
+
+    if cmd == 'war':
+        pack_war(app_dir)
+        sys.exit()
+
+    if cmd == 'help':
+        usage()
+        sys.exit()
+
+    usage()
+    sys.exit()
+

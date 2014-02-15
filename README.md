@@ -27,6 +27,19 @@
 		</mirrors>
 	
 3. 重新加载工程POM
+
+## 二、`JFgen`（推荐）
+
+一个为了方便使用idea和不喜欢`Maven`的脚本工具。
+
+	$ jfgen help
+	~
+	~ JFinal App gen.
+	~ Usage: jfgen cmd application_name [-options]
+	~
+	~ with,  new      Create a new application
+	~        war      Export the application as a standalone WAR archive
+	~        help     Show jfgen help
 	
 ## 二、系统相关配置和主要插件的使用说明
 
