@@ -24,3 +24,7 @@
 ## 更多信息
 
 可以点击 [JFinal-app GitHub Wiki](https://github.com/sogyf/jfinal-app/wiki) 查看更详细的信息。
+
+## 示例
+
+[jfinal-app-example](https://github.com/sogyf/jfinal-app-example)

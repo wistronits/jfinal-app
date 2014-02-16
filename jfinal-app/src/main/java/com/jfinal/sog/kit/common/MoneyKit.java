@@ -33,10 +33,6 @@ import java.util.Currency;
  * </ul>
  * <p/>
  * TODO: 必须处理运算中的溢出情形
- *
- * @author sagyf yang
- * @version 1.0 2014-01-04 13:57
- * @since JDK 1.6
  */
 @SuppressWarnings("UnusedDeclaration")
 public class MoneyKit implements Serializable, Comparable<MoneyKit> {

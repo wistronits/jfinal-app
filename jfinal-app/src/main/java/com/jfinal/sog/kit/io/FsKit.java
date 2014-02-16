@@ -14,10 +14,6 @@ import java.util.Properties;
  * <p>
  * 文件操作常用方法.
  * </p>
- *
- * @author sagyf yang
- * @version 1.0 2014-01-03 0:10
- * @since JDK 1.6
  */
 public class FsKit {
 

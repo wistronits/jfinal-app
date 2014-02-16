@@ -194,12 +194,10 @@
 
 ## 常用工具使用
 
-1. `AppFunc`常用常量函数
-	
-	- `COMMA_JOINER` - 当类似`a,b,c`这样的字符需要转换为`List<String>`集合时， 可使用`AppFunc.COMMA_JOINER.splitToList()`
+1. [AppFuncTest.java](https://github.com/sogyf/jfinal-app/blob/master/jfinal-app/src/test/java/com/jfinal/sog/kit/cst/AppFuncTest.java)
+2. [FnKitTest.java](https://github.com/sogyf/jfinal-app/blob/master/jfinal-app/src/test/java/com/jfinal/sog/kit/FnKitTest.java)
 
-	
-2. 
+3. 
 
 ## 异步任务
 
