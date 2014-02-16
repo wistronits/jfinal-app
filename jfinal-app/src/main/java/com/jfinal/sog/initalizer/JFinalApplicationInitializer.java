@@ -71,7 +71,7 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
         jfinalFilter.setAsyncSupported(true);
 
         System.out.println("initializer " + app_name + " Application ok!");
-        boolean dev_mode = Boolean.getBoolean(p.getProperty(DEV_MODE, "false"));
+        boolean dev_mode = Boolean.valueOf(p.getProperty(DEV_MODE, "false"));
         if (dev_mode) {
             runScriptInitDb(p);
         }
