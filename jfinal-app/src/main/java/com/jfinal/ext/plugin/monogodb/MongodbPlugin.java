@@ -7,6 +7,7 @@ package com.jfinal.ext.plugin.monogodb;
 
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.IPlugin;
+import com.jfinal.sog.kit.cst.StringPool;
 import com.mongodb.MongoClient;
 
 import java.net.UnknownHostException;
@@ -68,7 +69,7 @@ public class MongodbPlugin implements IPlugin {
         try {
             client = new MongoClient(host, port);
         } catch (UnknownHostException e) {
-            throw new RuntimeException("can't connect mongodb, please check the host and port:" + host + "," + port, e);
+            throw new RuntimeException("can't connect mongodb, please check the host and port:" + host + StringPool.COMMA + port, e);
         }
 
         MongoKit.init(client, database);

@@ -86,4 +86,9 @@ public interface AppFunc {
      * 默认的数据库主键
      */
     String TABLE_PK_COLUMN = "id";
+
+
+    // ---------------------------------------------------------------- array
+
+    String[] EMPTY_ARRAY = new String[0];
 }

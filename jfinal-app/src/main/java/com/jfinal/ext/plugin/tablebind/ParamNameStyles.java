@@ -5,6 +5,8 @@
  */
 package com.jfinal.ext.plugin.tablebind;
 
+import com.jfinal.sog.kit.cst.StringPool;
+
 public class ParamNameStyles {
 
     public static INameStyle module(String moduleName) {
@@ -89,7 +91,7 @@ class UpUnderlineModuleNameStyle implements INameStyle {
         for (int i = 0; i < className.length(); i++) {
             char ch = className.charAt(i);
             if (Character.isUpperCase(ch)) {
-                tableName += "_" + ch;
+                tableName += StringPool.UNDERSCORE + ch;
             } else {
                 tableName += Character.toUpperCase(ch);
             }
@@ -112,7 +114,7 @@ class LowerUnderlineModuleNameStyle implements INameStyle {
         for (int i = 0; i < className.length(); i++) {
             char ch = className.charAt(i);
             if (Character.isUpperCase(ch)) {
-                tableName += "_" + Character.toLowerCase(ch);
+                tableName += StringPool.UNDERSCORE + Character.toLowerCase(ch);
             } else {
                 tableName += ch;
             }

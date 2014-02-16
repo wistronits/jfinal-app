@@ -12,6 +12,7 @@ import java.util.Set;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.jfinal.sog.kit.cst.StringPool;
 
 @SuppressWarnings("serial")
 public class KeyLabel implements Comparable<KeyLabel>, Serializable {
@@ -71,7 +72,7 @@ public class KeyLabel implements Comparable<KeyLabel>, Serializable {
 
     @Override
     public String toString() {
-        return "KeyLabel["+this.label+", "+this.key+"]";
+        return "KeyLabel["+this.label+", "+this.key+ StringPool.RIGHT_SQ_BRACKET;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.jfinal.sog.ci;
 
 import com.google.common.collect.Lists;
+import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.sog.kit.lang.ObjectKit;
 
 import java.text.DecimalFormat;
@@ -628,7 +629,7 @@ public final class Profiler {
                 if (getException() != null) {
                     buffer.append(", ").append(getException().getClass().getSimpleName());
                 }
-                buffer.append("]");
+                buffer.append(StringPool.RIGHT_SQ_BRACKET);
             } else {
                 buffer.append("[UNRELEASED start:").append(numberFormat.format(getStartCostTime())).append("]ms");
             }

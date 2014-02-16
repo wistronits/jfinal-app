@@ -69,13 +69,13 @@ public class SqlKit {
                 name = xmlfile.getName();
             }
             for (SqlItem sqlItem : group.sqlItems) {
-                SQL_MAP.put(name + "." + sqlItem.id, sqlItem.value);
+                SQL_MAP.put(name + StringPool.DOT + sqlItem.id, sqlItem.value);
             }
         }
         if (logger.isDebugEnabled())
             logger.debug("SQL_MAP" + SQL_MAP);
         final Properties configProps = ConfigProperties.getConfigProps();
-        if (BooleanUtils.toBoolean(configProps.getProperty("dev.mode", "false"))) {
+        if (BooleanUtils.toBoolean(configProps.getProperty("dev.mode", StringPool.FALSE))) {
             // 启动文件监控
             runWatch();
         }

@@ -6,6 +6,7 @@
 package com.jfinal.ext.plugin.config;
 
 import com.google.common.collect.Maps;
+import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.sog.kit.io.ResourceKit;
 import com.jfinal.kit.PathKit;
 import com.jfinal.log.Logger;
@@ -82,7 +83,7 @@ public class ConfigKit {
     }
 
     private static String testFileName(String fileName) {
-        return fileName.substring(0, fileName.indexOf("." + ConfigPlugin.suffix)) + "-test." + ConfigPlugin.suffix;
+        return fileName.substring(0, fileName.indexOf(StringPool.DOT + ConfigPlugin.suffix)) + "-test." + ConfigPlugin.suffix;
     }
 
     public static String getStr(String key, String defaultVal) {

@@ -2,6 +2,7 @@ package com.jfinal.sog.kit.io;
 
 import com.jfinal.core.Const;
 import com.jfinal.log.Logger;
+import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.sog.kit.lang.TxtKit;
 
 import java.io.*;
@@ -203,8 +204,8 @@ public class FsKit {
     public static URL getResource(String relativePath) throws MalformedURLException {
         if (relativePath == null) {
             relativePath = "./";
-        } else if (relativePath.startsWith("/")) {
-            relativePath = "." + relativePath;
+        } else if (relativePath.startsWith(StringPool.SLASH)) {
+            relativePath = StringPool.DOT + relativePath;
         } else if (!relativePath.startsWith("./") && !relativePath.startsWith("../")) {
             relativePath = "./" + relativePath;
         }
@@ -214,7 +215,7 @@ public class FsKit {
         relativePath = relativePath.substring(relativePath.lastIndexOf("../") + 3);
         int containSum = TxtKit.containSum(parentStr, "../");
         for (int i = 0; i < containSum; i++)
-            classAbsPath = classAbsPath.substring(0, classAbsPath.lastIndexOf("/", classAbsPath.length() - 2) + 1);
+            classAbsPath = classAbsPath.substring(0, classAbsPath.lastIndexOf(StringPool.SLASH, classAbsPath.length() - 2) + 1);
 
         return new URL(classAbsPath + relativePath);
     }
@@ -456,10 +457,10 @@ public class FsKit {
         }
         size0 = Math.round(size0 * 100.0) / 100.0;
         String ss = String.valueOf(size0);
-        if (ss.lastIndexOf(".") == ss.length() - 2) {
-            ss += "0";
+        if (ss.lastIndexOf(StringPool.DOT) == ss.length() - 2) {
+            ss += StringPool.ZERO;
         }
-        return ss + " " + s;
+        return ss + StringPool.SPACE + s;
     }
 
     /**

@@ -17,6 +17,7 @@
 package com.jfinal.i18n;
 
 import com.jfinal.core.Const;
+import com.jfinal.sog.kit.cst.StringPool;
 
 import java.util.Enumeration;
 import java.util.Locale;
@@ -119,7 +120,7 @@ public class I18N {
 
     // public static Locale localeFromString(String localeStr, Locale defaultLocale) {
     public static Locale localeFromString(String localeStr) {
-        if ((localeStr == null) || (localeStr.trim().length() == 0) || ("_".equals(localeStr))) {
+        if ((localeStr == null) || (localeStr.trim().length() == 0) || (StringPool.UNDERSCORE.equals(localeStr))) {
             // return (defaultLocale != null) ? defaultLocale : Locale.getDefault();	// 原实现被注掉
             return defaultLocale;
         }

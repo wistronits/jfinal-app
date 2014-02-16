@@ -26,6 +26,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.*;
 
 import com.google.common.collect.Maps;
+import com.jfinal.sog.kit.cst.StringPool;
 
 public class MockHttpRequest implements HttpServletRequest {
     private Map<String, Object> attr = Maps.newHashMap();
@@ -68,7 +69,7 @@ public class MockHttpRequest implements HttpServletRequest {
 
     @Override
     public String getCharacterEncoding() {
-        return "UTF-8";
+        return StringPool.UTF_8;
     }
 
     @Override

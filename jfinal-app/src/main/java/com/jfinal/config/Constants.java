@@ -29,6 +29,7 @@ import com.jfinal.render.IErrorRenderFactory;
 import com.jfinal.render.IMainRenderFactory;
 import com.jfinal.render.RenderFactory;
 import com.jfinal.render.ViewType;
+import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.token.ITokenCache;
 
 /**
@@ -114,7 +115,7 @@ final public class Constants {
 	 * @param urlParaSeparator the urlPara separator
 	 */
 	public void setUrlParaSeparator(String urlParaSeparator) {
-		if (StringKit.isBlank(urlParaSeparator) || urlParaSeparator.contains("/"))
+		if (StringKit.isBlank(urlParaSeparator) || urlParaSeparator.contains(StringPool.SLASH))
 			throw new IllegalArgumentException("urlParaSepartor can not be blank and can not contains \"/\"");
 		this.urlParaSeparator = urlParaSeparator;
 	}
@@ -128,7 +129,8 @@ final public class Constants {
 	 * @param jspViewExtension the Jsp view extension
 	 */
 	public void setJspViewExtension(String jspViewExtension) {
-		this.jspViewExtension = jspViewExtension.startsWith(".") ? jspViewExtension : "." + jspViewExtension;
+		this.jspViewExtension = jspViewExtension.startsWith(StringPool.DOT)
+                ? jspViewExtension : StringPool.DOT + jspViewExtension;
 	}
 	
 	public String getFreeMarkerViewExtension() {
@@ -140,7 +142,8 @@ final public class Constants {
 	 * @param freeMarkerViewExtension the FreeMarker view extension
 	 */
 	public void setFreeMarkerViewExtension(String freeMarkerViewExtension) {
-		this.freeMarkerViewExtension = freeMarkerViewExtension.startsWith(".") ? freeMarkerViewExtension : "." + freeMarkerViewExtension;
+		this.freeMarkerViewExtension = freeMarkerViewExtension.startsWith(StringPool.DOT)
+                ? freeMarkerViewExtension : StringPool.DOT + freeMarkerViewExtension;
 	}
 	
 	public String getVelocityViewExtension() {
@@ -152,7 +155,8 @@ final public class Constants {
 	 * @param velocityViewExtension the Velocity view extension
 	 */
 	public void setVelocityViewExtension(String velocityViewExtension) {
-		this.velocityViewExtension = velocityViewExtension.startsWith(".") ? velocityViewExtension : "." + velocityViewExtension;
+		this.velocityViewExtension = velocityViewExtension.startsWith(StringPool.DOT)
+                ? velocityViewExtension : StringPool.DOT + velocityViewExtension;
 	}
 	
 	/**
@@ -211,7 +215,7 @@ final public class Constants {
 		if (StringKit.isBlank(fileRenderPath))
 			throw new IllegalArgumentException("The argument fileRenderPath can not be blank");
 		
-		if (!fileRenderPath.startsWith("/") && !fileRenderPath.startsWith(File.separator))
+		if (!fileRenderPath.startsWith(StringPool.SLASH) && !fileRenderPath.startsWith(File.separator))
 			fileRenderPath = File.separator + fileRenderPath;
 		this.fileRenderPath = PathKit.getWebRootPath() + fileRenderPath;
 	}
@@ -225,7 +229,7 @@ final public class Constants {
 		if (StringKit.isBlank(uploadedFileSaveDirectory))
 			throw new IllegalArgumentException("uploadedFileSaveDirectory can not be blank");
 		
-		if (uploadedFileSaveDirectory.endsWith("/") || uploadedFileSaveDirectory.endsWith("\\"))
+		if (uploadedFileSaveDirectory.endsWith(StringPool.SLASH) || uploadedFileSaveDirectory.endsWith(StringPool.BACK_SLASH))
 			this.uploadedFileSaveDirectory = uploadedFileSaveDirectory;
 		else
 			this.uploadedFileSaveDirectory = uploadedFileSaveDirectory + File.separator;

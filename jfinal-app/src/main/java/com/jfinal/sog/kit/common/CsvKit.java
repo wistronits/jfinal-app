@@ -28,7 +28,7 @@ public class CsvKit {
     protected static final char FIELD_SEPARATOR = ',';
     protected static final char FIELD_QUOTE = '"';
     protected static final String DOUBLE_QUOTE = "\"\"";
-    protected static final String SPECIAL_CHARS = "\r\n";
+    protected static final String SPECIAL_CHARS = StringPool.CRLF;
 
     /**
      * Parse fields as csv string,
@@ -119,7 +119,7 @@ public class CsvKit {
     private static void addField(List<String> row, String line, int startIndex, int endIndex, boolean inQuoted) {
         String field = line.substring(startIndex, endIndex);
         if (inQuoted) {
-            field = StringUtils.replace(field, DOUBLE_QUOTE, "\"");
+            field = StringUtils.replace(field, DOUBLE_QUOTE, StringPool.QUOTE);
         }
         row.add(field);
     }

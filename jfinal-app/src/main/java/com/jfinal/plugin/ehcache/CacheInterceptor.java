@@ -30,6 +30,7 @@ import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
 import com.jfinal.core.Controller;
 import com.jfinal.render.Render;
+import com.jfinal.sog.kit.cst.StringPool;
 
 /**
  * CacheInterceptor.
@@ -86,11 +87,11 @@ public class CacheInterceptor implements Interceptor {
 		StringBuilder sb = new StringBuilder(ai.getActionKey());
 		String urlPara = controller.getPara();
 		if (urlPara != null)
-			sb.append("/").append(urlPara);
+			sb.append(StringPool.SLASH).append(urlPara);
 		
 		String queryString = controller.getRequest().getQueryString();
 		if (queryString != null)
-			sb.append("?").append(queryString);
+			sb.append(StringPool.QUESTION_MARK).append(queryString);
 		return sb.toString();
 	}
 	

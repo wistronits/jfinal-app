@@ -14,6 +14,7 @@ import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
 import com.jfinal.core.Controller;
 import com.jfinal.sog.interceptor.syslog.config.LogPathConfig;
+import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.sog.kit.servlet.ServletKit;
 import com.jfinal.kit.StringKit;
 
@@ -33,7 +34,7 @@ public class SysLogInterceptor implements Interceptor {
         this.logProcesser = logProcesser;
 
         try {
-            String config = Files.toString(new File(path), Charset.forName("UTF-8"));
+            String config = Files.toString(new File(path), Charset.forName(StringPool.UTF_8));
 
             if (Strings.isNullOrEmpty(config)) {
                 return null;

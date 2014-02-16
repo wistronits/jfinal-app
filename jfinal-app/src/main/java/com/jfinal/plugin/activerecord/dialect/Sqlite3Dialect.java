@@ -31,12 +31,12 @@ import com.jfinal.plugin.activerecord.TableInfo;
 public class Sqlite3Dialect extends Dialect {
 	
 	public String forTableInfoBuilderDoBuildTableInfo(String tableName) {
-		return "select * from " + tableName + " where 1 = 2";
+		return "SELECT * FROM " + tableName + " WHERE 1 = 2";
 	}
 	
 	public void forModelSave(TableInfo tableInfo, Map<String, Object> attrs, StringBuilder sql, List<Object> paras) {
-		sql.append("insert into ").append(tableInfo.getTableName()).append("(");
-		StringBuilder temp = new StringBuilder(") values(");
+		sql.append("INSERT INTO ").append(tableInfo.getTableName()).append(StringPool.LEFT_BRACKET);
+		StringBuilder temp = new StringBuilder(") VALUES(");
 		for (Entry<String, Object> e: attrs.entrySet()) {
 			String colName = e.getKey();
 			if (tableInfo.hasColumnLabel(colName)) {
@@ -45,11 +45,11 @@ public class Sqlite3Dialect extends Dialect {
 					temp.append(", ");
 				}
 				sql.append(colName);
-				temp.append("?");
+				temp.append(StringPool.QUESTION_MARK);
 				paras.add(e.getValue());
 			}
 		}
-		sql.append(temp.toString()).append(")");
+		sql.append(temp.toString()).append(StringPool.RIGHT_BRACKET);
 	}
 	
 	public String forModelDeleteById(TableInfo tInfo) {
@@ -62,7 +62,7 @@ public class Sqlite3Dialect extends Dialect {
 	}
 	
 	public void forModelUpdate(TableInfo tableInfo, Map<String, Object> attrs, Set<String> modifyFlag, String pKey, Object id, StringBuilder sql, List<Object> paras) {
-		sql.append("update ").append(tableInfo.getTableName()).append(" set ");
+		sql.append(SQL_UPDATE).append(tableInfo.getTableName()).append(" SET ");
 		for (Entry<String, Object> e : attrs.entrySet()) {
 			String colName = e.getKey();
 			if (!pKey.equalsIgnoreCase(colName) && modifyFlag.contains(colName) && tableInfo.hasColumnLabel(colName)) {
@@ -72,13 +72,13 @@ public class Sqlite3Dialect extends Dialect {
 				paras.add(e.getValue());
 			}
 		}
-		sql.append(" where ").append(pKey).append(" = ?");
+		sql.append(SQL_WHERE).append(pKey).append(" = ?");
 		paras.add(id);
 	}
 	
 	public String forModelFindById(TableInfo tInfo, String columns) {
-		StringBuilder sql = new StringBuilder("select ");
-		if (columns.trim().equals("*")) {
+		StringBuilder sql = new StringBuilder("SELECT ");
+		if (columns.trim().equals(StringPool.ASTERISK)) {
 			sql.append(columns);
 		}
 		else {
@@ -89,15 +89,15 @@ public class Sqlite3Dialect extends Dialect {
 				sql.append(columnsArray[i].trim());
 			}
 		}
-		sql.append(" from ");
+		sql.append(SQL_FROM);
 		sql.append(tInfo.getTableName());
-		sql.append(" where ").append(tInfo.getPrimaryKey()).append(" = ?");
+		sql.append(SQL_WHERE).append(tInfo.getPrimaryKey()).append(" = ?");
 		return sql.toString();
 	}
 	
 	public String forDbFindById(String tableName, String primaryKey, String columns) {
-		StringBuilder sql = new StringBuilder("select ");
-		if (columns.trim().equals("*")) {
+		StringBuilder sql = new StringBuilder("SELECT ");
+		if (columns.trim().equals(StringPool.ASTERISK)) {
 			sql.append(columns);
 		}
 		else {
@@ -108,24 +108,21 @@ public class Sqlite3Dialect extends Dialect {
 				sql.append(columnsArray[i].trim());
 			}
 		}
-		sql.append(" from ");
+		sql.append(SQL_FROM);
 		sql.append(tableName.trim());
-		sql.append(" where ").append(primaryKey).append(" = ?");
+		sql.append(SQL_WHERE).append(primaryKey).append(" = ?");
 		return sql.toString();
 	}
 	
 	public String forDbDeleteById(String tableName, String primaryKey) {
-		StringBuilder sql = new StringBuilder("delete from ");
-		sql.append(tableName.trim());
-		sql.append(" where ").append(primaryKey).append(" = ?");
-		return sql.toString();
+        return "DELETE FROM " + tableName.trim() + SQL_WHERE + primaryKey + " = ?";
 	}
 	
 	public void forDbSave(StringBuilder sql, List<Object> paras, String tableName, Record record) {
-		sql.append("insert into ");
-		sql.append(tableName.trim()).append("(");
+		sql.append("INSERT INTO ");
+		sql.append(tableName.trim()).append(StringPool.LEFT_BRACKET);
 		StringBuilder temp = new StringBuilder();
-		temp.append(") values(");
+		temp.append(") VALUES(");
 		
 		for (Entry<String, Object> e: record.getColumns().entrySet()) {
 			if (paras.size() > 0) {
@@ -133,14 +130,14 @@ public class Sqlite3Dialect extends Dialect {
 				temp.append(", ");
 			}
 			sql.append(e.getKey());
-			temp.append("?");
+			temp.append(StringPool.QUESTION_MARK);
 			paras.add(e.getValue());
 		}
-		sql.append(temp.toString()).append(")");
+		sql.append(temp.toString()).append(StringPool.RIGHT_BRACKET);
 	}
 	
 	public void forDbUpdate(String tableName, String primaryKey, Object id, Record record, StringBuilder sql, List<Object> paras) {
-		sql.append("update ").append(tableName.trim()).append(" set ");
+		sql.append(SQL_UPDATE).append(tableName.trim()).append(" set ");
 		for (Entry<String, Object> e: record.getColumns().entrySet()) {
 			String colName = e.getKey();
 			if (!primaryKey.equalsIgnoreCase(colName)) {
@@ -151,13 +148,13 @@ public class Sqlite3Dialect extends Dialect {
 				paras.add(e.getValue());
 			}
 		}
-		sql.append(" where ").append(primaryKey).append(" = ?");
+		sql.append(SQL_WHERE).append(primaryKey).append(" = ?");
 		paras.add(id);
 	}
 	
 	public void forPaginate(StringBuilder sql, int pageNumber, int pageSize, String select, String sqlExceptSelect) {
 		int offset = pageSize * (pageNumber - 1);
-		sql.append(select).append(" ");
+		sql.append(select).append(StringPool.SPACE);
 		sql.append(sqlExceptSelect);
 		sql.append(" limit ").append(offset).append(", ").append(pageSize);
 	}

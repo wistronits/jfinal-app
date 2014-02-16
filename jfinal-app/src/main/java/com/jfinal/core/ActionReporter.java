@@ -55,11 +55,11 @@ final class ActionReporter {
                 .append(" ------------------------------\n");
         Class<? extends Controller> cc = action.getControllerClass();
         sb.append("Controller  : ").append(cc.getName()).append(".(").append(cc.getSimpleName()).append(".java:1)");
-        sb.append("\nMethod      : ").append(action.getMethodName()).append("\n");
+        sb.append("\nMethod      : ").append(action.getMethodName()).append(StringPool.NEWLINE);
 
         String urlParas = controller.getPara();
         if (urlParas != null) {
-            sb.append("UrlPara     : ").append(urlParas).append("\n");
+            sb.append("UrlPara     : ").append(urlParas).append(StringPool.NEWLINE);
         }
 
         Interceptor[] inters = action.getInterceptors();
@@ -72,7 +72,7 @@ final class ActionReporter {
                 Class<? extends Interceptor> ic = inter.getClass();
                 sb.append(ic.getName()).append(".(").append(ic.getSimpleName()).append(".java:1)");
             }
-            sb.append("\n");
+            sb.append(StringPool.NEWLINE);
         }
 
         // print all parameters
@@ -84,7 +84,7 @@ final class ActionReporter {
                 String name = e.nextElement();
                 String[] values = request.getParameterValues(name);
                 if (values.length == 1) {
-                    sb.append(name).append("=").append(values[0]);
+                    sb.append(name).append(StringPool.EQUALS).append(values[0]);
                 } else {
                     sb.append(name).append("[]={");
                     for (int i = 0; i < values.length; i++) {
@@ -92,11 +92,11 @@ final class ActionReporter {
                             sb.append(StringPool.COMMA);
                         sb.append(values[i]);
                     }
-                    sb.append("}");
+                    sb.append(StringPool.RIGHT_BRACE);
                 }
                 sb.append("  ");
             }
-            sb.append("\n");
+            sb.append(StringPool.NEWLINE);
         }
         sb.append("--------------------------------------------------------------------------------\n");
         System.out.print(sb.toString());

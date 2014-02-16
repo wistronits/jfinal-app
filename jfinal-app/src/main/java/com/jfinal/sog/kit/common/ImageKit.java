@@ -1,5 +1,6 @@
 package com.jfinal.sog.kit.common;
 
+import com.jfinal.sog.kit.cst.StringPool;
 import org.apache.commons.io.IOUtils;
 
 import javax.imageio.ImageIO;
@@ -240,7 +241,7 @@ public final class ImageKit {
      */
     public void saveAs(File file) {
         String path = file.getAbsolutePath();
-        String ext = path.substring(path.lastIndexOf(".") + 1).toUpperCase();
+        String ext = path.substring(path.lastIndexOf(StringPool.DOT) + 1).toUpperCase();
         if (!ext.equals("PNG") && !ext.equals("GIF")) {
             ext = "JPEG";
         }

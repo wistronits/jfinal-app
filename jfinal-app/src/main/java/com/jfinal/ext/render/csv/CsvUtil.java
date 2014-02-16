@@ -59,12 +59,12 @@ public class CsvUtil {
                 if (obj != null) {
                     Object[] objs = (Object[]) obj;
                     if (objs != null) {
-                        for (short i = 0; i < objs.length; i++) {
-                            createCol(strOut, objs[i]);
+                        for (Object obj1 : objs) {
+                            createCol(strOut, obj1);
                             strOut.append(StringPool.COMMA);
                         }
                         strOut = strOut.deleteCharAt(strOut.length() - 1); // 去点多余逗号
-                        strOut.append("\n");
+                        strOut.append(StringPool.NEWLINE);
                     }
                 }
             } else if (obj instanceof List) {
@@ -72,12 +72,12 @@ public class CsvUtil {
                 if (null == columns || columns.isEmpty()) { // 如果没有限制，默认全部显示
                     listToCSV(strOut, objlist);
                 } else {
-                    for (int i = 0; i < columns.size(); i++) {
-                        createCol(strOut, objlist.get((Integer) columns.get(i)));
+                    for (Object column : columns) {
+                        createCol(strOut, objlist.get((Integer) column));
                         strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
-                    strOut.append("\n");
+                    strOut.append(StringPool.NEWLINE);
                 }
             } else if (obj instanceof Map) {
                 Map objmap = (Map) obj;
@@ -88,14 +88,14 @@ public class CsvUtil {
                         strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
-                    strOut.append("\n");
+                    strOut.append(StringPool.NEWLINE);
                 } else {
-                    for (int i = 0; i < columns.size(); i++) {
-                        createCol(strOut, objmap.get(columns.get(i)));
+                    for (Object column : columns) {
+                        createCol(strOut, objmap.get(column));
                         strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
-                    strOut.append("\n");
+                    strOut.append(StringPool.NEWLINE);
                 }
             } else if (obj instanceof Model) {
                 Model objmodel = (Model) obj;
@@ -106,14 +106,14 @@ public class CsvUtil {
                         strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
-                    strOut.append("\n");
+                    strOut.append(StringPool.NEWLINE);
                 } else {
-                    for (int i = 0; i < columns.size(); i++) {
-                        createCol(strOut, objmodel.get(columns.get(i) + ""));
+                    for (Object column : columns) {
+                        createCol(strOut, objmodel.get(column + StringPool.EMPTY));
                         strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
-                    strOut.append("\n");
+                    strOut.append(StringPool.NEWLINE);
                 }
             } else if (obj instanceof Record) {
                 Record objrecord = (Record) obj;
@@ -125,21 +125,21 @@ public class CsvUtil {
                         strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
-                    strOut.append("\n");
+                    strOut.append(StringPool.NEWLINE);
                 } else {
-                    for (int i = 0; i < columns.size(); i++) {
-                        createCol(strOut, objrecord.get(columns.get(i) + ""));
+                    for (Object column : columns) {
+                        createCol(strOut, objrecord.get(column + StringPool.EMPTY));
                         strOut.append(StringPool.COMMA);
                     }
                     strOut = strOut.deleteCharAt(strOut.length() - 1);
-                    strOut.append("\n");
+                    strOut.append(StringPool.NEWLINE);
                 }
             } else {
                 while (itr.hasNext()) {
                     Object objs = itr.next();
                     if (objs != null) {
                         createCol(strOut, objs);
-                        strOut.append("\n");
+                        strOut.append(StringPool.NEWLINE);
                     }
                 }
             }
@@ -158,19 +158,19 @@ public class CsvUtil {
      */
     public static void listToCSV(StringBuffer strOut, List<?> list) {
         if (null != list && !list.isEmpty()) { // 如果文本不为空则添加到csv字符串中
-            for (short i = 0; i < list.size(); i++) {
-                createCol(strOut, list.get(i));
+            for (Object aList : list) {
+                createCol(strOut, aList);
                 strOut.append(StringPool.COMMA);
             }
             strOut = strOut.deleteCharAt(strOut.length() - 1);
-            strOut.append("\n");
+            strOut.append(StringPool.NEWLINE);
         }
     }
 
     // 把单个元素转化
     public static void createCol(StringBuffer strOut, Object obj) {
         if (obj != null) {
-            strOut.append("\"");
+            strOut.append(StringPool.QUOTE);
             String content = null;
 
             if (obj instanceof Boolean) {
@@ -185,7 +185,7 @@ public class CsvUtil {
                 content = write(String.valueOf(obj));
             }
             strOut.append(content);
-            strOut.append("\"");
+            strOut.append(StringPool.QUOTE);
         } else {
             strOut.append("\" \" ");
         }

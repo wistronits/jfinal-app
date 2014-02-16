@@ -12,6 +12,7 @@ import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.util.Map;
 
+import com.jfinal.sog.kit.cst.StringPool;
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateException;
@@ -83,7 +84,7 @@ public class PrincipalTag extends SecureTag {
 
 			return getSubject().getPrincipals().oneByType(cls);
 		} catch (ClassNotFoundException ex) {
-			_logger.error("Unable to find class for name [" + type + "]", ex);
+			_logger.error("Unable to find class for name [" + type + StringPool.RIGHT_SQ_BRACKET, ex);
 		}
 
 		return null;

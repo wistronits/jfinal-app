@@ -31,12 +31,12 @@ import com.jfinal.plugin.activerecord.TableInfo;
 public class PostgreSqlDialect extends Dialect {
 	
 	public String forTableInfoBuilderDoBuildTableInfo(String tableName) {
-		return "select * from \"" + tableName + "\" where 1 = 2";
+		return "SELECT * FROM \"" + tableName + "\" WHERE 1 = 2";
 	}
 	
 	public void forModelSave(TableInfo tableInfo, Map<String, Object> attrs, StringBuilder sql, List<Object> paras) {
-		sql.append("insert into \"").append(tableInfo.getTableName()).append("\"(");
-		StringBuilder temp = new StringBuilder(") values(");
+		sql.append("INSERT INTO \"").append(tableInfo.getTableName()).append("\"(");
+		StringBuilder temp = new StringBuilder(") VALUES(");
 		for (Entry<String, Object> e: attrs.entrySet()) {
 			String colName = e.getKey();
 			if (tableInfo.hasColumnLabel(colName)) {
@@ -44,41 +44,37 @@ public class PostgreSqlDialect extends Dialect {
 					sql.append(", ");
 					temp.append(", ");
 				}
-				sql.append("\"").append(colName).append("\"");
-				temp.append("?");
+				sql.append(StringPool.QUOTE).append(colName).append(StringPool.QUOTE);
+				temp.append(StringPool.QUESTION_MARK);
 				paras.add(e.getValue());
 			}
 		}
-		sql.append(temp.toString()).append(")");
+		sql.append(temp.toString()).append(StringPool.RIGHT_BRACKET);
 	}
 	
 	public String forModelDeleteById(TableInfo tInfo) {
 		String primaryKey = tInfo.getPrimaryKey();
-		StringBuilder sql = new StringBuilder(45);
-		sql.append("delete from \"");
-		sql.append(tInfo.getTableName());
-		sql.append("\" where \"").append(primaryKey).append("\" = ?");
-		return sql.toString();
+        return "DELETE FROM \"" + tInfo.getTableName() + "\" WHERE \"" + primaryKey + "\" = ?";
 	}
 	
 	public void forModelUpdate(TableInfo tableInfo, Map<String, Object> attrs, Set<String> modifyFlag, String primaryKey, Object id, StringBuilder sql, List<Object> paras) {
-		sql.append("update \"").append(tableInfo.getTableName()).append("\" set ");
+		sql.append("UPDATE \"").append(tableInfo.getTableName()).append("\" SET ");
 		for (Entry<String, Object> e : attrs.entrySet()) {
 			String colName = e.getKey();
 			if (!primaryKey.equalsIgnoreCase(colName) && modifyFlag.contains(colName) && tableInfo.hasColumnLabel(colName)) {
 				if (paras.size() > 0)
 					sql.append(", ");
-				sql.append("\"").append(colName).append("\" = ? ");
+				sql.append(StringPool.QUOTE).append(colName).append("\" = ? ");
 				paras.add(e.getValue());
 			}
 		}
-		sql.append(" where \"").append(primaryKey).append("\" = ?");
+		sql.append(" WHERE \"").append(primaryKey).append("\" = ?");
 		paras.add(id);
 	}
 	
 	public String forModelFindById(TableInfo tInfo, String columns) {
-		StringBuilder sql = new StringBuilder("select ");
-		if (columns.trim().equals("*")) {
+		StringBuilder sql = new StringBuilder("SELECT ");
+		if (columns.trim().equals(StringPool.ASTERISK)) {
 			sql.append(columns);
 		}
 		else {
@@ -86,18 +82,18 @@ public class PostgreSqlDialect extends Dialect {
 			for (int i=0; i<columnsArray.length; i++) {
 				if (i > 0)
 					sql.append(", ");
-				sql.append("\"").append(columnsArray[i].trim()).append("\"");
+				sql.append(StringPool.QUOTE).append(columnsArray[i].trim()).append(StringPool.QUOTE);
 			}
 		}
-		sql.append(" from \"");
+		sql.append(" FROM \"");
 		sql.append(tInfo.getTableName());
-		sql.append("\" where \"").append(tInfo.getPrimaryKey()).append("\" = ?");
+		sql.append("\" WHERE \"").append(tInfo.getPrimaryKey()).append("\" = ?");
 		return sql.toString();
 	}
 	
 	public String forDbFindById(String tableName, String primaryKey, String columns) {
-		StringBuilder sql = new StringBuilder("select ");
-		if (columns.trim().equals("*")) {
+		StringBuilder sql = new StringBuilder("SELECT ");
+		if (columns.trim().equals(StringPool.ASTERISK)) {
 			sql.append(columns);
 		}
 		else {
@@ -105,38 +101,35 @@ public class PostgreSqlDialect extends Dialect {
 			for (int i=0; i<columnsArray.length; i++) {
 				if (i > 0)
 					sql.append(", ");
-				sql.append("\"").append(columnsArray[i].trim()).append("\"");
+				sql.append(StringPool.QUOTE).append(columnsArray[i].trim()).append(StringPool.QUOTE);
 			}
 		}
-		sql.append(" from \"");
+		sql.append(" FROM \"");
 		sql.append(tableName.trim());
-		sql.append("\" where \"").append(primaryKey).append("\" = ?");
+		sql.append("\" WHERE \"").append(primaryKey).append("\" = ?");
 		return sql.toString();
 	}
 	
 	public String forDbDeleteById(String tableName, String primaryKey) {
-		StringBuilder sql = new StringBuilder("delete from \"");
-		sql.append(tableName.trim());
-		sql.append("\" where \"").append(primaryKey).append("\" = ?");
-		return sql.toString();
+        return "DELETE FROM \"" + tableName.trim() + "\" WHERE \"" + primaryKey + "\" = ?";
 	}
 	
 	public void forDbSave(StringBuilder sql, List<Object> paras, String tableName, Record record) {
-		sql.append("insert into \"");
+		sql.append("INSERT INTO \"");
 		sql.append(tableName.trim()).append("\"(");
 		StringBuilder temp = new StringBuilder();
-		temp.append(") values(");
+		temp.append(") VALUES(");
 		
 		for (Entry<String, Object> e: record.getColumns().entrySet()) {
 			if (paras.size() > 0) {
 				sql.append(", ");
 				temp.append(", ");
 			}
-			sql.append("\"").append(e.getKey()).append("\"");
-			temp.append("?");
+			sql.append(StringPool.QUOTE).append(e.getKey()).append(StringPool.QUOTE);
+			temp.append(StringPool.QUESTION_MARK);
 			paras.add(e.getValue());
 		}
-		sql.append(temp.toString()).append(")");
+		sql.append(temp.toString()).append(StringPool.RIGHT_BRACKET);
 	}
 	
 	public void forDbUpdate(String tableName, String primaryKey, Object id, Record record, StringBuilder sql, List<Object> paras) {
@@ -147,7 +140,7 @@ public class PostgreSqlDialect extends Dialect {
 				if (paras.size() > 0) {
 					sql.append(", ");
 				}
-				sql.append("\"").append(colName).append("\" = ? ");
+				sql.append(StringPool.QUOTE).append(colName).append("\" = ? ");
 				paras.add(e.getValue());
 			}
 		}
@@ -157,8 +150,8 @@ public class PostgreSqlDialect extends Dialect {
 	
 	public void forPaginate(StringBuilder sql, int pageNumber, int pageSize, String select, String sqlExceptSelect) {
 		int offset = pageSize * (pageNumber - 1);
-		sql.append(select).append(" ");
+		sql.append(select).append(StringPool.SPACE);
 		sql.append(sqlExceptSelect);
-		sql.append(" limit ").append(pageSize).append(" offset ").append(offset);
+		sql.append(" LIMIT ").append(pageSize).append(" OFFSET ").append(offset);
 	}
 }

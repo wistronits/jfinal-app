@@ -5,6 +5,7 @@
  */
 package com.jfinal.sog.ftl;
 
+import com.jfinal.sog.kit.cst.StringPool;
 import freemarker.cache.TemplateCache;
 import freemarker.core.Environment;
 import freemarker.template.*;
@@ -33,7 +34,7 @@ public class ExtendsDirective implements TemplateDirectiveModel {
                         TemplateModel[] loopVars, TemplateDirectiveBody body) throws TemplateException, IOException {
         String name = DirectiveUtils.getRequiredParam(params, "name");
         params.remove("name");
-        String encoding = DirectiveUtils.getParam(params, "encoding", "UTF-8");
+        String encoding = DirectiveUtils.getParam(params, "encoding", StringPool.UTF_8);
         String includeTemplateName = TemplateCache.getFullTemplatePath(env, getTemplatePath(env), name);
         Configuration configuration = env.getConfiguration();
         final Template template = configuration.getTemplate(includeTemplateName, env.getLocale(), encoding, true);

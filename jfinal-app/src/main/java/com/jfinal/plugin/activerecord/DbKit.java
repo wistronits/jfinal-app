@@ -20,6 +20,7 @@ import com.jfinal.plugin.activerecord.cache.EhCache;
 import com.jfinal.plugin.activerecord.cache.ICache;
 import com.jfinal.plugin.activerecord.dialect.Dialect;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
+import com.jfinal.sog.kit.cst.StringPool;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -247,9 +248,9 @@ public final class DbKit {
     }
 
     public static String replaceFormatSqlOrderBy(String sql) {
-        sql = sql.replaceAll("(\\s)+", " ");
-        int index = sql.toLowerCase().lastIndexOf("order by");
-        if (index > sql.toLowerCase().lastIndexOf(")")) {
+        sql = sql.replaceAll("(\\s)+", StringPool.SPACE);
+        int index = sql.toLowerCase().lastIndexOf("ORDER BY");
+        if (index > sql.toLowerCase().lastIndexOf(StringPool.RIGHT_BRACKET)) {
             String sql1 = sql.substring(0, index);
             String sql2 = sql.substring(index);
             sql2 = sql2.replaceAll("[oO][rR][dD][eE][rR] [bB][yY] [\u4e00-\u9fa5a-zA-Z0-9_.]+((\\s)+(([dD][eE][sS][cC])|([aA][sS][cC])))?(( )*,( )*[\u4e00-\u9fa5a-zA-Z0-9_.]+(( )+(([dD][eE][sS][cC])|([aA][sS][cC])))?)*", "");

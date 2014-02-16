@@ -19,41 +19,42 @@ package com.jfinal.ext.handler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.jfinal.handler.Handler;
+import com.jfinal.sog.kit.cst.StringPool;
 
 /**
  * ServerNameRedirect301Handler redirect to new server name with 301 Moved Permanently.
  */
 public class ServerNameRedirect301Handler extends Handler {
-	
+
 	private String originalServerName;
 	private String targetServerName;
 	private int serverNameLength;
-	
+
 	/**
 	 * Example: new ServerNameRedirectHandler("http://abc.com", "http://www.abc.com")
-	 * @param originalServerName	The original server name that you want be redirect 
+	 * @param originalServerName	The original server name that you want be redirect
 	 * @param targetServerName		The target server name that redirect to
 	 */
 	public ServerNameRedirect301Handler(String originalServerName, String targetServerName) {
 		this.originalServerName = originalServerName;
 		this.targetServerName = targetServerName;
-		
+
 		format();
 		serverNameLength = this.originalServerName.length();
 	}
-	
+
 	private final void format() {
-		if (originalServerName.endsWith("/"))
+		if (originalServerName.endsWith(StringPool.SLASH))
 			originalServerName = originalServerName.substring(0, originalServerName.length() - 1);
-		
-		if (targetServerName.endsWith("/"))
+
+		if (targetServerName.endsWith(StringPool.SLASH))
 			targetServerName = targetServerName.substring(0, targetServerName.length() - 1);
-		
+
 		// 此处没有考虑 https 的情况, 该情况由用户在 new ServerNameRedirectHandler() 时自行解决
-		if (originalServerName.indexOf("://") == -1)
+		if (!originalServerName.contains("://"))
 			originalServerName = "http://" + originalServerName;
 		
-		if (targetServerName.indexOf("://") == -1)
+		if (!targetServerName.contains("://"))
 			targetServerName = "http://" + targetServerName;
 	}
 	
@@ -64,7 +65,7 @@ public class ServerNameRedirect301Handler extends Handler {
 			isHandled[0] = true;
 			
 			String queryString = request.getQueryString();
-			queryString = (queryString == null ? "" : "?" + queryString);
+			queryString = (queryString == null ? "" : StringPool.QUESTION_MARK + queryString);
 			url = targetServerName + url.substring(serverNameLength) + queryString;
 			
 			response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);

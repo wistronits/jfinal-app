@@ -5,6 +5,8 @@
  */
 package com.jfinal.ext.test;
 
+import com.jfinal.sog.kit.cst.StringPool;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +19,7 @@ public class MockServletInputStream extends ServletInputStream {
     private InputStream is;
 
     public MockServletInputStream(String str) throws UnsupportedEncodingException {
-        is = new ByteArrayInputStream(str.getBytes("UTF-8"));
+        is = new ByteArrayInputStream(str.getBytes(StringPool.UTF_8));
     }
 
     @Override

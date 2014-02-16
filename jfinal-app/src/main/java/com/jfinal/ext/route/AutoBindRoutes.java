@@ -48,14 +48,14 @@ public class AutoBindRoutes extends Routes {
                         continue;
                     }
                     this.add(controllerKey(controller), controller);
-                    logger.debug("routes.add(" + controllerKey(controller) + ", " + controller.getName() + ")");
+                    logger.debug("routes.add(" + controllerKey(controller) + ", " + controller.getName() + StringPool.RIGHT_BRACKET);
                 } else if (StringKit.isBlank(controllerBind.viewPath())) {
                     this.add(controllerBind.controllerKey(), controller);
-                    logger.debug("routes.add(" + controllerBind.controllerKey() + ", " + controller.getName() + ")");
+                    logger.debug("routes.add(" + controllerBind.controllerKey() + ", " + controller.getName() + StringPool.RIGHT_BRACKET);
                 } else {
                     this.add(controllerBind.controllerKey(), controller, controllerBind.viewPath());
                     logger.debug("routes.add(" + controllerBind.controllerKey() + ", " + controller + StringPool.COMMA
-                            + controllerBind.viewPath() + ")");
+                            + controllerBind.viewPath() + StringPool.RIGHT_BRACKET);
                 }
             }
         }
@@ -64,7 +64,7 @@ public class AutoBindRoutes extends Routes {
     private String controllerKey(Class<Controller> clazz) {
         Preconditions.checkArgument(clazz.getSimpleName().endsWith(suffix),
                 " does not has a @ControllerBind annotation and it's name is not end with " + suffix);
-        String controllerKey = "/" + StringKit.firstCharToLowerCase(clazz.getSimpleName());
+        String controllerKey = StringPool.SLASH + StringKit.firstCharToLowerCase(clazz.getSimpleName());
         controllerKey = controllerKey.substring(0, controllerKey.indexOf(suffix));
         return controllerKey;
     }

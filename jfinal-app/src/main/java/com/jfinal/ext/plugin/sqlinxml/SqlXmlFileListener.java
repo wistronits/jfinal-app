@@ -7,6 +7,7 @@
 package com.jfinal.ext.plugin.sqlinxml;
 
 import com.jfinal.log.Logger;
+import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.sog.kit.map.JaxbKit;
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
@@ -44,9 +45,9 @@ public class SqlXmlFileListener extends FileAlterationListenerAdaptor {
             }
             for (SqlItem sqlItem : group.sqlItems) {
                 if (remove) {
-                    SqlKit.remove(name + "." + sqlItem.id);
+                    SqlKit.remove(name + StringPool.DOT + sqlItem.id);
                 } else {
-                    SqlKit.putOver(name + "." + sqlItem.id, sqlItem.value);
+                    SqlKit.putOver(name + StringPool.DOT + sqlItem.id, sqlItem.value);
                 }
             }
             if (logger.isDebugEnabled()) {

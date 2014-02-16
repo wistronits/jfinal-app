@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import com.jfinal.sog.kit.cst.StringPool;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -33,8 +34,6 @@ import com.jfinal.plugin.IPlugin;
  */
 @SuppressWarnings("unchecked")
 public class ShiroPlugin implements IPlugin {
-
-	private static final String SLASH = "/";
 
 	/**
 	 * Shiro的几种访问控制注解
@@ -211,15 +210,15 @@ public class ShiroPlugin implements IPlugin {
 		if (ak != null) {
 			actionKey = ak.value().trim();
 			if ("".equals(actionKey))
-				throw new IllegalArgumentException(controllerClass.getName() + "." + methodName + "(): The argument of ActionKey can not be blank.");
-			if (!actionKey.startsWith(SLASH))
-				actionKey = SLASH + actionKey;
+				throw new IllegalArgumentException(controllerClass.getName() + StringPool.DOT + methodName + "(): The argument of ActionKey can not be blank.");
+			if (!actionKey.startsWith(StringPool.SLASH))
+				actionKey = StringPool.SLASH + actionKey;
 		}
 		else if (methodName.equals("index")) {
 			actionKey = controllerKey;
 		}
 		else {
-			actionKey = controllerKey.equals(SLASH) ? SLASH + methodName : controllerKey + SLASH + methodName;
+			actionKey = controllerKey.equals(StringPool.SLASH) ? StringPool.SLASH + methodName : controllerKey + StringPool.SLASH + methodName;
 		}
 		return actionKey;
 	}
@@ -244,7 +243,7 @@ public class ShiroPlugin implements IPlugin {
 	/**
 	 * 返回该Controller的所有访问控制注解
 	 *
-	 * @param method
+	 * @param targetClass
 	 * @return
 	 */
 	private List<Annotation> getAuthzAnnotations(

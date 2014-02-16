@@ -1,5 +1,7 @@
 package com.jfinal.sog.kit.io;
 
+import com.jfinal.sog.kit.cst.StringPool;
+
 import java.text.DecimalFormat;
 
 /**
@@ -52,7 +54,7 @@ public final class FileSizeKit {
     }
 
     private static String getHumanReadableFileSize(long fileSize, long unit, String unitName) {
-        if (fileSize == 0) return "0";
+        if (fileSize == 0) return StringPool.ZERO;
 
         if (fileSize / unit >= 1) {
             double value = fileSize / (double) unit;

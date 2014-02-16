@@ -1,6 +1,8 @@
 package com.jfinal.sog.kit.io;
 
 import com.google.common.base.Splitter;
+import com.jfinal.sog.kit.cst.AppFunc;
+import com.jfinal.sog.kit.cst.StringPool;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -238,7 +240,7 @@ public class PropertiesKit {
         try {
             return new URL(getProperty(key));
         } catch (MalformedURLException e) {
-            throw new IllegalArgumentException("Property " + key + " must be a valid URL (" + getProperty(key) + ")");
+            throw new IllegalArgumentException("Property " + key + " must be a valid URL (" + getProperty(key) + StringPool.RIGHT_BRACKET);
         }
     }
 
@@ -269,7 +271,7 @@ public class PropertiesKit {
     public String[] getStringArray(String key) {
         String v = getProperty(key);
         if (v == null) {
-            return new String[0];
+            return AppFunc.EMPTY_ARRAY;
         } else {
             List<String> splits = Splitter.on(", \t\n\r\f").omitEmptyStrings().trimResults().splitToList(key);
             return splits.toArray(new String[splits.size()]);

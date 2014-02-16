@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 import com.jfinal.ext.kit.Reflect;
 import com.jfinal.kit.PathKit;
+import com.jfinal.sog.kit.cst.StringPool;
 
 import java.io.File;
 import java.util.List;
@@ -25,7 +26,6 @@ import java.util.List;
  * @since JDK 1.6
  */
 public class ClassFinder {
-    private static final String CLASS_FILE_EXAT = ".class";
 
     /**
      * find class files.
@@ -62,12 +62,12 @@ public class ClassFinder {
     private static List<String> findClassFile(FluentIterable<File> fileFluentIterable) {
         final List<String> files = Lists.newArrayList();
         for (File f : fileFluentIterable) {
-            if (f.exists() && !f.isDirectory() && f.getName().endsWith(CLASS_FILE_EXAT)) {
+            if (f.exists() && !f.isDirectory() && f.getName().endsWith(StringPool.DOT_CLASS)) {
                 String classname;
-                String tem = f.getAbsoluteFile().toString().replaceAll("\\\\", "/");
+                String tem = f.getAbsoluteFile().toString().replaceAll("\\\\", StringPool.SLASH);
                 classname = tem.substring(tem.indexOf("/classes") + "/classes".length() + 1,
-                        tem.indexOf(".class"));
-                files.add(classname.replaceAll("/", "."));
+                        tem.indexOf(StringPool.DOT_CLASS));
+                files.add(classname.replaceAll(StringPool.SLASH, StringPool.DOT));
             }
         }
         return files;

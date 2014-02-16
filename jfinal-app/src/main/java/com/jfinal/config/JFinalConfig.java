@@ -18,6 +18,7 @@ package com.jfinal.config;
 
 import com.jfinal.kit.FileKit;
 import com.jfinal.kit.StringKit;
+import com.jfinal.sog.kit.cst.StringPool;
 
 import java.util.Properties;
 
@@ -76,7 +77,7 @@ public abstract class JFinalConfig {
     public Properties loadPropertyFile(String file) {
         if (StringKit.isBlank(file))
             throw new IllegalArgumentException("Parameter of file can not be blank");
-        if (file.contains(".."))
+        if (file.contains(StringPool.DOTDOT))
             throw new IllegalArgumentException("Parameter of file can not contains \"..\"");
 
         FileKit.loadFileInProperties(file, properties);
@@ -113,9 +114,9 @@ public abstract class JFinalConfig {
         String resultStr = properties.getProperty(key);
         Boolean resultBool = null;
         if (resultStr != null) {
-            if (resultStr.trim().equalsIgnoreCase("true"))
+            if (resultStr.trim().equalsIgnoreCase(StringPool.TRUE))
                 resultBool = true;
-            else if (resultStr.trim().equalsIgnoreCase("false"))
+            else if (resultStr.trim().equalsIgnoreCase(StringPool.FALSE))
                 resultBool = false;
         }
         return resultBool;

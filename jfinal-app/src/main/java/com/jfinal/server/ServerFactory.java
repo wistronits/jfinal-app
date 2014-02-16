@@ -18,6 +18,7 @@ package com.jfinal.server;
 
 import java.io.File;
 import com.jfinal.kit.PathKit;
+import com.jfinal.sog.kit.cst.StringPool;
 
 /**
  * ServerFactory
@@ -57,20 +58,20 @@ public class ServerFactory {
 	}
 	
 	public static IServer getServer(int port) {
-		return getServer(detectWebAppDir(), port, "/", DEFAULT_SCANINTERVALSECONDS);
+		return getServer(detectWebAppDir(), port, StringPool.SLASH, DEFAULT_SCANINTERVALSECONDS);
 	}
 	
 	public static IServer getServer() {
-		return getServer(detectWebAppDir(), DEFAULT_PORT, "/", DEFAULT_SCANINTERVALSECONDS);
+		return getServer(detectWebAppDir(), DEFAULT_PORT, StringPool.SLASH, DEFAULT_SCANINTERVALSECONDS);
 	}
 	
 	private static String detectWebAppDir() {
 		String rootClassPath = PathKit.getRootClassPath();
 		String[] temp = null;
-		if (rootClassPath.indexOf("\\WEB-INF\\") != -1)
+		if (rootClassPath.contains("\\WEB-INF\\"))
 			temp = rootClassPath.split("\\\\");
 		else
-			temp = rootClassPath.split("/");
+			temp = rootClassPath.split(StringPool.SLASH);
 		return temp[temp.length - 3];
 	}
 	

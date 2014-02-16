@@ -13,13 +13,14 @@ import java.util.Properties;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
+import com.jfinal.sog.kit.cst.StringPool;
 
 public class ResourceKit {
     public static Map<String, String> readProperties(String resourceName) {
         Properties properties = new Properties();
         URL resource = Resources.getResource(resourceName);
         try {
-            properties.load(new InputStreamReader(resource.openStream(), "UTF-8"));
+            properties.load(new InputStreamReader(resource.openStream(), StringPool.UTF_8));
         } catch (Exception e) {
             throw Throwables.propagate(e);
         }

@@ -17,6 +17,7 @@ import javax.servlet.ServletContext;
 import com.jfinal.sog.ctxbox.ClassFinder;
 import com.jfinal.sog.initalizer.AppConfig;
 import com.jfinal.sog.initalizer.ConfigProperties;
+import com.jfinal.sog.kit.cst.StringPool;
 import org.junit.AfterClass;
 import org.junit.Before;
 
@@ -80,10 +81,10 @@ public abstract class ControllerTestCase<T extends AppConfig> {
 
     private String getTarget(String url, MockHttpRequest request) {
         String target = url;
-        if (url.contains("?")) {
-            target = url.substring(0, url.indexOf("?"));
-            String queryString = url.substring(url.indexOf("?") + 1);
-            String[] keyVals = queryString.split("&");
+        if (url.contains(StringPool.QUESTION_MARK)) {
+            target = url.substring(0, url.indexOf(StringPool.QUESTION_MARK));
+            String queryString = url.substring(url.indexOf(StringPool.QUESTION_MARK) + 1);
+            String[] keyVals = queryString.split(StringPool.AMPERSAND);
             for (String keyVal : keyVals) {
                 int i = keyVal.indexOf('=');
                 String key = keyVal.substring(0, i);

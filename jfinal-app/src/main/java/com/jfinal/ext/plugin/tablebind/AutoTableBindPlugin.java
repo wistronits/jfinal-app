@@ -58,15 +58,15 @@ public class AutoTableBindPlugin extends ActiveRecordPlugin {
                     }
                     tableName = nameStyle.name(modelClass.getSimpleName());
                     this.addMapping(tableName, modelClass);
-                    log.debug("addMapping(" + tableName + ", " + modelClass.getName() + ")");
+                    log.debug("addMapping(" + tableName + ", " + modelClass.getName() + StringPool.RIGHT_BRACKET);
                 } else {
                     tableName = tb.tableName();
                     if (StringKit.notBlank(tb.pkName())) {
                         this.addMapping(tableName, tb.pkName(), modelClass);
-                        log.debug("addMapping(" + tableName + ", " + tb.pkName() + StringPool.COMMA + modelClass.getName() + ")");
+                        log.debug("addMapping(" + tableName + ", " + tb.pkName() + StringPool.COMMA + modelClass.getName() + StringPool.RIGHT_BRACKET);
                     } else {
                         this.addMapping(tableName, modelClass);
-                        log.debug("addMapping(" + tableName + ", " + modelClass.getName() + ")");
+                        log.debug("addMapping(" + tableName + ", " + modelClass.getName() + StringPool.RIGHT_BRACKET);
                     }
                 }
             }

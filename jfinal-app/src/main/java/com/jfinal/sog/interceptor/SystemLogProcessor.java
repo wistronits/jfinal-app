@@ -50,7 +50,7 @@ public class  SystemLogProcessor implements LogProcessor {
             for (Map.Entry<String, String> entry : entrySet) {
                 String key = entry.getKey();
                 String value = entry.getValue();
-                result = result.replace("{" + key + "}", value);
+                result = result.replace(StringPool.LEFT_BRACE + key + StringPool.RIGHT_BRACE, value);
             }
         } else {
             result += ", ";

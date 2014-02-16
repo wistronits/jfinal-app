@@ -17,7 +17,10 @@
 package com.jfinal.render;
 
 import java.io.IOException;
+
+import com.google.common.base.Strings;
 import com.jfinal.core.JFinal;
+import com.jfinal.sog.kit.cst.StringPool;
 
 /**
  * RedirectRender with status: 302 Found.
@@ -31,7 +34,7 @@ public class RedirectRender extends Render {
 	
 	static String getContxtPath() {
 		String cp = JFinal.me().getContextPath();
-		return ("".equals(cp) || "/".equals(cp)) ? null : cp;
+		return (Strings.isNullOrEmpty(cp)) ? null : cp;
 	}
 	
 	public RedirectRender(String url) {
@@ -45,16 +48,16 @@ public class RedirectRender extends Render {
 	}
 	
 	public void render() {
-		if (contextPath != null && url.indexOf("://") == -1)
+		if (contextPath != null && !url.contains("://"))
 			url = contextPath + url;
 		
 		if (withQueryString) {
 			String queryString = request.getQueryString();
 			if (queryString != null)
-				if (url.indexOf("?") == -1)
-					url = url + "?" + queryString;
+				if (!url.contains(StringPool.QUESTION_MARK))
+					url = url + StringPool.QUESTION_MARK + queryString;
 				else
-					url = url + "&" + queryString;
+					url = url + StringPool.AMPERSAND + queryString;
 		}
 		
 		try {

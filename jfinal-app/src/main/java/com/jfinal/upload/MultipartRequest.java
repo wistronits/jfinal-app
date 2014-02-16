@@ -67,7 +67,7 @@ public class MultipartRequest extends HttpServletRequestWrapper {
 	 * 2: 其它路径被认为是相对路径, 需要 JFinalConfig.uploadedFileSaveDirectory 结合
 	 */
 	private String handleSaveDirectory(String saveDirectory) {
-		if (saveDirectory.startsWith("/") || saveDirectory.indexOf(StringPool.COLON) == 1)
+		if (saveDirectory.startsWith(StringPool.SLASH) || saveDirectory.indexOf(StringPool.COLON) == 1)
 			return saveDirectory;
 		else 
 			return MultipartRequest.saveDirectory + saveDirectory;

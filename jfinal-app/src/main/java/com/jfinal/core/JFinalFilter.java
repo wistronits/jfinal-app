@@ -29,6 +29,7 @@ import com.jfinal.config.Constants;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.handler.Handler;
 import com.jfinal.log.Logger;
+import com.jfinal.sog.kit.cst.StringPool;
 
 /**
  * JFinal framework filter
@@ -54,7 +55,7 @@ public final class JFinalFilter implements Filter {
 		jfinalConfig.afterJFinalStart();
 		
 		String contextPath = filterConfig.getServletContext().getContextPath();
-		contextPathLength = (contextPath == null || "/".equals(contextPath) ? 0 : contextPath.length());
+		contextPathLength = (contextPath == null || StringPool.SLASH.equals(contextPath) ? 0 : contextPath.length());
 	}
 	
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -73,7 +74,7 @@ public final class JFinalFilter implements Filter {
 		catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				String qs = request.getQueryString();
-				log.error(qs == null ? target : target + "?" + qs, e);
+				log.error(qs == null ? target : target + StringPool.QUESTION_MARK + qs, e);
 			}
 		}
 		

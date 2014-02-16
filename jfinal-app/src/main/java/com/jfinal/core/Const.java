@@ -17,6 +17,7 @@
 package com.jfinal.core;
 
 import com.jfinal.render.ViewType;
+import com.jfinal.sog.kit.cst.StringPool;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -33,7 +34,7 @@ public interface Const {
 
     String DEFAULT_ENCODING = "utf-8";
 
-    String DEFAULT_URL_PARA_SEPARATOR = "-";
+    String DEFAULT_URL_PARA_SEPARATOR = StringPool.DASH;
 
     String DEFAULT_FILE_CONTENT_TYPE = "application/octet-stream";
 

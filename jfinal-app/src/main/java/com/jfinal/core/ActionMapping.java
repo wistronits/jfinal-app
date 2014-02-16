@@ -19,6 +19,7 @@ package com.jfinal.core;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.config.Interceptors;
 import com.jfinal.config.Routes;
+import com.jfinal.sog.kit.cst.StringPool;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -29,7 +30,7 @@ import java.util.Map.Entry;
  */
 final class ActionMapping {
 
-    private static final String SLASH = "/";
+    private static final String SLASH = StringPool.SLASH;
     private Routes routes;
     private Interceptors interceptors;
 
@@ -71,7 +72,7 @@ final class ActionMapping {
                     if (ak != null) {
                         String actionKey = ak.value().trim();
                         if ("".equals(actionKey))
-                            throw new IllegalArgumentException(controllerClass.getName() + "." + methodName + "(): The argument of ActionKey can not be blank.");
+                            throw new IllegalArgumentException(controllerClass.getName() + StringPool.DOT + methodName + "(): The argument of ActionKey can not be blank.");
 
                         if (!actionKey.startsWith(SLASH))
                             actionKey = SLASH + actionKey;
@@ -107,13 +108,16 @@ final class ActionMapping {
         }
 
         // support url = controllerKey + urlParas with "/" of controllerKey
-        Action actoin = mapping.get("/");
+        Action actoin = mapping.get(StringPool.SLASH);
         if (actoin != null)
             mapping.put("", actoin);
     }
 
     private static void warnning(String actionKey, Class<? extends Controller> controllerClass, Method method) {
-        System.out.println("--------------------------------------------------------------------------------\nWarnning!!!\n" + "ActionKey already used: \"" + actionKey + "\" \n" + "Action can not be mapped: \"" + controllerClass.getName() + "." + method.getName() + "()\" \n" + "--------------------------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------------\nWarnning!!!\n"
+                + "ActionKey already used: \"" + actionKey + "\" \n" + "Action can not be mapped: \""
+                + controllerClass.getName() + StringPool.DOT + method.getName() + "()\" \n"
+                + "--------------------------------------------------------------------------------");
     }
 
     /**

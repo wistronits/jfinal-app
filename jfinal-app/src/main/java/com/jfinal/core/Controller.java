@@ -10,6 +10,8 @@ import com.jfinal.i18n.I18N;
 import com.jfinal.kit.StringKit;
 import com.jfinal.render.Render;
 import com.jfinal.render.RenderFactory;
+import com.jfinal.sog.kit.cst.AppFunc;
+import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.sog.kit.date.DateProvider;
 import com.jfinal.upload.MultipartRequest;
 import com.jfinal.upload.UploadFile;
@@ -35,14 +37,14 @@ import static com.jfinal.core.Const.I18N_LOCALE;
 @SuppressWarnings("UnusedDeclaration")
 public abstract class Controller {
 
-    private HttpServletRequest request;
+    private HttpServletRequest  request;
     private HttpServletResponse response;
 
-    private String urlPara;
+    private String   urlPara;
     private String[] urlParaArray;
 
-    private static final String[] NULL_URL_PARA_ARRAY = new String[0];
-    private static final String URL_PARA_SEPARATOR = Config.getConstants().getUrlParaSeparator();
+    private static final String[] NULL_URL_PARA_ARRAY = AppFunc.EMPTY_ARRAY;
+    private static final String   URL_PARA_SEPARATOR  = Config.getConstants().getUrlParaSeparator();
 
     void init(HttpServletRequest request, HttpServletResponse response, String urlPara) {
         this.request = request;
@@ -209,7 +211,7 @@ public abstract class Controller {
     private Integer toInt(String value, Integer defaultValue) {
         if (value == null || "".equals(value.trim()))
             return defaultValue;
-        if (value.startsWith("N") || value.startsWith("n"))
+        if (value.startsWith("N") || value.startsWith(StringPool.N))
             return -Integer.parseInt(value.substring(1));
         return Integer.parseInt(value);
     }
@@ -237,7 +239,7 @@ public abstract class Controller {
     private Long toLong(String value, Long defaultValue) {
         if (value == null || "".equals(value.trim()))
             return defaultValue;
-        if (value.startsWith("N") || value.startsWith("n"))
+        if (value.startsWith("N") || value.startsWith(StringPool.N))
             return -Long.parseLong(value.substring(1));
         return Long.parseLong(value);
     }
@@ -266,9 +268,9 @@ public abstract class Controller {
         if (value == null || "".equals(value.trim()))
             return defaultValue;
         value = value.trim().toLowerCase();
-        if ("1".equals(value) || "true".equals(value))
+        if (StringPool.ONE.equals(value) || StringPool.TRUE.equals(value))
             return Boolean.TRUE;
-        else if ("0".equals(value) || "false".equals(value))
+        else if (StringPool.ZERO.equals(value) || StringPool.FALSE.equals(value))
             return Boolean.FALSE;
         throw new RuntimeException("Can not parse the parameter \"" + value + "\" to boolean value.");
     }
@@ -525,7 +527,7 @@ public abstract class Controller {
      * Set Cookie with path = "/".
      */
     public Controller setCookie(String name, String value, int maxAgeInSeconds) {
-        setCookie(name, value, maxAgeInSeconds, "/", null);
+        setCookie(name, value, maxAgeInSeconds, StringPool.SLASH, null);
         return this;
     }
 
@@ -533,7 +535,7 @@ public abstract class Controller {
      * Remove Cookie with path = "/".
      */
     public Controller removeCookie(String name) {
-        setCookie(name, null, 0, "/", null);
+        setCookie(name, null, 0, StringPool.SLASH, null);
         return this;
     }
 

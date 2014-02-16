@@ -6,6 +6,8 @@
 
 package com.jfinal.sog.kit.lang;
 
+import com.jfinal.sog.kit.cst.StringPool;
+
 import java.math.BigDecimal;
 
 /**
@@ -106,7 +108,7 @@ public class ArithKit {
                     "The scale must be a positive integer or zero");
         }
         BigDecimal b = new BigDecimal(Double.toString(v));
-        BigDecimal one = new BigDecimal("1");
+        BigDecimal one = new BigDecimal(StringPool.ONE);
         return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
 
     }

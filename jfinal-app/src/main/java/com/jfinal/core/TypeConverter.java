@@ -16,6 +16,7 @@
 
 package com.jfinal.core;
 
+import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.sog.kit.date.DateProvider;
 
 import java.text.ParseException;
@@ -102,7 +103,7 @@ final class TypeConverter {
 		}
 		// mysql type: bit, tinyint(1)
         else if (clazz == Boolean.class) {
-        	result = Boolean.parseBoolean(s) || "1".equals(s);
+        	result = Boolean.parseBoolean(s) || StringPool.ONE.equals(s);
 		}
 		// mysql type: decimal, numeric
         else if (clazz == java.math.BigDecimal.class) {

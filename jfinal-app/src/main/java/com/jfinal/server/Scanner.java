@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import com.jfinal.kit.StringKit;
+import com.jfinal.sog.kit.cst.StringPool;
 
 /**
  * Scanner.
@@ -128,7 +129,7 @@ class TimeSize {
 	}
 	
 	public String toString() {
-		return "[t=" + time + ", s=" + size + "]";
+		return "[t=" + time + ", s=" + size + StringPool.RIGHT_SQ_BRACKET;
 	}
 }
 

@@ -1,6 +1,8 @@
 package com.jfinal.sog.kit.common;
 
 
+import com.jfinal.sog.kit.cst.StringPool;
+
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.*;
@@ -54,7 +56,7 @@ public class EmailKit {
         this.pwd = pwd;
         Properties props = new Properties();
         props.put("mail.smtp.host", server);
-        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.auth", StringPool.TRUE);
         props.put("mail.transport.protocol", "smtp");
         Auth auth = new Auth(uid, pwd);
         ssn = Session.getInstance(props, auth);

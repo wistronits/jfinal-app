@@ -1,6 +1,7 @@
 package com.jfinal.sog.kit.lang;
 
 import com.jfinal.core.Const;
+import com.jfinal.sog.kit.cst.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -202,11 +203,11 @@ public class TxtKit {
             System.err.println("->Txt.htmlToText(String inputString) ERROR:" + e.getMessage());
         }
         textStr = textStr.replaceAll("&acute;", "\'");
-        textStr = textStr.replaceAll("&quot;", "\"");
-        textStr = textStr.replaceAll("&lt;", "<");
-        textStr = textStr.replaceAll("&gt;", ">");
-        textStr = textStr.replaceAll("&nbsp;", " ");
-        textStr = textStr.replaceAll("&amp;", "&");
+        textStr = textStr.replaceAll(StringPool.HTML_QUOTE, StringPool.QUOTE);
+        textStr = textStr.replaceAll(StringPool.HTML_LT, StringPool.LEFT_CHEV);
+        textStr = textStr.replaceAll(StringPool.HTML_GT, StringPool.RIGHT_CHEV);
+        textStr = textStr.replaceAll(StringPool.HTML_NBSP, StringPool.SPACE);
+        textStr = textStr.replaceAll(StringPool.HTML_AMP, StringPool.AMPERSAND);
         return textStr;
     }
 
@@ -220,8 +221,10 @@ public class TxtKit {
      */
     @SuppressWarnings("unused")
     public static String encodeHTML(String str) {
-        String s = str.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
-                .replaceAll("\"", "&quot;").replaceAll("'", "&acute; ")
+        String s = str
+                .replaceAll(StringPool.LEFT_CHEV, StringPool.HTML_LT)
+                .replaceAll(StringPool.RIGHT_CHEV, StringPool.HTML_GT)
+                .replaceAll(StringPool.QUOTE, StringPool.HTML_QUOTE).replaceAll(StringPool.SINGLE_QUOTE, "&acute; ")
                 .replaceAll("  ", " &nbsp;")
                 .replaceAll("\\r\\n", "<br/>")
                 .replaceAll("\\n", "<br/>");

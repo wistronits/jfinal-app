@@ -6,6 +6,8 @@
 
 package com.jfinal.render;
 
+import com.jfinal.sog.kit.cst.StringPool;
+
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -35,7 +37,7 @@ public class Redirect301Render extends Render {
 		if (withQueryString) {
 			String queryString = request.getQueryString();
 			if (queryString != null)
-				url = url + "?" + queryString;
+				url = url + StringPool.QUESTION_MARK + queryString;
 		}
 		
 		response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);

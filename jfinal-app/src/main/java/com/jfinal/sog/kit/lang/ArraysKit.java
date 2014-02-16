@@ -6,6 +6,8 @@
 
 package com.jfinal.sog.kit.lang;
 
+import com.jfinal.sog.kit.cst.AppFunc;
+
 import java.lang.reflect.Array;
 
 /**
@@ -58,7 +60,7 @@ public class ArraysKit {
      */
     public static String[] join(String[]... arrays) {
         if (arrays.length == 0) {
-            return new String[0];
+            return AppFunc.EMPTY_ARRAY;
         }
         if (arrays.length == 1) {
             return arrays[0];

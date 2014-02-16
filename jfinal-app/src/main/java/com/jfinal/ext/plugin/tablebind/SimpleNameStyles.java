@@ -6,6 +6,7 @@
 package com.jfinal.ext.plugin.tablebind;
 
 import com.jfinal.kit.StringKit;
+import com.jfinal.sog.kit.cst.StringPool;
 
 public class SimpleNameStyles {
     public static final INameStyle DEFAULT = new INameStyle() {
@@ -21,27 +22,27 @@ public class SimpleNameStyles {
             return StringKit.firstCharToLowerCase(className);
         }
     };
-    public static final INameStyle UP = new INameStyle() {
+    public static final INameStyle UP          = new INameStyle() {
         @Override
         public String name(String className) {
             return className.toUpperCase();
         }
     };
-    public static final INameStyle LOWER = new INameStyle() {
+    public static final INameStyle LOWER       = new INameStyle() {
         @Override
         public String name(String className) {
             return className.toLowerCase();
         }
     };
 
-    public static final INameStyle UP_UNDERLINE = new INameStyle() {
+    public static final INameStyle UP_UNDERLINE    = new INameStyle() {
         @Override
         public String name(String className) {
             String tableName = "";
             for (int i = 0; i < className.length(); i++) {
                 char ch = className.charAt(i);
                 if (i != 0 && Character.isUpperCase(ch)) {
-                    tableName += "_" + ch;
+                    tableName += StringPool.UNDERSCORE + ch;
                 } else {
                     tableName += Character.toUpperCase(ch);
                 }
@@ -58,7 +59,7 @@ public class SimpleNameStyles {
                 if (i == 0) {
                     tableName += Character.toLowerCase(ch);
                 } else if (Character.isUpperCase(ch)) {
-                    tableName += "_" + Character.toLowerCase(ch);
+                    tableName += StringPool.UNDERSCORE + Character.toLowerCase(ch);
                 } else {
                     tableName += ch;
                 }

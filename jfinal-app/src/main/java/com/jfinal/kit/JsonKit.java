@@ -18,6 +18,7 @@ package com.jfinal.kit;
 
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.sog.kit.date.DateProvider;
 
 import java.lang.reflect.Method;
@@ -62,7 +63,7 @@ public class JsonKit {
 
     public static String mapToJson(Map map, int depth) {
         if (map == null)
-            return "null";
+            return StringPool.NULL;
 
         StringBuilder sb = new StringBuilder();
         boolean first = true;
@@ -85,7 +86,7 @@ public class JsonKit {
     private static String toKeyValue(String key, Object value, StringBuilder sb, int depth) {
         sb.append('\"');
         if (key == null)
-            sb.append("null");
+            sb.append(StringPool.NULL);
         else
             escape(key, sb);
         sb.append('\"').append(':');
@@ -97,7 +98,7 @@ public class JsonKit {
 
     public static String listToJson(List list, int depth) {
         if (list == null)
-            return "null";
+            return StringPool.NULL;
 
         boolean first = true;
         StringBuilder sb = new StringBuilder();
@@ -112,7 +113,7 @@ public class JsonKit {
 
             Object value = iter.next();
             if (value == null) {
-                sb.append("null");
+                sb.append(StringPool.NULL);
                 continue;
             }
             sb.append(toJson(value, depth));
@@ -181,21 +182,21 @@ public class JsonKit {
 
     public static String toJson(Object value, int depth) {
         if (value == null || (depth--) <= 0)
-            return "null";
+            return StringPool.NULL;
 
         if (value instanceof String)
-            return "\"" + escape((String) value) + "\"";
+            return StringPool.QUOTE + escape((String) value) + StringPool.QUOTE;
 
         if (value instanceof Double) {
             if (((Double) value).isInfinite() || ((Double) value).isNaN())
-                return "null";
+                return StringPool.NULL;
             else
                 return value.toString();
         }
 
         if (value instanceof Float) {
             if (((Float) value).isInfinite() || ((Float) value).isNaN())
-                return "null";
+                return StringPool.NULL;
             else
                 return value.toString();
         }
@@ -208,10 +209,10 @@ public class JsonKit {
 
         if (value instanceof java.util.Date) {
             if (value instanceof java.sql.Timestamp)
-                return "\"" + new SimpleDateFormat(timestampPattern).format(value) + "\"";
+                return StringPool.QUOTE + new SimpleDateFormat(timestampPattern).format(value) + StringPool.QUOTE;
             if (value instanceof java.sql.Time)
-                return "\"" + value.toString() + "\"";
-            return "\"" + new SimpleDateFormat(datePattern).format(value) + "\"";
+                return StringPool.QUOTE + value.toString() + StringPool.QUOTE;
+            return StringPool.QUOTE + new SimpleDateFormat(datePattern).format(value) + StringPool.QUOTE;
         }
 
         if (value instanceof Map) {
@@ -228,12 +229,12 @@ public class JsonKit {
 
         // 类型无法处理时当作字符串处理,否则ajax调用返回时js无法解析
         // return value.toString();
-        return "\"" + escape(value.toString()) + "\"";
+        return StringPool.QUOTE + escape(value.toString()) + StringPool.QUOTE;
     }
 
     private static String otherToJson(Object value, int depth) {
         if (value instanceof Character) {
-            return "\"" + escape(value.toString()) + "\"";
+            return StringPool.QUOTE + escape(value.toString()) + StringPool.QUOTE;
         }
 
         if (value instanceof Model) {
@@ -251,7 +252,7 @@ public class JsonKit {
             return listToJson(list, depth);
         }
         if (value instanceof Enum) {
-            return "\"" + ((Enum) value).name() + "\"";
+            return StringPool.QUOTE + ((Enum) value).name() + StringPool.QUOTE;
         }
 
         return beanToJson(value, depth);

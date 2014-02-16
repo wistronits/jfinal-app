@@ -260,7 +260,7 @@ public class Record implements Serializable {
                 value = value.toString();
             sb.append(e.getKey()).append(StringPool.COLON).append(value);
         }
-        sb.append("}");
+        sb.append(StringPool.RIGHT_BRACE);
         return sb.toString();
     }
 

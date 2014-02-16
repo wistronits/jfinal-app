@@ -227,7 +227,7 @@ public abstract class Model<M extends Model> implements Serializable {
             conn = DbKit.getConnection();
             long totalRow;
             int totalPage;
-            List result = Db.query(conn, "select count(1) " + DbKit.replaceFormatSqlOrderBy(sqlExceptSelect), paras);
+            List result = Db.query(conn, "SELECT count(1) " + DbKit.replaceFormatSqlOrderBy(sqlExceptSelect), paras);
             int size = result.size();
             if (size == 1)
                 totalRow = ((Number) result.get(0)).longValue();        // totalRow = (Long)result.get(0);
@@ -494,7 +494,7 @@ public abstract class Model<M extends Model> implements Serializable {
      * @param id the id value of the model
      */
     public M findById(Object id) {
-        return findById(id, "*");
+        return findById(id, StringPool.ASTERISK);
     }
 
     /**
@@ -650,7 +650,7 @@ public abstract class Model<M extends Model> implements Serializable {
                 value = value.toString();
             sb.append(e.getKey()).append(StringPool.COLON).append(value);
         }
-        sb.append("}");
+        sb.append(StringPool.RIGHT_BRACE);
         return sb.toString();
     }
 

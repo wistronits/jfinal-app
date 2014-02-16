@@ -7,6 +7,7 @@
 package com.jfinal.render;
 
 import com.google.common.collect.Maps;
+import com.jfinal.sog.kit.cst.StringPool;
 import freemarker.template.*;
 import org.apache.commons.io.IOUtils;
 
@@ -64,7 +65,7 @@ public class FreeMarkerRender extends Render {
         // - Create a configuration instance
         // config = new Configuration();
         // - Templates are stoted in the WEB-INF/templates directory of the Web app.
-        config.setServletContextForTemplateLoading(servletContext, "/");    // "WEB-INF/templates"
+        config.setServletContextForTemplateLoading(servletContext, StringPool.SLASH);    // "WEB-INF/templates"
         // - Set update dealy to 0 for now, to ease debugging and testing.
         //   Higher value should be used in production environment.
 

@@ -22,6 +22,7 @@ import com.alibaba.druid.util.Utils;
 import com.jfinal.core.Const;
 import com.jfinal.handler.Handler;
 import com.jfinal.kit.HandlerKit;
+import com.jfinal.sog.kit.cst.StringPool;
 
 /**
  * 替代 StatViewServlet
@@ -112,7 +113,7 @@ public class DruidStatViewHandler extends Handler {
 	        if (isRequireAuth()
 	            && session.getAttribute(SESSION_USER_KEY) == null
 	            && !("/login.html".equals(path) || path.startsWith("/css") || path.startsWith("/js") || path.startsWith("/img"))) {
-	            if (contextPath == null || contextPath.equals("") || contextPath.equals("/")) {
+	            if (contextPath.equals("") || contextPath.equals(StringPool.SLASH)) {
 	                response.sendRedirect("/login.html");
 	            } else {
 	                response.sendRedirect("login.html");
@@ -121,7 +122,7 @@ public class DruidStatViewHandler extends Handler {
 	        }
 
 	        if ("".equals(path)) {
-	            if (contextPath == null || contextPath.equals("") || contextPath.equals("/")) {
+	            if (contextPath.equals("") || contextPath.equals(StringPool.SLASH)) {
 	                response.sendRedirect("/druid/index.html");
 	            } else {
 	                response.sendRedirect("druid/index.html");
@@ -129,15 +130,15 @@ public class DruidStatViewHandler extends Handler {
 	            return;
 	        }
 
-	        if ("/".equals(path)) {
+	        if (StringPool.SLASH.equals(path)) {
 	            response.sendRedirect("index.html");
 	            return;
 	        }
 
-	        if (path.indexOf(".json") >= 0) {
+	        if (path.contains(".json")) {
 	            String fullUrl = path;
 	            if (request.getQueryString() != null && request.getQueryString().length() > 0) {
-	                fullUrl += "?" + request.getQueryString();
+	                fullUrl += StringPool.QUESTION_MARK + request.getQueryString();
 	            }
 	            response.getWriter().print(statService.service(fullUrl));
 	            return;

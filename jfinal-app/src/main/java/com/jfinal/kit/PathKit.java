@@ -62,7 +62,7 @@ public class PathKit {
 
     public static String getPackagePath(Object object) {
         Package p = object.getClass().getPackage();
-        return p != null ? p.getName().replaceAll("\\.", "/") : StringPool.EMPTY;
+        return p != null ? p.getName().replaceAll("\\.", StringPool.SLASH) : StringPool.EMPTY;
     }
 
     public static File getFileFromJar(String file) {
@@ -86,7 +86,7 @@ public class PathKit {
 
     private static String detectWebRootPath() {
         try {
-            String path = PathKit.class.getResource("/").toURI().getPath();
+            String path = PathKit.class.getResource(StringPool.SLASH).toURI().getPath();
             return new File(path).getParentFile().getParentFile().getCanonicalPath();
         } catch (Exception e) {
             throw new RuntimeException(e);

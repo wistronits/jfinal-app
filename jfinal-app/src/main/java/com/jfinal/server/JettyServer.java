@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
+
+import com.jfinal.sog.kit.cst.StringPool;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.SessionManager;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
@@ -87,8 +89,9 @@ class JettyServer implements IServer {
 		webApp = new WebAppContext();
 		webApp.setContextPath(context);
 		webApp.setResourceBase(webAppDir);	// webApp.setWar(webAppDir);
-		webApp.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
-		webApp.setInitParameter("org.eclipse.jetty.servlet.Default.useFileMappedBuffer", "false");	// webApp.setInitParams(Collections.singletonMap("org.mortbay.jetty.servlet.Default.useFileMappedBuffer", "false"));
+		webApp.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", StringPool.FALSE);
+		webApp.setInitParameter("org.eclipse.jetty.servlet.Default.useFileMappedBuffer", StringPool.FALSE);
+		// webApp.setInitParams(Collections.singletonMap("org.mortbay.jetty.servlet.Default.useFileMappedBuffer", "false"));
 		persistSession(webApp);
 		
 		server.setHandler(webApp);
@@ -151,8 +154,8 @@ class JettyServer implements IServer {
 	
 	private String getStoreDir() {
 		String storeDir = PathKit.getWebRootPath() + "/../../session_data" + context;
-		if ("\\".equals(File.separator))
-			storeDir = storeDir.replaceAll("/", "\\\\");
+		if (StringPool.BACK_SLASH.equals(File.separator))
+			storeDir = storeDir.replaceAll(StringPool.SLASH, "\\\\");
 		return storeDir;
 	}
 	

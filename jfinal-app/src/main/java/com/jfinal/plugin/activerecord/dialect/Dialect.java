@@ -31,6 +31,12 @@ import com.jfinal.plugin.activerecord.TableInfo;
  * Dialect.
  */
 public abstract class Dialect {
+    public static final String SQL_FROM   = " FROM ";
+    public static final String SQL_WHERE  = " WHERE ";
+    public static final String SQL_EQUAL  = " = ?";
+    public static final String SQL_UPDATE = "UPDATE ";
+    public static final int ZERO = 0;
+
 	public abstract String forTableInfoBuilderDoBuildTableInfo(String tableName);
 	public abstract void forModelSave(TableInfo tableInfo, Map<String, Object> attrs, StringBuilder sql, List<Object> paras);
 	public abstract String forModelDeleteById(TableInfo tInfo);

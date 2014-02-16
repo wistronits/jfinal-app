@@ -89,12 +89,9 @@ public interface StringPool {
     String CRLF              = "\r\n";
 
     String HTML_NBSP  = "&nbsp;";
-    String HTML_AMP   = "&amp";
+    String HTML_AMP   = "&amp;";
     String HTML_QUOTE = "&quot;";
     String HTML_LT    = "&lt;";
     String HTML_GT    = "&gt;";
 
-    // ---------------------------------------------------------------- array
-
-    String[] EMPTY_ARRAY = new String[0];
 }

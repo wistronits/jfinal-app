@@ -23,6 +23,8 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 import javax.servlet.ServletContext;
+
+import com.jfinal.sog.kit.cst.StringPool;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -59,7 +61,7 @@ public class VelocityRender extends Render {
 	}*/
 	
 	static void init(ServletContext servletContext) {
-		String webPath = servletContext.getRealPath("/");
+		String webPath = servletContext.getRealPath(StringPool.SLASH);
 		properties.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, webPath);
 		properties.setProperty(Velocity.ENCODING_DEFAULT, encoding); 
 		properties.setProperty(Velocity.INPUT_ENCODING, encoding); 
@@ -120,7 +122,7 @@ public class VelocityRender extends Render {
         	throw new RenderException("Example : error : cannot find template " + view, e);
         }
         catch( ParseErrorException e) {
-            throw new RenderException("Example : Syntax error in template " + view + ":" + e, e);
+            throw new RenderException("Example : Syntax error in template " + view + StringPool.COLON + e, e);
         }
         catch(Exception e ) {
             throw new RenderException(e);

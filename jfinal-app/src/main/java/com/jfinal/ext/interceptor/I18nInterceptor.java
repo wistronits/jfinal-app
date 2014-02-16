@@ -13,6 +13,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.kit.StringKit;
 import com.jfinal.render.Render;
 import com.jfinal.render.RenderFactory;
+import com.jfinal.sog.kit.cst.StringPool;
 
 public class I18nInterceptor implements Interceptor {
     private String defaultLanguage = "zh";
@@ -48,17 +49,17 @@ public class I18nInterceptor implements Interceptor {
 
         String prefix = getPrefix(country, language);
 
-        if (view.startsWith("/")) {
-            view = "/" + prefix + "/" + view.substring(1, view.length());
+        if (view.startsWith(StringPool.SLASH)) {
+            view = StringPool.SLASH + prefix + StringPool.SLASH + view.substring(1, view.length());
         } else {
-            view = "/" + prefix + ai.getViewPath() + view;
+            view = StringPool.SLASH + prefix + ai.getViewPath() + view;
         }
     }
 
     private String getPrefix(String country, String language) {
         String prefix = language;
         if (StringKit.notBlank(country)) {
-            prefix = language + "_" + country;
+            prefix = language + StringPool.UNDERSCORE + country;
         }
         //TODO
         // ScriptEngineManager sem = new ScriptEngineManager();

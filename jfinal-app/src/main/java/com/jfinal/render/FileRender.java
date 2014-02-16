@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.ServletContext;
 import static com.jfinal.core.Const.DEFAULT_FILE_CONTENT_TYPE;
 import com.jfinal.kit.PathKit;
+import com.jfinal.sog.kit.cst.StringPool;
 
 /**
  * FileRender.
@@ -45,7 +46,7 @@ public class FileRender extends Render {
 	
 	public void render() {
 		if (fileName != null) {
-			if (fileName.startsWith("/"))
+			if (fileName.startsWith(StringPool.SLASH))
 				file = new File(webRootPath + fileName);
 			else
 				file = new File(fileDownloadPath + fileName);

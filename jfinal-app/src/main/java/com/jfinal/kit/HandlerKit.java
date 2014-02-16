@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.jfinal.render.RenderException;
 import com.jfinal.render.RenderFactory;
+import com.jfinal.sog.kit.cst.StringPool;
 
 /**
  * HandlerKit.
@@ -41,7 +42,7 @@ public class HandlerKit {
 		
 		String queryString = request.getQueryString();
 		if (queryString != null)
-			url += "?" + queryString;
+			url += StringPool.QUESTION_MARK + queryString;
 		
 		response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 		response.setHeader("Location", url);
@@ -53,7 +54,7 @@ public class HandlerKit {
 		
 		String queryString = request.getQueryString();
 		if (queryString != null)
-			url = url + "?" + queryString;
+			url = url + StringPool.QUESTION_MARK + queryString;
 		
 		try {
 			response.sendRedirect(url);	// always 302

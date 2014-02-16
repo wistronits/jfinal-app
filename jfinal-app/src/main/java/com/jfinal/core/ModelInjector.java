@@ -21,6 +21,7 @@ import com.jfinal.plugin.activerecord.ActiveRecordException;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.TableInfo;
 import com.jfinal.plugin.activerecord.TableInfoMapping;
+import com.jfinal.sog.kit.cst.StringPool;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -66,7 +67,7 @@ final class ModelInjector {
                 continue;
 
             String attrName = methodName.substring(3);
-            String value = request.getParameter(modelName + "." + StringKit.firstCharToLowerCase(attrName));
+            String value = request.getParameter(modelName + StringPool.DOT + StringKit.firstCharToLowerCase(attrName));
             if (value != null) {
                 try {
                     method.invoke(model, TypeConverter.convert(types[0], value));
@@ -82,7 +83,7 @@ final class ModelInjector {
     private static void injectActiveRecordModel(Model<?> model, String modelName, HttpServletRequest request, boolean skipConvertError) {
         TableInfo tableInfo = TableInfoMapping.me().getTableInfo(model.getClass());
 
-        String modelNameAndDot = modelName + ".";
+        String modelNameAndDot = modelName + StringPool.DOT;
 
         Map<String, String[]> parasMap = request.getParameterMap();
         for (Entry<String, String[]> e : parasMap.entrySet()) {
