@@ -36,7 +36,7 @@ public class DruidPlugin implements IPlugin, IDataSourceProvider {
 	private String url;
 	private String username;
 	private String password;
-	private String driverClass = "com.mysql.jdbc.Driver";
+//	private String driverClass = "com.mysql.jdbc.Driver";
 	
 	// 配置初始化大小、最小、最大
 	private int initialSize = DruidDataSource.DEFAULT_INITIAL_SIZE;
@@ -79,18 +79,18 @@ public class DruidPlugin implements IPlugin, IDataSourceProvider {
 		this.password = password;
 	}
 	
-	public DruidPlugin(String url, String username, String password, String driverClass) {
+//	public DruidPlugin(String url, String username, String password, String driverClass) {
+//		this.url = url;
+//		this.username = username;
+//		this.password = password;
+//		this.driverClass = driverClass;
+//	}
+//
+	public DruidPlugin(String url, String username, String password,/* String driverClass,*/ String filters) {
 		this.url = url;
 		this.username = username;
 		this.password = password;
-		this.driverClass = driverClass;
-	}
-	
-	public DruidPlugin(String url, String username, String password, String driverClass, String filters) {
-		this.url = url;
-		this.username = username;
-		this.password = password;
-		this.driverClass = driverClass;
+//		this.driverClass = driverClass;
 		this.filters = filters;
 	}
 	
@@ -120,7 +120,7 @@ public class DruidPlugin implements IPlugin, IDataSourceProvider {
 		ds.setUrl(url);
 		ds.setUsername(username);
 		ds.setPassword(password);
-		ds.setDriverClassName(driverClass);
+//		ds.setDriverClassName(driverClass);
 		ds.setInitialSize(initialSize);
 		ds.setMinIdle(minIdle);
 		ds.setMaxActive(maxActive);
@@ -178,10 +178,10 @@ public class DruidPlugin implements IPlugin, IDataSourceProvider {
 		return this;
 	}
 	
-	public DruidPlugin setDriverClass(String driverClass) {
-		this.driverClass = driverClass;
-		return this;
-	}
+//	public DruidPlugin setDriverClass(String driverClass) {
+//		this.driverClass = driverClass;
+//		return this;
+//	}
 	
 	public DruidPlugin setInitialSize(int initialSize) {
 		this.initialSize = initialSize;

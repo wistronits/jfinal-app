@@ -54,35 +54,6 @@ import static com.jfinal.sog.initalizer.InitConst.*;
  */
 public class AppConfig extends JFinalConfig {
 
-    /**
-     * Global routing system configuration.
-     */
-    private Routes routes;
-
-    private static final String DEFAULT_DOMAIN = "http://127.0.0.1:8080/app";
-
-    private static String view_path;
-
-    private static String  domain;
-    private static boolean setViewPath;
-    private static String  appName;
-
-    public static String getAppName() {
-        return appName;
-    }
-
-    public static String getBaseViewPath() {
-        return view_path;
-    }
-
-    public static String getDomain() {
-        return domain;
-    }
-
-    public static boolean isSetViewPath() {
-        return setViewPath;
-    }
-
     @Override
     public void configConstant(Constants constants) {
         setProperties(ConfigProperties.getConfigProps());
@@ -111,34 +82,6 @@ public class AppConfig extends JFinalConfig {
         }
     }
 
-    /**
-     * set view type.
-     *
-     * @param constants jfinal constant.
-     * @param view_type view type.
-     */
-    private void setViewType(Constants constants, String view_type) {
-        final ViewType viewType = ViewType.valueOf(view_type.toUpperCase());
-        if (viewType == ViewType.FREE_MARKER) {
-            constants.setFreeMarkerViewExtension(".ftl");
-            setFtlSharedVariable();
-        }
-        constants.setViewType(viewType);
-    }
-
-    /**
-     * set freemarker variable.
-     */
-    private void setFtlSharedVariable() {
-        // custmer variable
-        final Configuration config = FreeMarkerRender.getConfiguration();
-        config.setSharedVariable("block", new BlockDirective());
-        config.setSharedVariable("extends", new ExtendsDirective());
-        config.setSharedVariable("override", new OverrideDirective());
-        config.setSharedVariable("super", new SuperDirective());
-        // 增加日期美化指令（类似 几分钟前）
-        config.setSharedVariable("prettyTime", new PrettyTimeDirective());
-    }
 
     @Override
     public void configRoute(Routes routes) {
@@ -182,6 +125,13 @@ public class AppConfig extends JFinalConfig {
 
     }
 
+    /**
+     * init databases.
+     *
+     * @param plugins plugin.
+     * @param db_url  db_url
+     * @param devMode devmode
+     */
     private void initDataSource(Plugins plugins, String db_url, boolean devMode) {
         if (!Strings.isNullOrEmpty(db_url)) {
             // 如果配置了数据库地址，则启用数据库插件
@@ -284,5 +234,65 @@ public class AppConfig extends JFinalConfig {
     @Override
     public void beforeJFinalStop() {
         super.beforeJFinalStop();
+    }
+
+
+    /**
+     * set view type.
+     *
+     * @param constants jfinal constant.
+     * @param view_type view type.
+     */
+    private void setViewType(Constants constants, String view_type) {
+        final ViewType viewType = ViewType.valueOf(view_type.toUpperCase());
+        if (viewType == ViewType.FREE_MARKER) {
+            constants.setFreeMarkerViewExtension(".ftl");
+            setFtlSharedVariable();
+        }
+        constants.setViewType(viewType);
+    }
+
+    /**
+     * set freemarker variable.
+     */
+    private void setFtlSharedVariable() {
+        // custmer variable
+        final Configuration config = FreeMarkerRender.getConfiguration();
+        config.setSharedVariable("block", new BlockDirective());
+        config.setSharedVariable("extends", new ExtendsDirective());
+        config.setSharedVariable("override", new OverrideDirective());
+        config.setSharedVariable("super", new SuperDirective());
+        // 增加日期美化指令（类似 几分钟前）
+        config.setSharedVariable("prettyTime", new PrettyTimeDirective());
+    }
+
+
+    /**
+     * Global routing system configuration.
+     */
+    private Routes routes;
+
+    private static final String DEFAULT_DOMAIN = "http://127.0.0.1:8080/app";
+
+    private static String view_path;
+
+    private static String  domain;
+    private static boolean setViewPath;
+    private static String  appName;
+
+    public static String getAppName() {
+        return appName;
+    }
+
+    public static String getBaseViewPath() {
+        return view_path;
+    }
+
+    public static String getDomain() {
+        return domain;
+    }
+
+    public static boolean isSetViewPath() {
+        return setViewPath;
     }
 }
