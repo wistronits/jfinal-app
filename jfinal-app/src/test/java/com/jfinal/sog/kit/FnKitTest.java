@@ -6,6 +6,7 @@
 
 package com.jfinal.sog.kit;
 
+import com.alibaba.druid.util.JdbcUtils;
 import org.junit.Test;
 
 /**
@@ -40,6 +41,12 @@ public class FnKitTest {
 
     @Test
     public void testDatediff() throws Exception {
+
+    }
+
+    @Test
+    public void testJdbcDriver() throws Exception {
+        System.out.println(JdbcUtils.getDriverClassName("jdbc:h2:mem:jfinal_example"));
 
     }
 }

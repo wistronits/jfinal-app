@@ -6,6 +6,8 @@
 
 package com.jfinal.plugin.activerecord;
 
+import com.google.common.collect.Lists;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -19,10 +21,10 @@ import java.util.Map;
  */
 public class ModelBuilder {
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public static <T> List<T> build(ResultSet rs, Class<? extends Model> modelClass) throws SQLException, InstantiationException, IllegalAccessException {
-        List<T> result = new ArrayList<T>();
-        ResultSetMetaData rsmd = rs.getMetaData();
+    public static <T> List<T> build(ResultSet rs, Class<? extends Model> modelClass)
+            throws SQLException, InstantiationException, IllegalAccessException {
+        List<T> result = Lists.newArrayList();
+        final ResultSetMetaData rsmd = rs.getMetaData();
         int columnCount = rsmd.getColumnCount();
         String[] labelNames = new String[columnCount + 1];
         int[] types = new int[columnCount + 1];
@@ -50,9 +52,10 @@ public class ModelBuilder {
         return result;
     }
 
-    private static void buildLabelNamesAndTypes(ResultSetMetaData rsmd, String[] labelNames, int[] types) throws SQLException {
+    private static void buildLabelNamesAndTypes(ResultSetMetaData rsmd, String[] labelNames, int[] types)
+            throws SQLException {
         for (int i = 1; i < labelNames.length; i++) {
-            labelNames[i] = rsmd.getColumnLabel(i);
+            labelNames[i] = rsmd.getColumnLabel(i).toLowerCase();
             types[i] = rsmd.getColumnType(i);
         }
     }

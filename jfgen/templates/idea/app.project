@@ -10,6 +10,8 @@
             <element id="module-output" name="{{appName}}" />
           </element>
           <element id="directory" name="lib">
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/ant-1.9.3.jar" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/ant-launcher-1.9.3.jar" />
             <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/xml-apis-1.0.b2.jar" />
             <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/activation-1.1.jar" />
             <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/commons-beanutils-1.9.1.jar" />
