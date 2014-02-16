@@ -261,7 +261,7 @@ public class AppConfig extends JFinalConfig {
                     logger.debug("init db script with {}", real_script_path);
                 }
                 final File script_dir = new File(real_script_path);
-                if (script_dir.isDirectory()) {
+                if (script_dir.exists() && script_dir.isDirectory()) {
                     final SQLExec sql_exec = new SQLExec();
                     final String db_url = getProperty(DB_URL);
                     Preconditions.checkArgument(Strings.isNullOrEmpty(db_url)
