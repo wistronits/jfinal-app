@@ -6,13 +6,31 @@
 
 package com.jfinal.sog.initalizer;
 
+import com.alibaba.druid.proxy.DruidDriver;
+import com.alibaba.druid.proxy.jdbc.DataSourceProxyConfig;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+import com.google.common.base.Throwables;
+import com.google.common.collect.Ordering;
+import com.jfinal.kit.PathKit;
 import com.jfinal.sog.ctxbox.ClassFinder;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.taskdefs.SQLExec;
+import org.apache.tools.ant.types.EnumeratedAttribute;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
+import java.io.File;
+import java.sql.SQLException;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Properties;
 import java.util.Set;
+
+import static com.jfinal.sog.initalizer.InitConst.*;
 
 /**
  * <p>
@@ -25,6 +43,7 @@ import java.util.Set;
  */
 public class JFinalApplicationInitializer implements ServletContainerInitializer {
 
+    private static final Logger logger = LoggerFactory.getLogger(JFinalApplicationInitializer.class);
 
     @Override
     public void onStartup(Set<Class<?>> classSet, ServletContext ctx)
@@ -51,7 +70,60 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
         // 支持异步请求处理
         jfinalFilter.setAsyncSupported(true);
 
-
         System.out.println("initializer " + app_name + " Application ok!");
+        boolean dev_mode = Boolean.getBoolean(p.getProperty(DEV_MODE, "false"));
+        if (dev_mode) {
+            runScriptInitDb(p);
+        }
     }
+
+
+    private void runScriptInitDb(final Properties p) {
+        try {
+
+            boolean script_run = Boolean.getBoolean(p.getProperty(DB_INIT, "false"));
+            if (script_run) {
+                String script_path = p.getProperty(DB_SCRIPT_PATH);
+                Preconditions.checkArgument(Strings.isNullOrEmpty(script_path)
+                        , "The Database init database script init!");
+                final String real_script_path = PathKit.getRootClassPath() + script_path;
+                if (logger.isDebugEnabled()) {
+                    logger.debug("init db script with {}", real_script_path);
+                }
+                final File script_dir = new File(real_script_path);
+                if (script_dir.exists() && script_dir.isDirectory()) {
+                    final SQLExec sql_exec = new SQLExec();
+                    final String db_url = p.getProperty(DB_URL);
+                    Preconditions.checkArgument(Strings.isNullOrEmpty(db_url)
+                            , "The DataBase connection url is must!");
+                    DataSourceProxyConfig config = DruidDriver.parseConfig(db_url, null);
+                    sql_exec.setDriver(config.getRawDriverClassName());
+                    sql_exec.setUrl(db_url);
+                    final String db_username = p.getProperty(DB_USERNAME);
+                    final String db_password = p.getProperty(DB_PASSWORD);
+                    if (!Strings.isNullOrEmpty(db_username) && !Strings.isNullOrEmpty(db_password)) {
+                        sql_exec.setUserid(db_username);
+                        sql_exec.setPassword(db_password);
+                    }
+
+                    sql_exec.setOnerror((SQLExec.OnError) (EnumeratedAttribute.getInstance(
+                            SQLExec.OnError.class, "abort")));
+                    sql_exec.setPrint(true);
+                    sql_exec.setProject(new Project());
+
+                    Collection<File> list_script_files
+                            = Ordering.natural()
+                            .sortedCopy(FileUtils.listFiles(script_dir, new String[]{"sql"}, false));
+                    for (File list_script_file : list_script_files) {
+                        sql_exec.setSrc(list_script_file);
+                        sql_exec.execute();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("init db script is error!", e);
+            throw Throwables.propagate(e);
+        }
+    }
+
 }
