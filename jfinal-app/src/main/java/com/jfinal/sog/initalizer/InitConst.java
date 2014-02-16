@@ -26,10 +26,12 @@ public interface InitConst {
     String VIEW_404  = "view.404";
     String VIEW_500  = "view.500";
 
-    String DB_URL      = "db.url";
-    String DB_USERNAME = "db.username";
-    String DB_PASSWORD = "db.password";
-    String DB_SQLINXML = "db.sqlinxml";
+    String DB_URL         = "db.url";
+    String DB_USERNAME    = "db.username";
+    String DB_PASSWORD    = "db.password";
+    String DB_SQLINXML    = "db.sqlinxml";
+    String DB_INIT        = "db.init";
+    String DB_SCRIPT_PATH = "db.script.path";
 
     String SECURITY = "security";
     String CACHE    = "cache";

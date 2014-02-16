@@ -113,7 +113,8 @@ public class DruidPlugin implements IPlugin, IDataSourceProvider {
 		filterList.add(filter);
 		return this;
 	}
-	
+
+    @Override
 	public boolean start() {
 		ds = new DruidDataSource();
 		

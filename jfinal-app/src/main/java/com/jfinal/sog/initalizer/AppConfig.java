@@ -6,10 +6,15 @@
 
 package com.jfinal.sog.initalizer;
 
+import com.alibaba.druid.proxy.DruidDriver;
+import com.alibaba.druid.proxy.jdbc.DataSourceProxyConfig;
 import com.alibaba.druid.util.JdbcConstants;
 import com.alibaba.druid.util.JdbcUtils;
 import com.alibaba.druid.wall.WallFilter;
+import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.base.Throwables;
+import com.google.common.collect.Ordering;
 import com.jfinal.config.*;
 import com.jfinal.ext.plugin.monogodb.MongodbPlugin;
 import com.jfinal.ext.plugin.quartz.QuartzPlugin;
@@ -19,6 +24,7 @@ import com.jfinal.ext.plugin.sqlinxml.SqlInXmlPlugin;
 import com.jfinal.ext.plugin.tablebind.AutoTableBindPlugin;
 import com.jfinal.ext.plugin.tablebind.SimpleNameStyles;
 import com.jfinal.ext.route.AutoBindRoutes;
+import com.jfinal.kit.PathKit;
 import com.jfinal.kit.StringKit;
 import com.jfinal.plugin.activerecord.dialect.*;
 import com.jfinal.plugin.druid.DruidPlugin;
@@ -35,10 +41,19 @@ import com.jfinal.sog.interceptor.SystemLogProcessor;
 import com.jfinal.sog.interceptor.autoscan.AutoOnLoadInterceptor;
 import com.jfinal.sog.interceptor.syslog.SysLogInterceptor;
 import freemarker.template.Configuration;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.taskdefs.SQLExec;
+import org.apache.tools.ant.types.EnumeratedAttribute;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 import static com.jfinal.sog.initalizer.InitConst.*;
@@ -53,6 +68,8 @@ import static com.jfinal.sog.initalizer.InitConst.*;
  * @since JDK 1.5
  */
 public class AppConfig extends JFinalConfig {
+
+    private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
 
     @Override
     public void configConstant(Constants constants) {
@@ -172,6 +189,7 @@ public class AppConfig extends JFinalConfig {
                 plugins.add(new SqlInXmlPlugin());
             }
         }
+
     }
 
     @Override
@@ -210,7 +228,7 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void afterJFinalStart() {
-
+        super.afterJFinalStart();
         List<Class> appCliasses = ClassBox.getInstance().getClasses(ClassType.APP);
         if (appCliasses != null && !appCliasses.isEmpty()) {
             for (Class appCliass : appCliasses) {
@@ -219,16 +237,63 @@ public class AppConfig extends JFinalConfig {
                 try {
                     event = (AppLoadEvent) appCliass.newInstance();
                     event.load();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                } catch (Throwable t) {
+                    throw Throwables.propagate(t);
                 }
             }
         }
 
+        //init db
+
+        runScriptInitDb();
         ClassBox.getInstance().clearBox();
-        super.afterJFinalStart();
+    }
+
+    private void runScriptInitDb() {
+        try {
+            boolean script_run = getPropertyToBoolean(DB_INIT, false);
+            if (script_run) {
+                String script_path = getProperty(DB_SCRIPT_PATH);
+                Preconditions.checkArgument(Strings.isNullOrEmpty(script_path)
+                        , "The Database init database script init!");
+                final String real_script_path = PathKit.getRootClassPath() + script_path;
+                if(logger.isDebugEnabled()){
+                    logger.debug("init db script with {}", real_script_path);
+                }
+                final File script_dir = new File(real_script_path);
+                if (script_dir.isDirectory()) {
+                    final SQLExec sql_exec = new SQLExec();
+                    final String db_url = getProperty(DB_URL);
+                    Preconditions.checkArgument(Strings.isNullOrEmpty(db_url)
+                            , "The DataBase connection url is must!");
+                    DataSourceProxyConfig config = DruidDriver.parseConfig(db_url, null);
+                    sql_exec.setDriver(config.getRawDriverClassName());
+                    sql_exec.setUrl(db_url);
+                    final String db_username = getProperty(DB_USERNAME);
+                    final String db_password = getProperty(DB_PASSWORD);
+                    if (!Strings.isNullOrEmpty(db_username) && !Strings.isNullOrEmpty(db_password)) {
+                        sql_exec.setUserid(db_username);
+                        sql_exec.setPassword(db_password);
+                    }
+
+                    sql_exec.setOnerror((SQLExec.OnError) (EnumeratedAttribute.getInstance(
+                            SQLExec.OnError.class, "abort")));
+                    sql_exec.setPrint(true);
+                    sql_exec.setProject(new Project());
+
+                    Collection<File> list_script_files
+                            = Ordering.natural()
+                            .sortedCopy(FileUtils.listFiles(script_dir, new String[]{"sql"}, false));
+                    for (File list_script_file : list_script_files) {
+                        sql_exec.setSrc(list_script_file);
+                        sql_exec.execute();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("init db script is error!", e);
+            throw Throwables.propagate(e);
+        }
     }
 
     @Override

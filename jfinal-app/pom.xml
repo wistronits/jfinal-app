@@ -53,6 +53,8 @@
         <morphia.version>0.106</morphia.version>
         <jedis.version>2.3.1</jedis.version>
         <postgresql.version>9.3-1100-jdbc41</postgresql.version>
+        <ant.version>1.9.3</ant.version>
+        <poi.version>3.10-FINAL</poi.version>
     </properties>
 
     <dependencies>
@@ -225,7 +227,17 @@
             <artifactId>morphia</artifactId>
             <version>${morphia.version}</version>
         </dependency>
-
+        <!-- ant tools -->
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>${ant.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant-launcher</artifactId>
+            <version>${ant.version}</version>
+        </dependency>
 
         <!--log -->
         <dependency>
@@ -278,7 +290,7 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>3.10-FINAL</version>
+            <version>${poi.version}</version>
         </dependency>
 
         <dependency>
