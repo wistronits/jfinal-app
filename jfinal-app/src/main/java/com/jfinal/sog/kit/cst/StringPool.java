@@ -35,7 +35,6 @@ public interface StringPool {
     String AND               = "and";
     String AT                = "@";
     String ASTERISK          = "*";
-    String STAR              = ASTERISK;
     String BACK_SLASH        = "\\";
     String COLON             = ":";
     String COMMA             = ",";

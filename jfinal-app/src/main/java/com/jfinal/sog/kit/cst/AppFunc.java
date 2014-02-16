@@ -25,23 +25,21 @@ import java.text.SimpleDateFormat;
  */
 public interface AppFunc {
 
-    /**
-     * 将集合类合并为逗号分割的字符串 处理函数
-     */
-    Joiner COMMA_JOINER = Joiner.on(StringPool.COMMA).skipNulls();
-    /**
-     * 将集合类合并为-分割的字符串 处理函数
-     */
-    Joiner DASH_JOINER  = Joiner.on(StringPool.DASH).skipNulls();
 
-    /**
-     * 将逗号分割的字符传转换为集合的处理函数。
-     */
+    Joiner COMMA_JOINER = Joiner.on(StringPool.COMMA).skipNulls();
+
+
     Splitter COMMA_SPLITTER = Splitter.on(StringPool.COMMA).trimResults().omitEmptyStrings();
-    /**
-     * 将-分割的字符传转换为集合的处理函数。
-     */
-    Splitter DASH_SPLITTER  = Splitter.on(StringPool.DASH).trimResults().omitEmptyStrings();
+
+    Joiner DOT_JOINER = Joiner.on(StringPool.DOT).skipNulls();
+
+
+    Splitter DOT_SPLITTER = Splitter.on(StringPool.DOT).trimResults().omitEmptyStrings();
+
+
+    Joiner DASH_JOINER = Joiner.on(StringPool.DASH).skipNulls();
+
+    Splitter DASH_SPLITTER = Splitter.on(StringPool.DASH).trimResults().omitEmptyStrings();
 
 
     /**

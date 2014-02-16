@@ -7,7 +7,12 @@
 package com.jfinal.sog.kit;
 
 import com.alibaba.druid.util.JdbcUtils;
+import com.jfinal.sog.kit.common.FnKit;
+import com.jfinal.sog.kit.date.DateProvider;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -21,7 +26,10 @@ import org.junit.Test;
 public class FnKitTest {
     @Test
     public void testContains() throws Exception {
-
+        final Date currentDate = DateProvider.DEFAULT.getCurrentDate();
+        Object[] src = new Object[]{"0", 1, currentDate};
+        boolean cot = FnKit.contains(src, currentDate);
+        Assert.assertTrue(cot);
     }
 
     @Test
