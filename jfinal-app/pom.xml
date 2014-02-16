@@ -11,19 +11,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <shiro.version>1.2.2</shiro.version>
-        <druid.version>1.0.2</druid.version>
+        <!-- the log -->
         <logback-core.version>1.1.1</logback-core.version>
         <slf4j-api.version>1.7.6</slf4j-api.version>
-        <quartz.version>2.2.1</quartz.version>
-        <jedis.version>2.3.1</jedis.version>
-        <fastjson.version>1.1.38</fastjson.version>
-        <joda-time.version>2.3</joda-time.version>
 
+        <!--the view render -->
         <freemarker.version>2.3.20</freemarker.version>
         <velocity.version>1.7</velocity.version>
-
+        <!-- utils -->
         <commons-beanutils.version>1.9.1</commons-beanutils.version>
         <commons-collections.version>3.2.1</commons-collections.version>
         <commons-pool.version>2.0</commons-pool.version>
@@ -31,23 +26,33 @@
         <commons-lang3.version>3.1</commons-lang3.version>
         <commons-io.version>2.4</commons-io.version>
         <httpclient.version>4.3.2</httpclient.version>
-
-        <mail.version>1.4.7</mail.version>
+        <guava.version>16.0.1</guava.version>
+        <fastjson.version>1.1.38</fastjson.version>
+        <joda-time.version>2.3</joda-time.version>
         <dom4j.version>1.6.1</dom4j.version>
         <jsoup.version>1.7.3</jsoup.version>
+
+        <!-- the common service -->
+        <mail.version>1.4.7</mail.version>
+        <quartz.version>2.2.1</quartz.version>
         <thumbnailator.version>0.4.7</thumbnailator.version>
 
-
+        <!-- the caceh and database -->
         <ehcache-core.version>2.6.7</ehcache-core.version>
+        <druid.version>1.0.2</druid.version>
         <mysql-connector-java.version>5.1.27</mysql-connector-java.version>
-        <guava.version>16.0.1</guava.version>
-
+        <h2.version>1.3.175</h2.version>
+        <!-- utest -->
         <junit.version>4.11</junit.version>
-        <org.jodd.version>3.4.10</org.jodd.version>
-
+        <!-- servlet and shiro -->
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <shiro.version>1.2.2</shiro.version>
+        <org.jodd.version>3.4.10</org.jodd.version>
+        <!-- nosql -->
         <mongo-java-driver.version>2.11.3</mongo-java-driver.version>
         <morphia.version>0.106</morphia.version>
+        <jedis.version>2.3.1</jedis.version>
+        <postgresql.version>9.3-1100-jdbc41</postgresql.version>
     </properties>
 
     <dependencies>
@@ -183,12 +188,26 @@
             <version>${joda-time.version}</version>
         </dependency>
 
-        <!--mysql db -->
+        <!--database driver -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
         </dependency>
+
+        <!-- h2 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
+        <!-- postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+
         <!-- redis -->
         <dependency>
             <groupId>redis.clients</groupId>
@@ -427,14 +446,6 @@
             <id>osc</id>
             <name>os-china</name>
             <url>http://maven.oschina.net/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>sogyf-mvn-repo</id>
-            <url>https://raw.github.com/sogyf/sparta-helpers/mvn-repo/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
         </repository>
     </repositories>
     <distributionManagement>
