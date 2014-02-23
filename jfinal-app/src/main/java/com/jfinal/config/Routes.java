@@ -18,7 +18,7 @@ package com.jfinal.config;
 
 import com.google.common.collect.Maps;
 import com.jfinal.core.Controller;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 import java.util.Map;
 import java.util.Map.Entry;

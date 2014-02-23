@@ -11,7 +11,7 @@ import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import com.jfinal.log.Logger;
 import com.jfinal.sog.initalizer.ConfigProperties;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import com.jfinal.sog.kit.map.JaxbKit;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.monitor.FileAlterationMonitor;

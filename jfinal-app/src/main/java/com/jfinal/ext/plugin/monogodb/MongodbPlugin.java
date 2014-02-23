@@ -7,22 +7,26 @@ package com.jfinal.ext.plugin.monogodb;
 
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.IPlugin;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
+import com.jfinal.sog.plugin.mongo.MorphiaKit;
 import com.mongodb.MongoClient;
 
 import java.net.UnknownHostException;
 
 public class MongodbPlugin implements IPlugin {
 
-    public static final String DEFAULT_HOST = "127.0.0.1";
-    public static final int DEFAUL_PORT = 27017;
+    public static final String DEFAULT_HOST = StringPool.LOCAL_HOST;
+    public static final int    DEFAUL_PORT  = 27017;
+    public static final String DEFAULT_PKGS = "app.entitys";
 
     protected final Logger logger = Logger.getLogger(getClass());
 
-    private MongoClient client;
-    private String host;
-    private int port;
-    private String database;
+    private       MongoClient client;
+    private final String      host;
+    private final int         port;
+    private final String      database;
+
+    private final String morphia_pkgs;
 
     /**
      * 是否启用 morphia
@@ -41,11 +45,22 @@ public class MongodbPlugin implements IPlugin {
     /**
      * 初始化MongoDB插件，并确定是否启用Morphia功能
      *
+     * @param database     数据库
+     * @param morphia_pkgs morphia package name.
+     */
+    public MongodbPlugin(String database, String morphia_pkgs) {
+        this(DEFAULT_HOST, DEFAUL_PORT, database, true, morphia_pkgs);
+    }
+
+
+    /**
+     * 初始化MongoDB插件，并确定是否启用Morphia功能
+     *
      * @param database 数据库
      * @param morphia  true，启用Morphia，false，不启用
      */
     public MongodbPlugin(String database, boolean morphia) {
-        this(DEFAULT_HOST, DEFAUL_PORT, database, morphia);
+        this(DEFAULT_HOST, DEFAUL_PORT, database, morphia, DEFAULT_PKGS);
     }
 
     /**
@@ -56,11 +71,12 @@ public class MongodbPlugin implements IPlugin {
      * @param database mongodb数据库
      * @param morphia  是否启用morphia
      */
-    public MongodbPlugin(String host, int port, String database, boolean morphia) {
+    public MongodbPlugin(String host, int port, String database, boolean morphia, String morphia_pkgs) {
         this.host = host;
         this.port = port;
         this.database = database;
         this.morphia = morphia;
+        this.morphia_pkgs = morphia_pkgs;
     }
 
     @Override
@@ -74,7 +90,7 @@ public class MongodbPlugin implements IPlugin {
 
         MongoKit.init(client, database);
         if (morphia) {
-            MorphiaKit.init(client, database, "app.entitys");
+            MorphiaKit.create(client, database, morphia_pkgs);
         }
         return true;
     }

@@ -16,13 +16,13 @@
 
 package com.jfinal.plugin.activerecord;
 
+import com.google.common.collect.Lists;
 import com.jfinal.plugin.IPlugin;
 import com.jfinal.plugin.activerecord.cache.ICache;
 import com.jfinal.plugin.activerecord.dialect.Dialect;
 import com.mysql.jdbc.Connection;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,12 +31,15 @@ import java.util.List;
  * ActiveRecord plugin not support mysql type year, you can use int instead of year.
  * Mysql error message for type year when insert a record: Data truncated for column 'xxx' at row 1
  */
+@SuppressWarnings("UnusedDeclaration")
 public class ActiveRecordPlugin implements IPlugin {
 
     private static boolean isStarted = false;
-    private static DataSource dataSource;
+
+    private static DataSource          dataSource;
     private static IDataSourceProvider dataSourceProvider;
-    private static final List<TableInfo> tableMappings = new ArrayList<TableInfo>();
+
+    private static final List<TableInfo> tableMappings = Lists.newArrayList();
 
     public static void setDevMode(boolean devMode) {
         DbKit.setDevMode(devMode);

@@ -7,10 +7,9 @@
 package com.jfinal.ext.plugin.sqlinxml;
 
 import com.jfinal.log.Logger;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import com.jfinal.sog.kit.map.JaxbKit;
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
-import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;

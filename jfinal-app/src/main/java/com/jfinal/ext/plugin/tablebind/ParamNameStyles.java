@@ -5,7 +5,7 @@
  */
 package com.jfinal.ext.plugin.tablebind;
 
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 public class ParamNameStyles {
 

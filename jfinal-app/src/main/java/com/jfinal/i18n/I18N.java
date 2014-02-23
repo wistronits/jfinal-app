@@ -17,7 +17,7 @@
 package com.jfinal.i18n;
 
 import com.jfinal.core.Const;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 import java.util.Enumeration;
 import java.util.Locale;

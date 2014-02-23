@@ -20,7 +20,7 @@ import com.jfinal.core.Const;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.StringKit;
 import com.jfinal.render.Render;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;

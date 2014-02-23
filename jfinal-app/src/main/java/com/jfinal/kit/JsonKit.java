@@ -18,7 +18,7 @@ package com.jfinal.kit;
 
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Record;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import com.jfinal.sog.kit.date.DateProvider;
 
 import java.lang.reflect.Method;

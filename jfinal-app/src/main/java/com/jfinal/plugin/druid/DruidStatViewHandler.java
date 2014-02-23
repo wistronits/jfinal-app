@@ -22,7 +22,7 @@ import com.alibaba.druid.util.Utils;
 import com.jfinal.core.Const;
 import com.jfinal.handler.Handler;
 import com.jfinal.kit.HandlerKit;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 /**
  * 替代 StatViewServlet

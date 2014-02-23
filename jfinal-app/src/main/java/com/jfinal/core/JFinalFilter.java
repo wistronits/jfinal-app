@@ -29,7 +29,7 @@ import com.jfinal.config.Constants;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.handler.Handler;
 import com.jfinal.log.Logger;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 /**
  * JFinal framework filter

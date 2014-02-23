@@ -7,7 +7,7 @@
 package com.jfinal.sog.kit.common;
 
 import com.google.common.collect.Lists;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import com.jfinal.kit.StringKit;
 import org.apache.commons.lang3.StringUtils;
 

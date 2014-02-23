@@ -19,7 +19,7 @@ package com.jfinal.ext.handler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.jfinal.handler.Handler;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 /**
  * ServerNameRedirect301Handler redirect to new server name with 301 Moved Permanently.

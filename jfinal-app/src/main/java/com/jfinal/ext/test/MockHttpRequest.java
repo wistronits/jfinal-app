@@ -26,7 +26,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.*;
 
 import com.google.common.collect.Maps;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 public class MockHttpRequest implements HttpServletRequest {
     private Map<String, Object> attr = Maps.newHashMap();

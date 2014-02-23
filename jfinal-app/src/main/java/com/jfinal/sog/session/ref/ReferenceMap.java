@@ -6,7 +6,7 @@
 
 package com.jfinal.sog.session.ref;
 
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;

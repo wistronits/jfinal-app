@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.TableInfo;
 

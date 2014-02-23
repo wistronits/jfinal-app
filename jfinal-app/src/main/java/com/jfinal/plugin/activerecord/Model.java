@@ -17,13 +17,23 @@
 package com.jfinal.plugin.activerecord;
 
 import com.google.common.collect.Lists;
-import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.plugin.activerecord.cache.ICache;
+import com.jfinal.sog.kit.StringPool;
 
 import java.io.Serializable;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import static com.jfinal.plugin.activerecord.DbKit.NULL_PARA_ARRAY;
 
@@ -505,9 +515,9 @@ public abstract class Model<M extends Model> implements Serializable {
      * @param columns the specific columns separate with comma character ==> ","
      */
     public M findById(Object id, String columns) {
-        TableInfo tInfo = tableInfoMapping.getTableInfo(getClass());
-        String sql = DbKit.dialect.forModelFindById(tInfo, columns);
-        List<M> result = find(sql, id);
+        final TableInfo tInfo = tableInfoMapping.getTableInfo(getClass());
+        final String sql = DbKit.dialect.forModelFindById(tInfo, columns);
+        final List<M> result = find(sql, id);
         return result.size() > 0 ? result.get(0) : null;
     }
 

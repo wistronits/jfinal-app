@@ -6,7 +6,7 @@
 package com.jfinal.ext.plugin.redis;
 
 import com.google.common.collect.Maps;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import com.jfinal.log.Logger;
 
 import java.io.Serializable;

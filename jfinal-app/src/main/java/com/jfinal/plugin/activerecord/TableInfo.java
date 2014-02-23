@@ -16,9 +16,10 @@
 
 package com.jfinal.plugin.activerecord;
 
-import com.jfinal.sog.kit.cst.StringPool;
 import com.jfinal.kit.StringKit;
+import com.jfinal.sog.kit.StringPool;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,9 +27,13 @@ import java.util.Map;
  */
 public class TableInfo {
 
-    private String tableName;
-    private String primaryKey;
+    private final String tableName;
+    private       String primaryKey;
     private String secondaryKey = null;
+
+    private String columnName;
+
+    private List<String> columnNames;
 
     @SuppressWarnings("unchecked")
     private Map<String, Class<?>> columnTypeMap = DbKit.containerFactory.getAttrsMap();    //	new HashMap<String, Class<?>>();
@@ -97,6 +102,22 @@ public class TableInfo {
 
     public Class<? extends Model<?>> getModelClass() {
         return modelClass;
+    }
+
+    public String getColumnName() {
+        return columnName;
+    }
+
+    void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
+
+    public List<String> getColumnNames() {
+        return columnNames;
+    }
+
+    void setColumnNames(List<String> columnNames) {
+        this.columnNames = columnNames;
     }
 }
 

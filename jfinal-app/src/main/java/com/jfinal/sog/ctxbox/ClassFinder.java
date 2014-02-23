@@ -11,7 +11,7 @@ import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 import com.jfinal.ext.kit.Reflect;
 import com.jfinal.kit.PathKit;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 import java.io.File;
 import java.util.List;

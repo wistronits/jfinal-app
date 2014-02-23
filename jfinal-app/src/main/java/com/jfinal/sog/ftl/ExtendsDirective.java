@@ -5,7 +5,7 @@
  */
 package com.jfinal.sog.ftl;
 
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import freemarker.cache.TemplateCache;
 import freemarker.core.Environment;
 import freemarker.template.*;

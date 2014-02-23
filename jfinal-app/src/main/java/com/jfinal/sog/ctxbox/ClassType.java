@@ -37,5 +37,10 @@ public enum ClassType {
     /**
      * Interceptor System
      */
-    AOP
+    AOP,
+
+    /**
+     * The System Event.
+     */
+    EVENT,
 }

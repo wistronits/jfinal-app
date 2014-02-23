@@ -13,7 +13,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.kit.StringKit;
 import com.jfinal.render.Render;
 import com.jfinal.render.RenderFactory;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 public class I18nInterceptor implements Interceptor {
     private String defaultLanguage = "zh";

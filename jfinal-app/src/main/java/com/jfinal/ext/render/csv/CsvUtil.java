@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.jfinal.sog.kit.cst.AppFunc;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.AppFunc;
+import com.jfinal.sog.kit.StringPool;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Record;
 

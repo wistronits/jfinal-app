@@ -6,7 +6,7 @@
 package com.jfinal.ext.plugin.config;
 
 import com.google.common.collect.Maps;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import com.jfinal.sog.kit.io.ResourceKit;
 import com.jfinal.kit.PathKit;
 import com.jfinal.log.Logger;

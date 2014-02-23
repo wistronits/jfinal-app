@@ -18,7 +18,7 @@ package com.jfinal.server;
 
 import java.io.File;
 import com.jfinal.kit.PathKit;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 /**
  * ServerFactory

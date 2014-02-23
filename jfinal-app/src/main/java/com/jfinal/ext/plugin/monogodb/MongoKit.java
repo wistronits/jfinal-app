@@ -29,7 +29,7 @@ public class MongoKit {
     private static MongoClient client;
     private static DB defaultDb;
 
-    public static void init(MongoClient client, String database) {
+    protected static void init(MongoClient client, String database) {
         MongoKit.client = client;
         MongoKit.defaultDb = client.getDB(database);
 

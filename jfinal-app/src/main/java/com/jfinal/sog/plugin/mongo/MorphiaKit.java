@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package com.jfinal.ext.plugin.monogodb;
+package com.jfinal.sog.plugin.mongo;
 
 import com.google.common.base.Preconditions;
 import com.mongodb.Mongo;
@@ -27,25 +27,29 @@ public final class MorphiaKit {
 
     private static Datastore _datastore;
 
-    private MorphiaKit() {
-    }
-
     /**
-     * Visit constructor package
+     * Default .
      *
-     * @param mongo          mongo client
-     * @param db             db name
+     * @param mongo          mongo
+     * @param db             mongo database.
      * @param entity_package entity package name.
      */
-    protected static void init(final Mongo mongo, final String db, String entity_package) {
+    private MorphiaKit(final Mongo mongo, final String db, String entity_package) {
         Preconditions.checkNotNull(mongo, "the mongo object is not null. ");
         Preconditions.checkNotNull(db, "the mongodb database name is not null.");
-        if (_datastore == null) {
-            Morphia morphia = new Morphia();
-            _datastore = morphia.createDatastore(mongo, db);
-            morphia.mapPackage(entity_package);
+        Morphia morphia = new Morphia();
+        _datastore = morphia.createDatastore(mongo, db);
+        morphia.mapPackage(entity_package);
+    }
+
+    public static MorphiaKit create(final Mongo mongo, final String db, String entity_package){
+        if(MorphiaKit.getDataStore() != null){
+            throw new IllegalStateException();
+        } else {
+            return new MorphiaKit(mongo, db, entity_package);
         }
     }
+
 
     public static <T> Key<T> save(T t) {
         Preconditions.checkNotNull(_datastore, "the  morphia datasotre is not instace!");

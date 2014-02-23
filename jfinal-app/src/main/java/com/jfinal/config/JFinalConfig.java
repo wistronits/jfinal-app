@@ -18,7 +18,7 @@ package com.jfinal.config;
 
 import com.jfinal.kit.FileKit;
 import com.jfinal.kit.StringKit;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 import java.util.Properties;
 

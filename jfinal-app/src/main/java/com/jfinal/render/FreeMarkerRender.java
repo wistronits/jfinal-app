@@ -7,7 +7,7 @@
 package com.jfinal.render;
 
 import com.google.common.collect.Maps;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import freemarker.template.*;
 import org.apache.commons.io.IOUtils;
 

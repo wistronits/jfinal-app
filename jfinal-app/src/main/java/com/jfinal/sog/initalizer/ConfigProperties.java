@@ -1,7 +1,10 @@
 package com.jfinal.sog.initalizer;
 
+import com.google.common.collect.Maps;
 import com.jfinal.kit.FileKit;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -17,12 +20,21 @@ import java.util.Properties;
  */
 public class ConfigProperties {
 
-    private static final String                  APPLICATION_PROP = "application.conf";
-    private static final ThreadLocal<Properties> configProps      = new ThreadLocal<Properties>();
+    private static final String APPLICATION_PROP = "application.conf";
+    private static final ThreadLocal<Properties> configProps = new ThreadLocal<Properties>();
+
+    private static final Map<String, String> APPLICATION_CONFIG = Maps.newHashMapWithExpectedSize(5);
+    private static final Map<String, String> DATABASE_CONFIG    = Maps.newHashMapWithExpectedSize(5);
+    private static final Map<String, String> MONGODB_CONFIG     = Maps.newHashMapWithExpectedSize(2);
+    private static final Map<String, String> REDIS_CONFIG       = Maps.newHashMapWithExpectedSize(5);
 
     static {
         readConf();
     }
+
+    public static final String REDIS_PREFIX = "redis";
+    public static final String MONGO_PREFIX = "mongo";
+    public static final String DB_PREFIX = "db";
 
     /**
      * 重新加载配置文件
@@ -40,6 +52,19 @@ public class ConfigProperties {
         FileKit.loadFileInProperties(APPLICATION_PROP, p);
         if (checkNullOrEmpty(p)) {
             throw new IllegalArgumentException("Properties file can not be empty. " + APPLICATION_PROP);
+        }
+        final Map<String, String> _applications = Maps.fromProperties(p);
+        for (String key : _applications.keySet()) {
+            final String value = _applications.get(key);
+            if (StringUtils.startsWithIgnoreCase(key, REDIS_PREFIX)) {
+                REDIS_CONFIG.put(key, value);
+            } else if (StringUtils.startsWithIgnoreCase(key, MONGO_PREFIX)) {
+                MONGODB_CONFIG.put(key, value);
+            } else if (StringUtils.startsWithIgnoreCase(key, DB_PREFIX)){
+                DATABASE_CONFIG.put(key, value);
+            } else {
+                APPLICATION_CONFIG.put(key, value);
+            }
         }
         configProps.set(p);
     }
@@ -76,5 +101,19 @@ public class ConfigProperties {
         return getConfigProps().getProperty(key, default_value);
     }
 
+    public static Map<String, String> getRedisConfig() {
+        return REDIS_CONFIG;
+    }
 
+    public static Map<String, String> getMongodbConfig() {
+        return MONGODB_CONFIG;
+    }
+
+    public static Map<String, String> getDatabaseConfig() {
+        return DATABASE_CONFIG;
+    }
+
+    public static Map<String, String> getApplicationConfig() {
+        return APPLICATION_CONFIG;
+    }
 }

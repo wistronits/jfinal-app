@@ -17,7 +17,7 @@ import javax.servlet.ServletContext;
 import com.jfinal.sog.ctxbox.ClassFinder;
 import com.jfinal.sog.initalizer.AppConfig;
 import com.jfinal.sog.initalizer.ConfigProperties;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import org.junit.AfterClass;
 import org.junit.Before;
 

@@ -6,7 +6,7 @@
 
 package com.jfinal.sog.ftl.shiro.role;
 
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import org.apache.shiro.subject.Subject;
 
 /**

@@ -13,7 +13,7 @@ import com.google.common.base.Throwables;
 import com.google.common.collect.Ordering;
 import com.jfinal.kit.PathKit;
 import com.jfinal.sog.ctxbox.ClassFinder;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tools.ant.Project;

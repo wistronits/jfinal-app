@@ -7,7 +7,7 @@
 package com.jfinal.sog.ftl;
 
 import com.google.common.base.Strings;
-import com.jfinal.sog.kit.cst.AppFunc;
+import com.jfinal.sog.kit.AppFunc;
 import com.jfinal.sog.kit.date.DateProvider;
 import freemarker.core.Environment;
 import freemarker.template.*;

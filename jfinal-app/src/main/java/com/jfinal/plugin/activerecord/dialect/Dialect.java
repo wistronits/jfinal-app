@@ -16,16 +16,18 @@
 
 package com.jfinal.plugin.activerecord.dialect;
 
+import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.activerecord.TableInfo;
+import com.jfinal.sog.Constants;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import com.jfinal.plugin.activerecord.Model;
-import com.jfinal.plugin.activerecord.Page;
-import com.jfinal.plugin.activerecord.Record;
-import com.jfinal.plugin.activerecord.TableInfo;
 
 /**
  * Dialect.
@@ -35,55 +37,64 @@ public abstract class Dialect {
     public static final String SQL_WHERE  = " WHERE ";
     public static final String SQL_EQUAL  = " = ?";
     public static final String SQL_UPDATE = "UPDATE ";
-    public static final int ZERO = 0;
+    public static final int    ZERO       = Constants.INTEGER_NORMAL;
 
-	public abstract String forTableInfoBuilderDoBuildTableInfo(String tableName);
-	public abstract void forModelSave(TableInfo tableInfo, Map<String, Object> attrs, StringBuilder sql, List<Object> paras);
-	public abstract String forModelDeleteById(TableInfo tInfo);
-	public abstract void forModelUpdate(TableInfo tableInfo, Map<String, Object> attrs, Set<String> modifyFlag, String pKey, Object id, StringBuilder sql, List<Object> paras);
-	public abstract String forModelFindById(TableInfo tInfo, String columns);
-	public abstract String forDbFindById(String tableName, String primaryKey, String columns);
-	public abstract String forDbDeleteById(String tableName, String primaryKey);
-	public abstract void forDbSave(StringBuilder sql, List<Object> paras, String tableName, Record record);
-	public abstract void forDbUpdate(String tableName, String primaryKey, Object id, Record record, StringBuilder sql, List<Object> paras);
-	public abstract void forPaginate(StringBuilder sql, int pageNumber, int pageSize, String select, String sqlExceptSelect);
-	
-	public boolean isOracle() {
-		return false;
-	}
-	
-	public boolean isTakeOverDbPaginate() {
-		return false;
-	}
-	
-	public Page<Record> takeOverDbPaginate(Connection conn, int pageNumber, int pageSize, String select, String sqlExceptSelect, Object... paras) throws SQLException {
-		throw new RuntimeException("You should implements this method in " + getClass().getName());
-	}
-	
-	public boolean isTakeOverModelPaginate() {
-		return false;
-	}
-	
-	@SuppressWarnings("rawtypes")
-	public Page takeOverModelPaginate(Class<? extends Model> modelClass, int pageNumber, int pageSize, String select, String sqlExceptSelect, Object... paras) {
-		throw new RuntimeException("You should implements this method in " + getClass().getName());
-	}
-	
-	public void fillStatement(PreparedStatement pst, List<Object> paras) throws SQLException {
-		for (int i=0, size=paras.size(); i<size; i++) {
-			pst.setObject(i + 1, paras.get(i));
-		}
-	}
-	
-	public void fillStatement(PreparedStatement pst, Object... paras) throws SQLException {
-		for (int i=0; i<paras.length; i++) {
-			pst.setObject(i + 1, paras[i]);
-		}
-	}
-	
-	public String getDefaultPrimaryKey() {
-		return "id";
-	}
+    public abstract String forTableInfoBuilderDoBuildTableInfo(String tableName);
+
+    public abstract void forModelSave(TableInfo tableInfo, Map<String, Object> attrs, StringBuilder sql, List<Object> paras);
+
+    public abstract String forModelDeleteById(TableInfo tInfo);
+
+    public abstract void forModelUpdate(TableInfo tableInfo, Map<String, Object> attrs, Set<String> modifyFlag, String pKey, Object id, StringBuilder sql, List<Object> paras);
+
+    public abstract String forModelFindById(TableInfo tInfo, String columns);
+
+    public abstract String forDbFindById(String tableName, String primaryKey, String columns);
+
+    public abstract String forDbDeleteById(String tableName, String primaryKey);
+
+    public abstract void forDbSave(StringBuilder sql, List<Object> paras, String tableName, Record record);
+
+    public abstract void forDbUpdate(String tableName, String primaryKey, Object id, Record record, StringBuilder sql, List<Object> paras);
+
+    public abstract void forPaginate(StringBuilder sql, int pageNumber, int pageSize, String select, String sqlExceptSelect);
+
+    public boolean isOracle() {
+        return false;
+    }
+
+    public boolean isTakeOverDbPaginate() {
+        return false;
+    }
+
+    public Page<Record> takeOverDbPaginate(Connection conn, int pageNumber, int pageSize, String select, String sqlExceptSelect, Object... paras) throws SQLException {
+        throw new RuntimeException("You should implements this method in " + getClass().getName());
+    }
+
+    public boolean isTakeOverModelPaginate() {
+        return false;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public Page takeOverModelPaginate(Class<? extends Model> modelClass, int pageNumber, int pageSize, String select, String sqlExceptSelect, Object... paras) {
+        throw new RuntimeException("You should implements this method in " + getClass().getName());
+    }
+
+    public void fillStatement(PreparedStatement pst, List<Object> paras) throws SQLException {
+        for (int i = 0, size = paras.size(); i < size; i++) {
+            pst.setObject(i + 1, paras.get(i));
+        }
+    }
+
+    public void fillStatement(PreparedStatement pst, Object... paras) throws SQLException {
+        for (int i = 0; i < paras.length; i++) {
+            pst.setObject(i + 1, paras[i]);
+        }
+    }
+
+    public String getDefaultPrimaryKey() {
+        return "id";
+    }
 }
 
 

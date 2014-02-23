@@ -16,7 +16,7 @@
 
 package com.jfinal.kit;
 
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 import java.io.File;
 import java.net.URL;

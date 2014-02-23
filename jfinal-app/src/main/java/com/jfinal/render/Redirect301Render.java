@@ -6,7 +6,7 @@
 
 package com.jfinal.render;
 
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 import javax.servlet.http.HttpServletResponse;
 

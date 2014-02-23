@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package com.jfinal.sog.kit.cst;
+package com.jfinal.sog.kit;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;

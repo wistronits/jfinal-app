@@ -24,7 +24,7 @@ import java.util.Properties;
 import java.util.Set;
 import javax.servlet.ServletContext;
 
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;

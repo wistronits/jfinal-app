@@ -6,7 +6,7 @@
 
 package com.jfinal.sog.kit.lang;
 
-import com.jfinal.sog.kit.cst.AppFunc;
+import com.jfinal.sog.kit.AppFunc;
 
 import java.lang.reflect.Array;
 

@@ -23,12 +23,14 @@ import java.util.regex.Pattern;
 /**
  * Validator.
  */
+@SuppressWarnings("UnusedDeclaration")
 public abstract class Validator implements Interceptor {
 
-    private Controller controller;
+    private Controller       controller;
     private ActionInvocation invocation;
+
     private boolean shortCircuit = false;
-    private boolean invalid = false;
+    private boolean invalid      = false;
 
     private static final String emailAddressPattern = "\\b(^['_A-Za-z0-9-]+(\\.['_A-Za-z0-9-]+)*@([A-Za-z0-9-])+(\\.[A-Za-z0-9-]+)*((\\.[A-Za-z0-9]{2,})|(\\.[A-Za-z0-9]{2,}\\.[A-Za-z0-9]{2,}))$)\\b";
 
@@ -206,7 +208,6 @@ public abstract class Validator implements Interceptor {
             addError(errorKey, errorMessage);
         }
     }
-
 
 
     /**

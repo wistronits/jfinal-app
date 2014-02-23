@@ -6,7 +6,7 @@
 package com.jfinal.ext.plugin.tablebind;
 
 import com.jfinal.kit.StringKit;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 public class SimpleNameStyles {
     public static final INameStyle DEFAULT = new INameStyle() {

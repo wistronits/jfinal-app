@@ -12,7 +12,7 @@ import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.util.Map;
 
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateException;

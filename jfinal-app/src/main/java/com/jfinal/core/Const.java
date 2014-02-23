@@ -17,7 +17,7 @@
 package com.jfinal.core;
 
 import com.jfinal.render.ViewType;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 

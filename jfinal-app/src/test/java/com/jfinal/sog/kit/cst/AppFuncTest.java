@@ -7,6 +7,7 @@
 package com.jfinal.sog.kit.cst;
 
 import com.google.common.collect.Lists;
+import com.jfinal.sog.kit.AppFunc;
 import org.junit.Assert;
 import org.junit.Test;
 

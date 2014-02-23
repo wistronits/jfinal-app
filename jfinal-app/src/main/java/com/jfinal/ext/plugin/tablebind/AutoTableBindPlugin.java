@@ -7,7 +7,7 @@ package com.jfinal.ext.plugin.tablebind;
 
 import com.jfinal.sog.ctxbox.ClassBox;
 import com.jfinal.sog.ctxbox.ClassType;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import com.jfinal.kit.StringKit;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;

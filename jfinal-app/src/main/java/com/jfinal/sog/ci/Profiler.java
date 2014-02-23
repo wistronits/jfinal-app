@@ -1,7 +1,7 @@
 package com.jfinal.sog.ci;
 
 import com.google.common.collect.Lists;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import com.jfinal.sog.kit.lang.ObjectKit;
 
 import java.text.DecimalFormat;

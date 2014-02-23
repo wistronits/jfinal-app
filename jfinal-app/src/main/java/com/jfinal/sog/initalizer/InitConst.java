@@ -16,16 +16,21 @@ package com.jfinal.sog.initalizer;
  * @since JDK 1.6
  */
 public interface InitConst {
-    String APP = "app";
-
+    /*App Configurate*/
+    String APP      = "app";
     String DEV_MODE = "dev.mode";
     String DOMAIN   = "domain";
+    String SECURITY = "security";
+    String CACHE    = "cache";
+    String JOB      = "job";
 
+    /* View Configuration. */
     String VIEW_PATH = "view.path";
     String VIEW_TYPE = "view.type";
     String VIEW_404  = "view.404";
     String VIEW_500  = "view.500";
 
+    /* Database Configuration. */
     String DB_URL         = "db.url";
     String DB_USERNAME    = "db.username";
     String DB_PASSWORD    = "db.password";
@@ -33,16 +38,26 @@ public interface InitConst {
     String DB_INIT        = "db.init";
     String DB_SCRIPT_PATH = "db.script.path";
 
-    String SECURITY = "security";
-    String CACHE    = "cache";
-    String JOB      = "job";
 
+    /* MongoDB Configuration */
     String MONGO_HOST   = "mongo.host";
     String MONGO_URL    = "mongo.url";
     String MONGO_PORT   = "mongo.port";
     String MONGO_DB     = "mongo.db";
     String MONGO_MORIPH = "mongo.moriph";
 
-    String REDIS_HOST = "redis.host";
-    String REDIS_PORT = "redis.port";
+    /* Redis Configuration */
+    String REDIS_HOST                           = "redis.host";
+    String REDIS_PORT                           = "redis.port";
+    String REDIS_PASSWORD                       = "redis.password";
+    String REDIS_MAXTOTAL                       = "redis.maxtotal";
+    String REDIS_MAXIDLE                        = "redis.maxidle";
+    String REDIS_MINIDLE                        = "redis.minidle";
+    String REDIS_MINEVICTABLEIDLETIMEMILLIS     = "redis.minevictableidletimemillis";
+    String REDIS_NUMTESTSPEREVICTIONRUN         = "redis.numtestsperevictionrun";
+    String REDIS_SOFTMINEVICTABLEIDLETIMEMILLIS = "redis.softminevictableidletimemillis";
+    String REDIS_TIMEBETWEENEVICTIONRUNSMILLIS  = "redis.timebetweenevictionrunsmillis";
+    String REDIS_TESTWHILEIDLE                  = "redis.testwhileidle";
+    String REDIS_TESTONRETURN                   = "redis.testonreturn";
+    String REDIS_TESTONBORROW                   = "redis.testonborrow";
 }

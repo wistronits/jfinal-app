@@ -18,7 +18,7 @@ package com.jfinal.plugin.activerecord.dialect;
 
 import com.google.common.collect.Lists;
 import com.jfinal.plugin.activerecord.*;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -81,7 +81,8 @@ public class AnsiSqlDialect extends Dialect {
     public String forModelFindById(TableInfo tInfo, String columns) {
         StringBuilder sql = new StringBuilder("SELECT ");
         if (columns.trim().equals(StringPool.ASTERISK)) {
-            sql.append(columns);
+//            sql.append(columns);
+            sql.append(tInfo.getColumnName());
         } else {
             String[] columnsArray = columns.split(StringPool.COMMA);
             for (int i = ZERO; i < columnsArray.length; i++) {

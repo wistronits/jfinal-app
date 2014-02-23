@@ -16,7 +16,7 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.ServletContext;
 import static com.jfinal.core.Const.DEFAULT_FILE_CONTENT_TYPE;
 import com.jfinal.kit.PathKit;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 /**
  * FileRender.

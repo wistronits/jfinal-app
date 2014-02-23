@@ -29,7 +29,7 @@ import com.jfinal.render.IErrorRenderFactory;
 import com.jfinal.render.IMainRenderFactory;
 import com.jfinal.render.RenderFactory;
 import com.jfinal.render.ViewType;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import com.jfinal.token.ITokenCache;
 
 /**

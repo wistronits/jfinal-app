@@ -16,19 +16,19 @@
 
 package com.jfinal.plugin.activerecord;
 
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.jfinal.plugin.activerecord.cache.EhCache;
 import com.jfinal.plugin.activerecord.cache.ICache;
 import com.jfinal.plugin.activerecord.dialect.Dialect;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,11 +38,11 @@ import java.util.Set;
 public final class DbKit {
 
     private static DataSource dataSource;
-    private static final ThreadLocal<Connection> threadLocal = new ThreadLocal<Connection>();
-    static final Object[] NULL_PARA_ARRAY = new Object[0];
-    private static int transactionLevel = Connection.TRANSACTION_READ_COMMITTED;
+    private static final ThreadLocal<Connection> threadLocal      = new ThreadLocal<Connection>();
+    static final         Object[]                NULL_PARA_ARRAY  = new Object[0];
+    private static       int                     transactionLevel = Connection.TRANSACTION_READ_COMMITTED;
 
-    private static ICache cache = new EhCache();
+    private static ICache  cache   = new EhCache();
     private static boolean showSql = false;
 
     static boolean devMode = false;
@@ -50,15 +50,15 @@ public final class DbKit {
 
     static IContainerFactory containerFactory = new IContainerFactory() {
         public Map<String, Object> getAttrsMap() {
-            return new HashMap<String, Object>();
+            return Maps.newHashMap();
         }
 
         public Map<String, Object> getColumnsMap() {
-            return new HashMap<String, Object>();
+            return Maps.newHashMap();
         }
 
         public Set<String> getModifyFlagSet() {
-            return new HashSet<String>();
+            return Sets.newHashSet();
         }
     };
 
@@ -140,7 +140,7 @@ public final class DbKit {
     }
 
 	/* backup before refactory
-	public static final Connection getConnection() throws SQLException {
+    public static final Connection getConnection() throws SQLException {
 		Connection conn = threadLocal.get();
 		if (showSql)
 			return conn != null ? conn : new SqlReporter(dataSource.getConnection()).getConnection();

@@ -20,7 +20,7 @@ import java.io.IOException;
 
 import com.google.common.base.Strings;
 import com.jfinal.core.JFinal;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 /**
  * RedirectRender with status: 302 Found.

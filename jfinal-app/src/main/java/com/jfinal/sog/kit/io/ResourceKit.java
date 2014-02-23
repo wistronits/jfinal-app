@@ -13,7 +13,7 @@ import java.util.Properties;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 public class ResourceKit {
     public static Map<String, String> readProperties(String resourceName) {

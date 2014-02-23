@@ -5,7 +5,7 @@
  */
 package com.jfinal.ext.plugin.redis;
 
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 public class TopicNest {
     private StringBuilder sb;

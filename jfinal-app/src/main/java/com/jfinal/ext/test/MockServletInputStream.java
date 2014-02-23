@@ -5,7 +5,7 @@
  */
 package com.jfinal.ext.test;
 
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

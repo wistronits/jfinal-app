@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import com.jfinal.kit.StringKit;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 /**
  * Scanner.

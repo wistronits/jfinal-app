@@ -30,7 +30,7 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.render.RenderFactory;
 import com.jfinal.server.IServer;
 import com.jfinal.server.ServerFactory;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import com.jfinal.token.ITokenCache;
 import com.jfinal.token.TokenManager;
 import com.jfinal.upload.OreillyCos;

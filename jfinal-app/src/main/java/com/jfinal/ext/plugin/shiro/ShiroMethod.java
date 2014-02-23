@@ -5,7 +5,7 @@
  */
 package com.jfinal.ext.plugin.shiro;
 
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 

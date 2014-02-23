@@ -7,7 +7,9 @@ package com.jfinal.ext.plugin.redis;
 
 import com.jfinal.kit.StringKit;
 import com.jfinal.plugin.IPlugin;
-import com.jfinal.sog.kit.io.ResourceKit;
+import com.jfinal.sog.initalizer.ConfigProperties;
+import com.jfinal.sog.initalizer.InitConst;
+import com.jfinal.sog.kit.StringPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -21,9 +23,8 @@ import java.util.Set;
 public class JedisPlugin implements IPlugin {
 
     public JedisPool pool;
-    private String config = "RedisConnector.properties";
 
-    public static final String DEFAULT_HOST = "127.0.0.1";
+    public static final String DEFAULT_HOST = StringPool.LOCAL_HOST;
     public static final int    DEFAULT_PORT = Protocol.DEFAULT_PORT;
 
     private final String host;
@@ -66,17 +67,15 @@ public class JedisPlugin implements IPlugin {
         this.timeout = timeout;
     }
 
-    public JedisPlugin config(String config) {
-        this.config = config;
-        return this;
-    }
 
     @Override
     public boolean start() {
-        Map<String, String> map = ResourceKit.readProperties(config);
-        Set<Entry<String, String>> entrySet = map.entrySet();
-        for (Entry<String, String> entry : entrySet) {
-            parseSetting(entry.getKey(), entry.getValue().trim());
+        Map<String, String> map = ConfigProperties.getRedisConfig();
+        if (map != null && !map.isEmpty()) {
+            Set<Entry<String, String>> entrySet = map.entrySet();
+            for (Entry<String, String> entry : entrySet) {
+                parseSetting(entry.getKey(), entry.getValue());
+            }
         }
         JedisShardInfo shardInfo = new JedisShardInfo(host, port, timeout);
         if (StringKit.notBlank(password)) {
@@ -115,27 +114,27 @@ public class JedisPlugin implements IPlugin {
     }
 
     private void parseSetting(String key, String value) {
-        if ("password".equalsIgnoreCase(key)) {
+        if (InitConst.REDIS_PASSWORD.equalsIgnoreCase(key)) {
             password = value;
-        } else if ("maxtotal".equalsIgnoreCase(key)) {
+        } else if (InitConst.REDIS_MAXTOTAL.equalsIgnoreCase(key)) {
             maxTotal = Integer.valueOf(value);
-        } else if ("maxidle".equalsIgnoreCase(key)) {
+        } else if (InitConst.REDIS_MAXIDLE.equalsIgnoreCase(key)) {
             maxidle = Integer.valueOf(value);
-        } else if ("minevictableidletimemillis".equalsIgnoreCase(key)) {
+        } else if (InitConst.REDIS_MINEVICTABLEIDLETIMEMILLIS.equalsIgnoreCase(key)) {
             minevictableidletimemillis = Long.valueOf(value);
-        } else if ("minidle".equalsIgnoreCase(key)) {
+        } else if (InitConst.REDIS_MINIDLE.equalsIgnoreCase(key)) {
             minidle = Integer.valueOf(value);
-        } else if ("numtestsperevictionrun".equalsIgnoreCase(key)) {
+        } else if (InitConst.REDIS_NUMTESTSPEREVICTIONRUN.equalsIgnoreCase(key)) {
             numtestsperevictionrun = Integer.valueOf(value);
-        } else if ("softminevictableidletimemillis".equalsIgnoreCase(key)) {
+        } else if (InitConst.REDIS_SOFTMINEVICTABLEIDLETIMEMILLIS.equalsIgnoreCase(key)) {
             softminevictableidletimemillis = Long.valueOf(value);
-        } else if ("timebetweenevictionrunsmillis".equalsIgnoreCase(key)) {
+        } else if (InitConst.REDIS_TIMEBETWEENEVICTIONRUNSMILLIS.equalsIgnoreCase(key)) {
             timebetweenevictionrunsmillis = Long.valueOf(value);
-        } else if ("testwhileidle".equalsIgnoreCase(key)) {
+        } else if (InitConst.REDIS_TESTWHILEIDLE.equalsIgnoreCase(key)) {
             testwhileidle = Boolean.getBoolean(value);
-        } else if ("testonreturn".equalsIgnoreCase(key)) {
+        } else if (InitConst.REDIS_TESTONRETURN.equalsIgnoreCase(key)) {
             testonreturn = Boolean.getBoolean(value);
-        } else if ("testonborrow".equalsIgnoreCase(key)) {
+        } else if (InitConst.REDIS_TESTONBORROW.equalsIgnoreCase(key)) {
             testonborrow = Boolean.getBoolean(value);
         }
     }

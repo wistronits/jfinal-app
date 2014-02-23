@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-package com.jfinal.sog.kit.cst;
+package com.jfinal.sog.kit;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -92,5 +92,7 @@ public interface StringPool {
     String HTML_QUOTE = "&quot;";
     String HTML_LT    = "&lt;";
     String HTML_GT    = "&gt;";
+
+    String LOCAL_HOST = "127.0.0.1";
 
 }

@@ -12,7 +12,7 @@ import java.util.Set;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.jfinal.sog.kit.cst.StringPool;
+import com.jfinal.sog.kit.StringPool;
 
 @SuppressWarnings("serial")
 public class KeyLabel implements Comparable<KeyLabel>, Serializable {
