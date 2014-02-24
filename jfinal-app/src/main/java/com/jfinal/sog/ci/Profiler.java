@@ -8,6 +8,8 @@ import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
 
+import static com.jfinal.sog.kit.StringPool.EMPTY;
+
 /**
  * 用来测试并统计线程执行时间的工具。
  * <p/>
@@ -15,7 +17,6 @@ import java.util.List;
  * Profiler.enter(message),Profiler.release() 要成对出现
  * <p/>
  * <pre>
- *    @Test
  * 	public void test_dump() throws InterruptedException {
  * 		try {
  * 			Profiler.start("businessProcess");
@@ -62,6 +63,7 @@ import java.util.List;
  * @version 1.0 2014-01-04 13:54
  * @since JDK 1.6
  */
+@SuppressWarnings("UnusedDeclaration")
 public final class Profiler {
 
 
@@ -237,7 +239,7 @@ public final class Profiler {
      * @return 列出所有step，并统计各自所占用的时间
      */
     public static String printDump() {
-        String dump = dump("", "");
+        String dump = dump(EMPTY, EMPTY);
         if (dump != null && !dump.isEmpty()) {
             System.out.println(dump);
         }
@@ -250,7 +252,7 @@ public final class Profiler {
      * @return 列出所有step，并统计各自所占用的时间
      */
     public static String dump() {
-        return dump("", "");
+        return dump(EMPTY, EMPTY);
     }
 
     /**
@@ -276,7 +278,7 @@ public final class Profiler {
         if (step != null) {
             return step.toString(prefix1, prefix2);
         } else {
-            return "";
+            return EMPTY;
         }
     }
 
@@ -351,7 +353,7 @@ public final class Profiler {
         /**
          * 得到开始时间
          *
-         * @return
+         * @return 得到开始时间
          */
         public long getStartTime() {
             return startTime;
@@ -360,7 +362,7 @@ public final class Profiler {
         /**
          * 得到父step
          *
-         * @return
+         * @return 得到父step
          */
         public Step getParentStep() {
             return parentStep;
@@ -405,7 +407,7 @@ public final class Profiler {
         /**
          * 得到循环执行次数，用于计算TPS使用
          *
-         * @return
+         * @return 得到循环执行次数
          */
         public long getLoopCount() {
             return loopCount;
@@ -414,7 +416,7 @@ public final class Profiler {
         /**
          * 得到这个步骤的执行的异常
          *
-         * @return
+         * @return 得到这个步骤的执行的异常
          */
         public Throwable getException() {
             return exception;
@@ -489,7 +491,7 @@ public final class Profiler {
         /**
          * 得到TPS(每秒事务处理量Transaction Per Second)
          *
-         * @return
+         * @return 得到TPS
          */
         public int getTps() {
             if (loopCount > 0 && getDuration() > 0) {
@@ -573,7 +575,7 @@ public final class Profiler {
          * @return 字符串表示的step
          */
         public String toString() {
-            return toString("", "");
+            return toString(EMPTY, EMPTY);
         }
 
         /**
@@ -591,6 +593,9 @@ public final class Profiler {
             return buffer.toString();
         }
 
+
+        DecimalFormat pecentageFormat = new DecimalFormat("##.#%");
+        DecimalFormat numberFormat = new DecimalFormat("##,###,###");
         /**
          * 将step转换成字符串的表示。
          *
@@ -598,9 +603,6 @@ public final class Profiler {
          * @param prefix1 首行前缀
          * @param prefix2 后续行前缀
          */
-        DecimalFormat pecentageFormat = new DecimalFormat("##.#%");
-        DecimalFormat numberFormat = new DecimalFormat("##,###,###");
-
         private void toString(StringBuilder buffer, String prefix1, String prefix2) {
             buffer.append(prefix1);
 

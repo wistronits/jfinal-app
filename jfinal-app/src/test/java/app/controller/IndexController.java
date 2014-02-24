@@ -7,9 +7,11 @@
 package app.controller;
 
 import app.dtos.Work;
-import com.jfinal.sog.annotation.Param;
+import com.jfinal.aop.Before;
 import com.jfinal.config.AjaxMessage;
 import com.jfinal.config.BasicController;
+import com.jfinal.sog.annotation.Param;
+import com.jfinal.sog.interceptor.ProfilerInterceptor;
 import com.jfinal.sog.kit.AppFunc;
 
 import java.util.Date;
@@ -54,6 +56,7 @@ public class IndexController extends BasicController {
     }
 
 
+    @Before(ProfilerInterceptor.class)
     public void json(String name, @Param(json = true) Work work,
                      @Param(json = true) Work d) {
         System.out.println(name);
