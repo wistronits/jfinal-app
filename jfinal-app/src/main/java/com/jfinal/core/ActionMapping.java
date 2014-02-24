@@ -16,25 +16,39 @@
 
 package com.jfinal.core;
 
+import com.google.common.collect.Maps;
+import com.jfinal.sog.annotation.Path;
+import com.jfinal.sog.annotation.RequestMethod;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.config.Interceptors;
 import com.jfinal.config.Routes;
 import com.jfinal.sog.kit.StringPool;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
-import java.util.*;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+
+import static com.jfinal.sog.kit.StringPool.SLASH;
 
 /**
  * ActionMapping
  */
 final class ActionMapping {
+    private final static Logger logger = LoggerFactory.getLogger(ActionMapping.class);
 
-    private static final String SLASH = StringPool.SLASH;
-    private Routes routes;
-    private Interceptors interceptors;
+    private final Routes       routes;
+    private final Interceptors interceptors;
 
-    private final Map<String, Action> mapping = new HashMap<String, Action>();
+    private final Map<String, Action> mapping = Maps.newHashMap();
 
     ActionMapping(Routes routes, Interceptors interceptors) {
         this.routes = routes;
@@ -60,18 +74,29 @@ final class ActionMapping {
         for (Entry<String, Class<? extends Controller>> entry : routes.getEntrySet()) {
             Class<? extends Controller> controllerClass = entry.getValue();
             Interceptor[] controllerInters = interceptorBuilder.buildControllerInterceptors(controllerClass);
-            Method[] methods = controllerClass.getMethods();
+//            Method[] methods = controllerClass.getMethods();
+            // sogyf : only current controller method.
+            final Method[] methods = controllerClass.getDeclaredMethods();
+            // end sogyf : only current controller method.
+
             for (Method method : methods) {
+                // sogyf: filter public method.
+                if (!Modifier.isPublic(method.getModifiers())) {
+                    return;
+                }
+                // end sogyf: filter public method.
+
                 String methodName = method.getName();
-                if (!excludedMethodName.contains(methodName) && method.getParameterTypes().length == 0) {
+                if (!excludedMethodName.contains(methodName) /*&& method.getParameterTypes().length == 0*/) {
                     Interceptor[] methodInters = interceptorBuilder.buildMethodInterceptors(method);
                     Interceptor[] actionInters = interceptorBuilder.buildActionInterceptors(defaultInters, controllerInters, controllerClass, methodInters, method);
                     String controllerKey = entry.getKey();
 
-                    ActionKey ak = method.getAnnotation(ActionKey.class);
+
+                    Path ak = method.getAnnotation(Path.class);
                     if (ak != null) {
                         String actionKey = ak.value().trim();
-                        if ("".equals(actionKey))
+                        if (StringUtils.isBlank(actionKey))
                             throw new IllegalArgumentException(controllerClass.getName() + StringPool.DOT + methodName + "(): The argument of ActionKey can not be blank.");
 
                         if (!actionKey.startsWith(SLASH))
@@ -82,11 +107,17 @@ final class ActionMapping {
                             continue;
                         }
 
-                        Action action = new Action(controllerKey, actionKey, controllerClass, method, methodName, actionInters, routes.getViewPath(controllerKey));
+                        final Action action = new Action(controllerKey, actionKey, controllerClass, method, methodName, actionInters, routes.getViewPath(controllerKey), ak.method());
+                        if(logger.isDebugEnabled()){
+                            logger.debug("The JFinal Action {} init...", actionKey);
+                        }
                         mapping.put(actionKey, action);
                     } else if (methodName.equals("index")) {
 
-                        Action action = new Action(controllerKey, controllerKey, controllerClass, method, methodName, actionInters, routes.getViewPath(controllerKey));
+                        Action action = new Action(controllerKey, controllerKey, controllerClass, method, methodName, actionInters, routes.getViewPath(controllerKey), RequestMethod.ALL);
+                        if(logger.isDebugEnabled()){
+                            logger.debug("The JFinal Action {} init...", controllerKey);
+                        }
                         action = mapping.put(controllerKey, action);
 
                         if (action != null) {
@@ -100,7 +131,10 @@ final class ActionMapping {
                             continue;
                         }
 
-                        Action action = new Action(controllerKey, actionKey, controllerClass, method, methodName, actionInters, routes.getViewPath(controllerKey));
+                        final Action action = new Action(controllerKey, actionKey, controllerClass, method, methodName, actionInters, routes.getViewPath(controllerKey), RequestMethod.ALL);
+                        if(logger.isDebugEnabled()){
+                            logger.debug("The JFinal Action {} init...", actionKey);
+                        }
                         mapping.put(actionKey, action);
                     }
                 }
@@ -108,9 +142,9 @@ final class ActionMapping {
         }
 
         // support url = controllerKey + urlParas with "/" of controllerKey
-        Action actoin = mapping.get(StringPool.SLASH);
+        Action actoin = mapping.get(SLASH);
         if (actoin != null)
-            mapping.put("", actoin);
+            mapping.put(StringPool.EMPTY, actoin);
     }
 
     private static void warnning(String actionKey, Class<? extends Controller> controllerClass, Method method) {

@@ -50,7 +50,7 @@ public final class JFinalFilter implements Filter {
 			throw new RuntimeException("JFinal init error!");
 		
 		handler = jfinal.getHandler();
-        Constants constants = Config.getConstants();
+        final Constants constants = Config.getConstants();
 		encoding = constants.getEncoding();
 		jfinalConfig.afterJFinalStart();
 		
@@ -59,8 +59,8 @@ public final class JFinalFilter implements Filter {
 	}
 	
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest request = (HttpServletRequest)req;
-		HttpServletResponse response = (HttpServletResponse)res;
+		final HttpServletRequest request = (HttpServletRequest)req;
+		final HttpServletResponse response = (HttpServletResponse)res;
 		request.setCharacterEncoding(encoding);
 		
 		String target = request.getRequestURI();

@@ -5,6 +5,23 @@
  */
 package com.jfinal.ext.test;
 
+import com.google.common.collect.Maps;
+import com.jfinal.sog.kit.StringPool;
+
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpUpgradeHandler;
+import javax.servlet.http.Part;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -15,25 +32,12 @@ import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.AsyncContext;
-import javax.servlet.DispatcherType;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.*;
-
-import com.google.common.collect.Maps;
-import com.jfinal.sog.kit.StringPool;
-
 public class MockHttpRequest implements HttpServletRequest {
-    private Map<String, Object> attr = Maps.newHashMap();
+    private final Map<String, Object> attr = Maps.newHashMap();
 
-    private Map<String, String> para = Maps.newHashMap();
+    private final Map<String, String> para = Maps.newHashMap();
 
-    private String body;
+    private final String body;
 
     public MockHttpRequest(String body) {
         this.body = body;
@@ -195,7 +199,7 @@ public class MockHttpRequest implements HttpServletRequest {
 
     @Override
     public String[] getParameterValues(String key) {
-        return new String[] { para.get(key) };
+        return new String[]{para.get(key)};
     }
 
     @Override

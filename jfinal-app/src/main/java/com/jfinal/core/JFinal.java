@@ -45,7 +45,7 @@ public final class JFinal {
 	private Handler handler;
 	private ServletContext servletContext;
 	private static IServer server;
-	private String contextPath = "";
+	private String contextPath = StringPool.EMPTY;
 	
 	Handler getHandler() {
 		return handler;

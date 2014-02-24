@@ -45,6 +45,7 @@ public interface InitConst {
     String MONGO_PORT   = "mongo.port";
     String MONGO_DB     = "mongo.db";
     String MONGO_MORIPH = "mongo.moriph";
+    String MONGO_MORIPH_PKGS = "mongo.moriph_pkgs";
 
     /* Redis Configuration */
     String REDIS_HOST                           = "redis.host";

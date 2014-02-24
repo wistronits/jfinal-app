@@ -84,6 +84,7 @@
         <ant.version>1.9.3</ant.version>
         <poi.version>3.10-FINAL</poi.version>
         <activation.version>1.1</activation.version>
+        <asm.version>4.2</asm.version>
     </properties>
 
     <dependencies>
@@ -332,6 +333,12 @@
             <artifactId>thumbnailator</artifactId>
             <version>${thumbnailator.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>${asm.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>junit</groupId>

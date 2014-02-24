@@ -131,12 +131,14 @@ public abstract class ControllerTestCase<T extends AppConfig> {
         return response;
     }
 
-    public ControllerTestCase<T> post(File bodyFile) {
+
+
+    public ControllerTestCase<T> bodyFile(File bodyFile) {
         this.bodyFile = bodyFile;
         return this;
     }
 
-    public ControllerTestCase<T> post(String bodyData) {
+    public ControllerTestCase<T> bodyData(String bodyData) {
         this.bodyData = bodyData;
         return this;
     }

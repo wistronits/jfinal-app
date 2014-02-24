@@ -16,6 +16,7 @@
 
 package com.jfinal.core;
 
+import com.jfinal.sog.annotation.RequestMethod;
 import com.jfinal.config.Constants;
 import com.jfinal.handler.Handler;
 import com.jfinal.log.Logger;
@@ -23,6 +24,7 @@ import com.jfinal.render.Render;
 import com.jfinal.render.RenderException;
 import com.jfinal.render.RenderFactory;
 import com.jfinal.sog.kit.StringPool;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,10 +34,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 final class ActionHandler extends Handler {
 
-    private final boolean devMode;
+    private final boolean       devMode;
     private final ActionMapping actionMapping;
     private static final RenderFactory renderFactory = RenderFactory.me();
-    private static final Logger log = Logger.getLogger(ActionHandler.class);
+    private static final Logger        log           = Logger.getLogger(ActionHandler.class);
 
     public ActionHandler(ActionMapping actionMapping, Constants constants) {
         this.actionMapping = actionMapping;
@@ -58,11 +60,13 @@ final class ActionHandler extends Handler {
         final Action action = actionMapping.getAction(target, urlPara);
 
         if (action == null) {
-            if (log.isWarnEnabled()) {
-                String qs = request.getQueryString();
-                log.warn("404 Action Not Found: " + (qs == null ? target : target + StringPool.QUESTION_MARK + qs));
-            }
-            renderFactory.getErrorRender(404).setContext(request, response).render();
+            notFound(target, request, response);
+            return;
+        }
+
+        if (action.getPathMethod() != RequestMethod.ALL
+                && !StringUtils.equalsIgnoreCase(action.getPathMethod().toString(), request.getMethod())) {
+            notFound(target, request, response);
             return;
         }
 
@@ -119,6 +123,15 @@ final class ActionHandler extends Handler {
             }
             renderFactory.getErrorRender(500).setContext(request, response).render();
         }
+    }
+
+    private void notFound(String target, HttpServletRequest request, HttpServletResponse response) {
+        if (log.isWarnEnabled()) {
+            String qs = request.getQueryString();
+            String method = request.getMethod();
+            log.warn("404 Action Not Found: " + (qs == null ? target : target + StringPool.QUESTION_MARK + qs) + ", method: " + method);
+        }
+        renderFactory.getErrorRender(404).setContext(request, response).render();
     }
 }
 
