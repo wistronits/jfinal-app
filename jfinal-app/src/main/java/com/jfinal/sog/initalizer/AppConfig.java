@@ -10,7 +10,6 @@ import com.alibaba.druid.util.JdbcConstants;
 import com.alibaba.druid.util.JdbcUtils;
 import com.alibaba.druid.wall.WallFilter;
 import com.google.common.base.Strings;
-import com.google.common.base.Throwables;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -241,7 +240,7 @@ public class AppConfig extends JFinalConfig {
                     event.load();
                 } catch (Throwable t) {
                     logger.error("load event is error!", t);
-                    throw Throwables.propagate(t);
+                    // ingore
                 }
             }
         }

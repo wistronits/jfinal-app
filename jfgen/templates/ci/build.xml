@@ -12,21 +12,21 @@
     <property name="vendor" value="jfinal"/>
 
     <property name="src.dir" location="src/main/java"/>
-    <property name="build.dir" location="out/ant/classes" />
-    <property name="dist.dir" location="out/dist"/>
+    <property name="build.dir" location="target/ant/classes" />
+    <property name="dist.dir" location="target/dist"/>
 
     <property name="config.dir" location="src/main/resources" />
-    <property name="doc.dir" location="out/ant/javadoc"/>
+    <property name="doc.dir" location="target/ant/javadoc"/>
     <property name="web.root" location="src/main/webapp" />
 
-    <property name="lib.dir" location="src/main/webapp/WEB-INF/lib"/>
+    <property name="lib.dir" location="{{genPath}}/deps/compile/"/>
 
     <path id="classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
     </path>
 
     <target name="clean" description="clean build and package dir">
-        <delete dir="out"/>
+        <delete dir="target"/>
     </target>
 
     <target name="makedir" description="mkdir">

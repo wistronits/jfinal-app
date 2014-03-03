@@ -14,6 +14,9 @@ import shutil
 import errno
 import uuid
 
+reload(sys)
+# 解决：中文字符写入文件问题
+sys.setdefaultencoding('utf-8')
 
 gen_path = os.path.normpath(os.path.dirname(os.path.realpath(sys.argv[0])))
 
@@ -75,7 +78,7 @@ def gen_idea(directory, project_name):
     idea_ipr = project_name + '.ipr'
     idea_iws = project_name + '.iws'
     idea_iml = project_name + '.iml'
-    params = {'appName': project_name, 'appSN': uuid.uuid4()}
+    params = {'appName': project_name, 'appSN': uuid.uuid4(), 'gen_path': gen_path}
     file_content = render_config_file('idea/app.module', params)
     _storage_file(directory, file_content, idea_iml)
     file_content = render_config_file('idea/app.project', params)
@@ -97,6 +100,13 @@ def gen_config(directory, application_name):
 
     file_content = render_config_file('conf/logback.xml', params)
     _storage_file(storage_path, file_content, 'logback.xml')
+
+
+def create_maven(maven_project_path, group):
+    params = {'group': group}
+
+    file_content = render_config_file('ci/maven.project', params)
+    _storage_file(maven_project_path, file_content, 'pom.xml')
 
 
 def _storage_file(storage_path, content, file_name):
@@ -166,7 +176,7 @@ def pack_war(project_dir):
             break
 
     # 2. render build.xml file into project dir.
-    build_xml_content = render_config_file('ci/build.xml', {'appName': application_name})
+    build_xml_content = render_config_file('ci/build.xml', {'appName': application_name,'genPath': gen_path})
     build_xml_file = os.path.join(project_dir, 'build.xml')
     _storage_file(project_dir, build_xml_content, 'build.xml')
 
@@ -221,9 +231,11 @@ if __name__ == "__main__":
         project_layout_gen(app_dir, app_name)
 
         project_folder = os.path.join(app_dir, app_name)
-        copy_deps_lib(project_folder)
+        # copy_deps_lib(project_folder)
 
         gen_config(project_folder, app_name)
+
+        create_maven(project_folder, app_name);
 
         init_default_code(project_folder, app_name)
 

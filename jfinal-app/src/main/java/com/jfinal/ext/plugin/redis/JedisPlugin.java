@@ -16,10 +16,11 @@ import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.Protocol;
 
-import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.Set;
 
+@SuppressWarnings("UnusedDeclaration")
 public class JedisPlugin implements IPlugin {
 
     public JedisPool pool;
@@ -70,11 +71,12 @@ public class JedisPlugin implements IPlugin {
 
     @Override
     public boolean start() {
-        Map<String, String> map = ConfigProperties.getRedisConfig();
-        if (map != null && !map.isEmpty()) {
-            Set<Entry<String, String>> entrySet = map.entrySet();
-            for (Entry<String, String> entry : entrySet) {
-                parseSetting(entry.getKey(), entry.getValue());
+        final Properties properties = ConfigProperties.getRedisConfig();
+        if (properties != null && !properties.isEmpty()) {
+
+            Set<Entry<Object, Object>> entrySet = properties.entrySet();
+            for (Entry<Object, Object> entry : entrySet) {
+                parseSetting(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
             }
         }
         JedisShardInfo shardInfo = new JedisShardInfo(host, port, timeout);

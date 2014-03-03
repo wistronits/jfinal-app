@@ -7,11 +7,12 @@
 package app.controller;
 
 import app.dtos.Work;
+import app.module.Task;
 import com.jfinal.aop.Before;
 import com.jfinal.config.AjaxMessage;
 import com.jfinal.config.BasicController;
 import com.jfinal.sog.annotation.Param;
-import com.jfinal.sog.interceptor.ProfilerInterceptor;
+import com.jfinal.sog.ci.ProfilerInterceptor;
 import com.jfinal.sog.kit.AppFunc;
 
 import java.util.Date;
@@ -28,6 +29,7 @@ import java.util.Date;
 public class IndexController extends BasicController {
 
     public void index() {
+        Task.dao.findById(1);
         renderJson("abc");
     }
 

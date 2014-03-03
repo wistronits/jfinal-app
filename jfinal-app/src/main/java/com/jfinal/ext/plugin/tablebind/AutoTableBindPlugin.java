@@ -9,16 +9,17 @@ import com.jfinal.sog.ctxbox.ClassBox;
 import com.jfinal.sog.ctxbox.ClassType;
 import com.jfinal.sog.kit.StringPool;
 import com.jfinal.kit.StringKit;
-import com.jfinal.log.Logger;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.IDataSourceProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 public class AutoTableBindPlugin extends ActiveRecordPlugin {
 
-    protected final Logger log = Logger.getLogger(getClass());
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private boolean autoScan = true;
     private final INameStyle nameStyle;
