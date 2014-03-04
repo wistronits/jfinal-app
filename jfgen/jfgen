@@ -88,7 +88,7 @@ def gen_idea(project_dir):
     _storage_file(project_dir, file_content, idea_ipr)
     file_content = render_config_file('idea/app.workspace', params)
     _storage_file(project_dir, file_content, idea_iws)
-    pass
+    print 'Convert the idea project Success.'
 
 
 def gen_config(directory, application_name):
@@ -259,7 +259,7 @@ if __name__ == "__main__":
 
         # gen_idea(project_folder, app_name)
 
-        print '%s project create Suceess!' % app_name
+        print '%s project create Success!' % app_name
         sys.exit()
 
     if cmd == 'war':
