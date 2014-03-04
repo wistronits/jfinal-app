@@ -29,7 +29,7 @@ def project_layout_gen(project_dir, project_name):
     # Maven layout project.
     _src = os.path.join(project_dir, project_name, 'src')
     if os.path.exists(_src):
-        print 'the %s is exist!' % _src
+        print 'the %s is exist!' % os.path.jon(project_dir, project_name)
         sys.exit(1)
     os.makedirs(_src)
     main_ = os.path.join(_src, "main")
@@ -142,6 +142,11 @@ def copy_directory(source_dir, dest_dir):
 
 
 def init_default_code(directory, project_name):
+    # .gitignore copy
+    ignore_git = open(os.path.join(gen_path, 'deps', 'git', 'ignore'), 'r')
+    _storage_file(directory, ignore_git.read(), '.gitignore')
+    ignore_git.close()
+
     storage_path = os.path.join(
         directory, "src", "main", "java", "app", "controllers")
 
