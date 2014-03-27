@@ -9,11 +9,11 @@ package app.controller;
 import app.dtos.Work;
 import app.module.Task;
 import com.jfinal.aop.Before;
-import com.jfinal.config.AjaxMessage;
-import com.jfinal.config.BasicController;
-import com.jfinal.sog.annotation.Param;
-import com.jfinal.sog.ci.ProfilerInterceptor;
-import com.jfinal.sog.kit.AppFunc;
+import com.github.sog.controller.AjaxMessage;
+import com.github.sog.controller.BasicController;
+import com.github.sog.annotation.Param;
+import com.github.sog.test.ci.ProfilerInterceptor;
+import com.github.sog.kit.AppFunc;
 
 import java.util.Date;
 

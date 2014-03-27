@@ -52,17 +52,16 @@
 
         <!--the view render -->
         <freemarker.version>2.3.20</freemarker.version>
-        <velocity.version>1.7</velocity.version>
         <!-- utils -->
         <commons-beanutils.version>1.9.1</commons-beanutils.version>
         <commons-collections.version>3.2.1</commons-collections.version>
-        <commons-pool.version>2.0</commons-pool.version>
+        <commons-pool.version>2.2</commons-pool.version>
         <commons-codec.version>1.9</commons-codec.version>
-        <commons-lang3.version>3.1</commons-lang3.version>
+        <commons-lang3.version>3.3</commons-lang3.version>
         <commons-io.version>2.4</commons-io.version>
-        <httpclient.version>4.3.2</httpclient.version>
+        <httpclient.version>4.3.3</httpclient.version>
         <guava.version>16.0.1</guava.version>
-        <fastjson.version>1.1.38</fastjson.version>
+        <fastjson.version>1.1.39</fastjson.version>
         <joda-time.version>2.3</joda-time.version>
         <dom4j.version>1.6.1</dom4j.version>
         <jsoup.version>1.7.3</jsoup.version>
@@ -73,28 +72,36 @@
         <thumbnailator.version>0.4.7</thumbnailator.version>
 
         <!-- the caceh and database -->
-        <ehcache-core.version>2.6.7</ehcache-core.version>
-        <druid.version>1.0.2</druid.version>
-        <mysql-connector-java.version>5.1.27</mysql-connector-java.version>
+        <ehcache-core.version>2.6.8</ehcache-core.version>
+        <druid.version>1.0.3</druid.version>
+        <mysql-connector-java.version>5.1.29</mysql-connector-java.version>
         <h2.version>1.3.175</h2.version>
         <!-- utest -->
         <junit.version>4.11</junit.version>
         <!-- servlet and shiro -->
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-        <shiro.version>1.2.2</shiro.version>
-        <org.jodd.version>3.4.10</org.jodd.version>
+        <shiro.version>1.2.3</shiro.version>
         <!-- nosql -->
-        <mongo-java-driver.version>2.11.3</mongo-java-driver.version>
-        <morphia.version>0.106</morphia.version>
-        <jedis.version>2.3.1</jedis.version>
-        <postgresql.version>9.3-1100-jdbc41</postgresql.version>
+        <mongo-java-driver.version>2.11.4</mongo-java-driver.version>
+        <morphia.version>0.107</morphia.version>
+        <jedis.version>2.4.1</jedis.version>
+        <postgresql.version>9.3-1101-jdbc41</postgresql.version>
         <ant.version>1.9.3</ant.version>
         <poi.version>3.10-FINAL</poi.version>
         <activation.version>1.1</activation.version>
         <asm.version>4.2</asm.version>
+        <httpcore.version>4.3.2</httpcore.version>
+        <jfinal.version>1.5</jfinal.version>
     </properties>
 
     <dependencies>
+
+
+        <dependency>
+            <groupId>com.jfinal</groupId>
+            <artifactId>jfinal</artifactId>
+            <version>${jfinal.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>javax.activation</groupId>
@@ -179,7 +186,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
-            <version>${httpclient.version}</version>
+            <version>${httpcore.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-logging</groupId>
@@ -373,89 +380,27 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
-            <scope>provided</scope>
+            <version>${shiro.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
-            <scope>provided</scope>
+            <version>${shiro.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <scope>provided</scope>
+            <version>${shiro.version}</version>
         </dependency>
 
 
         <dependency>
             <groupId>com.jfinal</groupId>
             <artifactId>jetty-server</artifactId>
+            <version>8.1.8</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-
-
-            <dependency>
-                <groupId>com.jfinal</groupId>
-                <artifactId>jetty-server</artifactId>
-                <version>8.1.8</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jodd</groupId>
-                <artifactId>jodd-core</artifactId>
-                <version>${org.jodd.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jodd</groupId>
-                <artifactId>jodd-upload</artifactId>
-                <version>${org.jodd.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jodd</groupId>
-                <artifactId>jodd-http</artifactId>
-                <version>${org.jodd.version}</version>
-            </dependency>
-
-
-            <!--Shiro -->
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-core</artifactId>
-                <version>${shiro.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-web</artifactId>
-                <version>${shiro.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-ehcache</artifactId>
-                <version>${shiro.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.velocity</groupId>
-                <artifactId>velocity</artifactId>
-                <version>${velocity.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-lang</groupId>
-                        <artifactId>commons-lang</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <finalName>jfinal-app</finalName>

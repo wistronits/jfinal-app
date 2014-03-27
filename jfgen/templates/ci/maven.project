@@ -13,7 +13,7 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.jfinal</groupId>
+            <groupId>com.github.sogyf</groupId>
             <artifactId>jfinal-app</artifactId>
             <version>${com.jfinal.version}</version>
         </dependency>
@@ -35,11 +35,6 @@
     </dependencies>
 
     <repositories>
-        <repository>
-            <id>sog</id>
-            <name>sog Repository</name>
-            <url>https://raw2.github.com/sogyf/maven-repository/master/</url>
-        </repository>
         <repository>
             <id>osc</id>
             <name>osc Repository</name>

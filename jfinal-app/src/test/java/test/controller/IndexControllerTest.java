@@ -8,8 +8,8 @@ package test.controller;
 
 import app.dtos.Work;
 import com.alibaba.fastjson.JSON;
-import com.jfinal.ext.test.ControllerTestCase;
-import com.jfinal.sog.initalizer.AppConfig;
+import com.github.sog.test.ControllerTestCase;
+import com.github.sog.config.AppConfig;
 import org.junit.Test;
 
 /**
