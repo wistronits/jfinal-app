@@ -6,7 +6,8 @@
 
 package com.github.sog.kit.common;
 
-import jodd.JoddCore;
+
+import com.github.sog.config.StringPool;
 
 import java.util.Arrays;
 import java.io.UnsupportedEncodingException;
@@ -127,7 +128,7 @@ public class Base64 {
 
 	public static byte[] encodeToByte(String s) {
 		try {
-			return encodeToByte(s.getBytes(JoddCore.encoding), false);
+			return encodeToByte(s.getBytes(StringPool.UTF_8), false);
 		} catch (UnsupportedEncodingException ignore) {
 			return null;
 		}
@@ -135,7 +136,7 @@ public class Base64 {
 
 	public static byte[] encodeToByte(String s, boolean lineSep) {
 		try {
-			return encodeToByte(s.getBytes(JoddCore.encoding), lineSep);
+			return encodeToByte(s.getBytes(StringPool.UTF_8), lineSep);
 		} catch (UnsupportedEncodingException ignore) {
 			return null;
 		}
@@ -189,7 +190,7 @@ public class Base64 {
 
 	public static String decodeToString(byte[] arr) {
 		try {
-			return new String(decode(arr), JoddCore.encoding);
+			return new String(decode(arr), StringPool.UTF_8);
 		} catch (UnsupportedEncodingException ignore) {
 			return null;
 		}
@@ -242,7 +243,7 @@ public class Base64 {
 
 	public static String encodeToString(String s) {
 		try {
-			return new String(encodeToChar(s.getBytes(JoddCore.encoding), false));
+			return new String(encodeToChar(s.getBytes(StringPool.UTF_8), false));
 		} catch (UnsupportedEncodingException ignore) {
 			return null;
 		}
@@ -250,7 +251,7 @@ public class Base64 {
 
 	public static String encodeToString(String s, boolean lineSep) {
 		try {
-			return new String(encodeToChar(s.getBytes(JoddCore.encoding), lineSep));
+			return new String(encodeToChar(s.getBytes(StringPool.UTF_8), lineSep));
 		} catch (UnsupportedEncodingException ignore) {
 			return null;
 		}
@@ -269,7 +270,7 @@ public class Base64 {
 
 	public static String decodeToString(String s) {
 		try {
-			return new String(decode(s), JoddCore.encoding);
+			return new String(decode(s), StringPool.UTF_8);
 		} catch (UnsupportedEncodingException ignore) {
 			return null;
 		}
