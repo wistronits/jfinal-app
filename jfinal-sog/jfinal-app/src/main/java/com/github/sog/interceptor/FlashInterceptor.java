@@ -33,7 +33,7 @@ public class FlashInterceptor implements Interceptor {
         final Controller c = ai.getController();
         final HttpSession session = c.getSession(false);
         final String curAction = ai.getViewPath() + ai.getMethodName();
-        final Map<String, Object> flashMap = AppConfig.getFlashManager().getFlash(session, curAction);
+        final Map<String, Object> flashMap = AppConfig.flashManager().getFlash(session, curAction);
         if (flashMap != null) {
             for (Map.Entry<String, Object> flashEntry : flashMap.entrySet()) {
                 c.setAttr(flashEntry.getKey(), flashEntry.getValue());

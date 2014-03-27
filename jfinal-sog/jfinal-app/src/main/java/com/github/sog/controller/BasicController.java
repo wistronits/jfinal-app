@@ -6,6 +6,7 @@
 
 package com.github.sog.controller;
 
+import com.github.sog.config.AppConfig;
 import com.github.sog.controller.datatables.core.DataSet;
 import com.github.sog.controller.datatables.core.DatatablesCriterias;
 import com.github.sog.controller.datatables.core.DatatablesResponse;
@@ -148,19 +149,17 @@ public abstract class BasicController extends Controller {
      * @param value 值
      */
     public void setFlash(String key, Object value) {
-        String sessionKey = this.getSession(false).getId();
         String actionPath = getRequest().getRequestURI();
-        FlashManager.me().setFlash(sessionKey, actionPath, key, value);
+        AppConfig.flashManager().setFlash(this.getSession(false), actionPath, key, value);
         flashflag = true;
     }
 
     @Override
     public void forwardAction(String actionUrl) {
         if (flashflag) {//若有新加入的Flash。更换key。
-            String sessionKey = this.getSession(false).getId();
             String actionPath = getRequest().getRequestURI();
             //将以当前actionPath为key更替为下一个请求actionPath作为key
-            FlashManager.me().updateFlash(sessionKey, actionPath, actionUrl);
+            AppConfig.flashManager().updateFlashKey(this.getSession(false), actionPath, actionUrl);
             flashflag = false;
         }
         super.forwardAction(actionUrl);
@@ -169,10 +168,9 @@ public abstract class BasicController extends Controller {
     @Override
     public void redirect(String url) {
         if (flashflag) {
-            String sessionKey = this.getSession(false).getId();
             String actionPath = getRequest().getRequestURI();
             String newActionPath = parsePath(actionPath, url);
-            FlashManager.me().updateFlash(sessionKey, actionPath, newActionPath);
+            AppConfig.flashManager().updateFlashKey(this.getSession(false), actionPath, newActionPath);
             flashflag = false;
         }
         super.redirect(url);
@@ -181,10 +179,9 @@ public abstract class BasicController extends Controller {
     @Override
     public void redirect(String url, boolean withQueryString) {
         if (flashflag) {
-            String sessionKey = this.getSession(false).getId();
             String actionPath = this.getRequest().getRequestURI();
             String newActionPath = parsePath(actionPath, url);
-            FlashManager.me().updateFlash(sessionKey, actionPath, newActionPath);
+            AppConfig.flashManager().updateFlashKey(this.getSession(false), actionPath, newActionPath);
             flashflag = false;
         }
         super.redirect(url, withQueryString);

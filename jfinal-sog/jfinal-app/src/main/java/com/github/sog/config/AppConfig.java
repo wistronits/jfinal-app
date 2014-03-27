@@ -329,7 +329,7 @@ public class AppConfig extends JFinalConfig {
         return setViewPath;
     }
 
-    public static FlashManager getFlashManager() {
+    public static FlashManager flashManager() {
         if (flashManager == null) {
             flashManager = new SessionFlashManager();
         }
