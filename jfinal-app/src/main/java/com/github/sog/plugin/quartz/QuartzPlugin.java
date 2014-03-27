@@ -5,6 +5,7 @@
  */
 package com.github.sog.plugin.quartz;
 
+import com.github.sog.annotation.On;
 import com.github.sog.initalizer.ctxbox.ClassBox;
 import com.github.sog.initalizer.ctxbox.ClassType;
 import com.jfinal.log.Logger;

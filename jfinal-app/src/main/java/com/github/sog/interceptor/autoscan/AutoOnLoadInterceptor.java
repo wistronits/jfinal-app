@@ -1,5 +1,6 @@
 package com.github.sog.interceptor.autoscan;
 
+import com.github.sog.annotation.AppInterceptor;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.config.Interceptors;
 import com.jfinal.log.Logger;

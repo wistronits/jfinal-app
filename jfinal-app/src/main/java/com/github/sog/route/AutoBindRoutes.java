@@ -5,6 +5,7 @@
  */
 package com.github.sog.route;
 
+import com.github.sog.annotation.ControllerBind;
 import com.google.common.base.Preconditions;
 import com.jfinal.config.Routes;
 import com.jfinal.core.Controller;

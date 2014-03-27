@@ -1,4 +1,4 @@
-package com.github.sog.interceptor.autoscan;
+package com.github.sog.annotation;
 
 import java.lang.annotation.*;
 

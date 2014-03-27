@@ -5,6 +5,7 @@
  */
 package com.github.sog.plugin.tablebind;
 
+import com.github.sog.annotation.TableBind;
 import com.github.sog.initalizer.ctxbox.ClassBox;
 import com.github.sog.initalizer.ctxbox.ClassType;
 import com.github.sog.config.StringPool;

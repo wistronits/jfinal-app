@@ -6,7 +6,7 @@
 
 package app.module;
 
-import com.github.sog.plugin.tablebind.TableBind;
+import com.github.sog.annotation.TableBind;
 import com.jfinal.plugin.activerecord.Model;
 
 /**

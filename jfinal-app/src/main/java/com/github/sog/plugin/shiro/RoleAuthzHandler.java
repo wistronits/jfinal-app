@@ -15,7 +15,6 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 /**
  * 基于角色的访问控制处理器，非单例模式运行。
  * @author dafei
- *
  */
 class RoleAuthzHandler extends AbstractAuthzHandler {
 
@@ -25,8 +24,7 @@ class RoleAuthzHandler extends AbstractAuthzHandler {
 		this.annotation = annotation;
 	}
 
-	@Override
-    public void assertAuthorized() throws AuthorizationException {
+	public void assertAuthorized() throws AuthorizationException {
 		//if (!(annotation instanceof RequiresRoles)) return;
         RequiresRoles rrAnnotation = (RequiresRoles) annotation;
         String[] roles = rrAnnotation.value();

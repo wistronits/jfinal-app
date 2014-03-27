@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
-package com.github.sog.plugin.shiro;
+package com.github.sog.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
