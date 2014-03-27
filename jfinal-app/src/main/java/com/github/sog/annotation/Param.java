@@ -6,7 +6,7 @@
 
 package com.github.sog.annotation;
 
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

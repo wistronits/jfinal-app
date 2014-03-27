@@ -8,7 +8,7 @@ package com.github.sog.initalizer;
 
 import com.alibaba.druid.util.JdbcUtils;
 import com.github.sog.initalizer.ctxbox.ClassFinder;
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;

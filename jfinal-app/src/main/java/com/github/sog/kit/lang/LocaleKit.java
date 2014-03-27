@@ -7,8 +7,7 @@
 package com.github.sog.kit.lang;
 
 import com.google.common.collect.Maps;
-import com.github.sog.kit.StringPool;
-import com.jfinal.kit.StringKit;
+import com.github.sog.config.StringPool;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.NumberFormat;

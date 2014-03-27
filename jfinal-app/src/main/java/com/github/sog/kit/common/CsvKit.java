@@ -8,8 +8,7 @@ package com.github.sog.kit.common;
 
 import com.github.sog.kit.lang.CharKit;
 import com.google.common.collect.Lists;
-import com.github.sog.kit.StringPool;
-import com.jfinal.kit.StringKit;
+import com.github.sog.config.StringPool;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;

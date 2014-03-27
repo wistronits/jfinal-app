@@ -2,7 +2,7 @@ package com.github.sog.kit.io;
 
 import com.jfinal.core.Const;
 import com.jfinal.log.Logger;
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 import com.github.sog.kit.lang.TxtKit;
 
 import java.io.*;

@@ -7,10 +7,10 @@ package com.github.sog.test;
 
 import com.alibaba.druid.util.JdbcUtils;
 import com.github.sog.config.AppConfig;
-import com.github.sog.ext.kit.Reflect;
+import com.github.sog.kit.common.Reflect;
 import com.github.sog.initalizer.ConfigProperties;
 import com.github.sog.initalizer.ctxbox.ClassFinder;
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;

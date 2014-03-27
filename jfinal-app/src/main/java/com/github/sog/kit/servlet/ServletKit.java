@@ -6,7 +6,7 @@
 package com.github.sog.kit.servlet;
 
 import com.google.common.net.HttpHeaders;
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 import com.github.sog.kit.encry.EncodeKit;
 import com.jfinal.kit.StringKit;
 import org.apache.commons.lang3.Validate;

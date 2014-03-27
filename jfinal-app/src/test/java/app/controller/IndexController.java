@@ -13,7 +13,7 @@ import com.github.sog.controller.AjaxMessage;
 import com.github.sog.controller.BasicController;
 import com.github.sog.annotation.Param;
 import com.github.sog.test.ci.ProfilerInterceptor;
-import com.github.sog.kit.AppFunc;
+import com.github.sog.config.AppFunc;
 
 import java.util.Date;
 

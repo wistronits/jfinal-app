@@ -7,13 +7,13 @@
 package com.github.sog.kit.lang;
 
 import com.google.common.base.Strings;
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 
-import static com.github.sog.Constants.*;
-import static com.github.sog.Constants.ValidatorRegex.*;
+import static com.github.sog.config.Constants.*;
+import static com.github.sog.config.Constants.ValidatorRegex.*;
 
 /**
  * <p>

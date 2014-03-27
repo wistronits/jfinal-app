@@ -1,6 +1,6 @@
 package com.github.sog.kit.common;
 
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 import org.apache.commons.io.IOUtils;
 
 import javax.imageio.ImageIO;

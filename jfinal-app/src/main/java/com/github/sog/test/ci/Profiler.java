@@ -1,14 +1,14 @@
 package com.github.sog.test.ci;
 
 import com.google.common.collect.Lists;
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 import com.github.sog.kit.lang.ObjectKit;
 
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
 
-import static com.github.sog.kit.StringPool.EMPTY;
+import static com.github.sog.config.StringPool.EMPTY;
 
 /**
  * 用来测试并统计线程执行时间的工具。

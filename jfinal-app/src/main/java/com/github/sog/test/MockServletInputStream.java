@@ -5,7 +5,7 @@
  */
 package com.github.sog.test;
 
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

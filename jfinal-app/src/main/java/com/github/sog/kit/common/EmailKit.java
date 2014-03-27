@@ -1,7 +1,7 @@
 package com.github.sog.kit.common;
 
 
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 import sun.misc.BASE64Encoder;
 
 import javax.activation.DataHandler;

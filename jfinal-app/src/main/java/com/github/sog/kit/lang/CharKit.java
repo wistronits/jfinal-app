@@ -6,7 +6,7 @@
 
 package com.github.sog.kit.lang;
 
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;

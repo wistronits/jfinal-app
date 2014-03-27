@@ -6,7 +6,7 @@
 package com.github.sog.test;
 
 import com.google.common.collect.Maps;
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;

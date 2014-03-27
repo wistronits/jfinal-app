@@ -1,6 +1,6 @@
 package com.github.sog.kit.io;
 
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 
 import java.text.DecimalFormat;
 

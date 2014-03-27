@@ -1,6 +1,6 @@
 package com.github.sog.kit.encry;
 
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 
 import java.security.SecureRandom;
 import java.util.UUID;

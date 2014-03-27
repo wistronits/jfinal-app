@@ -14,7 +14,7 @@ import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
 import com.jfinal.core.Controller;
 import com.github.sog.interceptor.syslog.config.LogPathConfig;
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 import com.github.sog.kit.servlet.ServletKit;
 import com.jfinal.kit.StringKit;
 

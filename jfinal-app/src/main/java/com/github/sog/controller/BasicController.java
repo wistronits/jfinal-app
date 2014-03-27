@@ -10,7 +10,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.jfinal.core.Controller;
 import com.github.sog.kit.tpl.FreemarkerKit;
-import com.github.sog.ext.render.FreeMarkerXMLRender;
+import com.github.sog.render.FreeMarkerXMLRender;
 import com.github.sog.controller.datatables.core.DataSet;
 import com.github.sog.controller.datatables.core.DatatablesCriterias;
 import com.github.sog.controller.datatables.core.DatatablesResponse;

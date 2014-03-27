@@ -12,7 +12,7 @@ import com.jfinal.core.Controller;
 import com.github.sog.interceptor.syslog.LogConfig;
 import com.github.sog.interceptor.syslog.LogProcessor;
 import com.github.sog.interceptor.syslog.SysLog;
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.StringPool;
 
 import java.util.Map;
 import java.util.Set;

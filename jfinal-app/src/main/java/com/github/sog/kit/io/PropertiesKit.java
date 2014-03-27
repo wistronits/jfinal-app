@@ -1,8 +1,8 @@
 package com.github.sog.kit.io;
 
 import com.google.common.base.Splitter;
-import com.github.sog.kit.AppFunc;
-import com.github.sog.kit.StringPool;
+import com.github.sog.config.AppFunc;
+import com.github.sog.config.StringPool;
 
 import java.io.*;
 import java.net.MalformedURLException;
