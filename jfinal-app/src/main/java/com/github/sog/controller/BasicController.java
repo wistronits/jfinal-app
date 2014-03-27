@@ -6,14 +6,14 @@
 
 package com.github.sog.controller;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Maps;
-import com.jfinal.core.Controller;
-import com.github.sog.kit.tpl.FreemarkerKit;
-import com.github.sog.render.FreeMarkerXMLRender;
 import com.github.sog.controller.datatables.core.DataSet;
 import com.github.sog.controller.datatables.core.DatatablesCriterias;
 import com.github.sog.controller.datatables.core.DatatablesResponse;
+import com.github.sog.kit.tpl.FreemarkerKit;
+import com.github.sog.render.FreeMarkerXMLRender;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Maps;
+import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 
 import java.util.Enumeration;
@@ -29,6 +29,8 @@ import java.util.Map;
  * @since JDK 1.5
  */
 public abstract class BasicController extends Controller {
+
+    protected static boolean flashflag = false;
 
 
     /**
@@ -114,5 +116,77 @@ public abstract class BasicController extends Controller {
         DataSet<E> dataSet = DataSet.newSet(datas.getList(), datas.getTotalRow(), datas.getTotalRow());
         DatatablesResponse<E> response = DatatablesResponse.build(dataSet, criterias);
         renderJson(response);
+    }
+
+
+    /**
+     * 根据当前路径构造将要跳转的路径的完整Action
+     *
+     * @param currentActionPath 当前路径，类似 /sau/index
+     * @param url               下一个路径，类似/au/login, detail?，admin/detail.
+     * @return 下一个Action的完整路径（）
+     */
+    public String parsePath(String currentActionPath, String url) {
+        if (url.startsWith("/")) {//完整路径
+            return url.split("\\?")[0];
+        } else if (!url.contains("/")) {//类似于detail的路径。
+            return "/" + currentActionPath.split("/")[1] + "/" + url.split("\\?")[0];
+        } else if (url.contains("http:") || url.contains("https:")) {
+            return null;
+        }
+        ///abc/def","bcd/efg?abc
+        return currentActionPath + "/" + url.split("\\?")[0];
+    }
+
+    /**
+     * 设定Flash，该flash中的所有信息将会出现在下一个请求中。
+     * 该操作一般用在forwardAction 及redirect操作前。
+     * 在设定Falsh拦截器后，拦截器会自动注入所有当前Action中设定的Flash信息到request中。
+     * 且仅注入一次。
+     *
+     * @param key   键
+     * @param value 值
+     */
+    public void setFlash(String key, Object value) {
+        String sessionKey = this.getSession(false).getId();
+        String actionPath = getRequest().getRequestURI();
+        FlashManager.me().setFlash(sessionKey, actionPath, key, value);
+        flashflag = true;
+    }
+
+    @Override
+    public void forwardAction(String actionUrl) {
+        if (flashflag) {//若有新加入的Flash。更换key。
+            String sessionKey = this.getSession(false).getId();
+            String actionPath = getRequest().getRequestURI();
+            //将以当前actionPath为key更替为下一个请求actionPath作为key
+            FlashManager.me().updateFlash(sessionKey, actionPath, actionUrl);
+            flashflag = false;
+        }
+        super.forwardAction(actionUrl);
+    }
+
+    @Override
+    public void redirect(String url) {
+        if (flashflag) {
+            String sessionKey = this.getSession(false).getId();
+            String actionPath = getRequest().getRequestURI();
+            String newActionPath = parsePath(actionPath, url);
+            FlashManager.me().updateFlash(sessionKey, actionPath, newActionPath);
+            flashflag = false;
+        }
+        super.redirect(url);
+    }
+
+    @Override
+    public void redirect(String url, boolean withQueryString) {
+        if (flashflag) {
+            String sessionKey = this.getSession(false).getId();
+            String actionPath = this.getRequest().getRequestURI();
+            String newActionPath = parsePath(actionPath, url);
+            FlashManager.me().updateFlash(sessionKey, actionPath, newActionPath);
+            flashflag = false;
+        }
+        super.redirect(url, withQueryString);
     }
 }

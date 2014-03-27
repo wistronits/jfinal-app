@@ -9,16 +9,11 @@ package com.github.sog.config;
 import com.alibaba.druid.util.JdbcConstants;
 import com.alibaba.druid.util.JdbcUtils;
 import com.alibaba.druid.wall.WallFilter;
+import com.github.sog.controller.flash.EhCacheFlashManager;
+import com.github.sog.controller.flash.FlashManager;
+import com.github.sog.controller.flash.SessionFlashManager;
 import com.github.sog.db.dialect.DB2Dialect;
 import com.github.sog.db.dialect.H2Dialect;
-import com.github.sog.plugin.monogodb.MongodbPlugin;
-import com.github.sog.plugin.quartz.QuartzPlugin;
-import com.github.sog.plugin.redis.JedisPlugin;
-import com.github.sog.plugin.shiro.ShiroPlugin;
-import com.github.sog.plugin.sqlinxml.SqlInXmlPlugin;
-import com.github.sog.plugin.tablebind.AutoTableBindPlugin;
-import com.github.sog.plugin.tablebind.SimpleNameStyles;
-import com.github.sog.route.AutoBindRoutes;
 import com.github.sog.initalizer.AppLoadEvent;
 import com.github.sog.initalizer.ConfigProperties;
 import com.github.sog.initalizer.ctxbox.ClassBox;
@@ -28,11 +23,19 @@ import com.github.sog.interceptor.SystemLogProcessor;
 import com.github.sog.interceptor.autoscan.AutoOnLoadInterceptor;
 import com.github.sog.interceptor.syslog.SysLogInterceptor;
 import com.github.sog.plugin.log.LogbackLoggerFactory;
+import com.github.sog.plugin.monogodb.MongodbPlugin;
+import com.github.sog.plugin.quartz.QuartzPlugin;
+import com.github.sog.plugin.redis.JedisPlugin;
+import com.github.sog.plugin.shiro.ShiroPlugin;
+import com.github.sog.plugin.sqlinxml.SqlInXmlPlugin;
+import com.github.sog.plugin.tablebind.AutoTableBindPlugin;
+import com.github.sog.plugin.tablebind.SimpleNameStyles;
 import com.github.sog.render.ftl.BlockDirective;
 import com.github.sog.render.ftl.ExtendsDirective;
 import com.github.sog.render.ftl.OverrideDirective;
 import com.github.sog.render.ftl.PrettyTimeDirective;
 import com.github.sog.render.ftl.SuperDirective;
+import com.github.sog.route.AutoBindRoutes;
 import com.google.common.base.Strings;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -75,7 +78,6 @@ public class AppConfig extends JFinalConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
 
-
     @Override
     public void configConstant(Constants constants) {
         constants.setLoggerFactory(new LogbackLoggerFactory());
@@ -87,6 +89,9 @@ public class AppConfig extends JFinalConfig {
         }
         appName = ConfigProperties.getProperty(APP, "app");
         domain = ConfigProperties.getProperty(DOMAIN, DEFAULT_DOMAIN);
+        String flash = ConfigProperties.getProperty(FLASH, "session");
+        flashManager = StringUtils.equals("session", flash) ? new SessionFlashManager()
+                : new EhCacheFlashManager("flash_cache_val");
         String view_type = ConfigProperties.getProperty(VIEW_TYPE);
         if (!StringKit.isBlank(view_type)) {
             setViewType(constants, view_type);
@@ -305,6 +310,9 @@ public class AppConfig extends JFinalConfig {
     private static boolean setViewPath;
     private static String  appName;
 
+
+    private static FlashManager flashManager;
+
     public static String getAppName() {
         return appName;
     }
@@ -319,5 +327,12 @@ public class AppConfig extends JFinalConfig {
 
     public static boolean isSetViewPath() {
         return setViewPath;
+    }
+
+    public static FlashManager getFlashManager() {
+        if (flashManager == null) {
+            flashManager = new SessionFlashManager();
+        }
+        return flashManager;
     }
 }

@@ -23,6 +23,7 @@ public interface InitConst {
     String SECURITY = "security";
     String CACHE    = "cache";
     String JOB      = "job";
+    String FLASH      = "flash";
 
     /* View Configuration. */
     String VIEW_PATH = "view.path";
@@ -35,8 +36,6 @@ public interface InitConst {
     String DB_USERNAME    = "db.username";
     String DB_PASSWORD    = "db.password";
     String DB_SQLINXML    = "db.sqlinxml";
-    String DB_INIT        = "db.init";
-    String DB_SCRIPT_PATH = "db.script.path";
 
 
     /* MongoDB Configuration */
