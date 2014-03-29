@@ -7,11 +7,15 @@
 package com.github.sog.controller;
 
 import com.github.sog.config.JFinalApp;
+import com.github.sog.config.StringPool;
 import com.github.sog.controller.datatables.core.DataSet;
 import com.github.sog.controller.datatables.core.DatatablesCriterias;
 import com.github.sog.controller.datatables.core.DatatablesResponse;
 import com.github.sog.kit.tpl.FreemarkerKit;
+import com.github.sog.render.BadRequest;
 import com.github.sog.render.FreeMarkerXMLRender;
+import com.github.sog.render.JxlsRender;
+import com.github.sog.render.NotModified;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.jfinal.core.Controller;
@@ -34,6 +38,14 @@ public abstract class BasicController extends Controller {
     protected static boolean flashflag = false;
 
 
+    @Override
+    public void render(String view) {
+        if (view.startsWith(StringPool.SLASH) && JFinalApp.setViewPath) {
+            super.render(JFinalApp.viewPath + view);
+        } else {
+            super.render(view);
+        }
+    }
 
     /**
      * 在jfinal基础上增加渲染XML格式的数据.
@@ -120,6 +132,24 @@ public abstract class BasicController extends Controller {
         renderJson(response);
     }
 
+    /**
+     * Send a 304 Not Modified response
+     */
+    protected static void notModified() {
+        new NotModified().render();
+    }
+
+    /**
+     * Send a 400 Bad request
+     */
+    protected static void badRequest() {
+        new BadRequest().render();
+    }
+
+
+    protected static void renderExcel(String templateFile, Map<String, Object> datas) {
+        JxlsRender.me(templateFile).beans(datas).render();
+    }
 
     /**
      * 根据当前路径构造将要跳转的路径的完整Action

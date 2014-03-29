@@ -50,7 +50,7 @@ public class FreemarkerKit {
             appConfig = (Configuration) FreeMarkerRender.getConfiguration().clone();
             try {
                 //设置模板路径
-                appConfig.setDirectoryForTemplateLoading(new File(PathKit.getWebRootPath() + JFinalApp.getBaseViewPath()));
+                appConfig.setDirectoryForTemplateLoading(new File(PathKit.getWebRootPath() + JFinalApp.viewPath));
                 appConfig.setObjectWrapper(new DefaultObjectWrapper());
             } catch (IOException e) {
                 // TODO log

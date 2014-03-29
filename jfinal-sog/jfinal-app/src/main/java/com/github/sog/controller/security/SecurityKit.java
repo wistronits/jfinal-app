@@ -42,15 +42,15 @@ import java.util.Enumeration;
  * @since JDK 1.6
  */
 public class SecurityKit {
-    public final static  String COOKIE_LOGIN      = JFinalApp.getAppName() + "_session_id";
+    public final static  String COOKIE_LOGIN      = JFinalApp.appName + "_session_id";
     /**
      * 登录的SESSION。KEY
      */
-    private static final String LOGIN_SESSION_KEY = JFinalApp.getAppName() + "#$session$login_user";
+    private static final String LOGIN_SESSION_KEY = JFinalApp.appName + "#$session$login_user";
     /**
      * 登录的会员IDSession信息
      */
-    private static final String LOGIN_MEMBER_ID   = JFinalApp.getAppName() + "@session#member%id";
+    private static final String LOGIN_MEMBER_ID   = JFinalApp.appName + "@session#member%id";
 
 
     private static final String LOGIN_CACHE_SESSION = "login.session";

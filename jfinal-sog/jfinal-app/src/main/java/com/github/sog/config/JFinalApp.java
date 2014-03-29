@@ -100,12 +100,6 @@ public class JFinalApp extends JFinalConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(JFinalApp.class);
 
-    public static Properties configuration;
-
-    /**
-     * The application mode
-     */
-    public static Mode mode;
 
     @Override
     public void configConstant(Constants constants) {
@@ -119,10 +113,10 @@ public class JFinalApp extends JFinalConfig {
         mode = dev_mode ? Mode.DEV : Mode.PROD;
         constants.setDevMode(dev_mode);
 
-        view_path = ConfigProperties.getProperty(VIEW_PATH, "/WEB-INF/views/");
-        if (!StringKit.isBlank(view_path)) {
+        viewPath = ConfigProperties.getProperty(VIEW_PATH, "/WEB-INF/views/");
+        if (!StringKit.isBlank(viewPath)) {
             setViewPath = true;
-            constants.setBaseViewPath(view_path);
+            constants.setBaseViewPath(viewPath);
         }
         appName = ConfigProperties.getProperty(APP, "app");
         domain = ConfigProperties.getProperty(DOMAIN, DEFAULT_DOMAIN);
@@ -340,30 +334,20 @@ public class JFinalApp extends JFinalConfig {
 
     private static final String DEFAULT_DOMAIN = "http://127.0.0.1:8080/app";
 
-    private static String view_path;
+    public static Properties configuration;
 
-    private static String  domain;
-    private static boolean setViewPath;
-    private static String  appName;
+    /**
+     * The application mode
+     */
+    public static Mode mode;
+
+    public static String  viewPath;
+    public static String  domain;
+    public static boolean setViewPath;
+    public static String  appName;
 
 
     private static FlashManager flashManager;
-
-    public static String getAppName() {
-        return appName;
-    }
-
-    public static String getBaseViewPath() {
-        return view_path;
-    }
-
-    public static String getDomain() {
-        return domain;
-    }
-
-    public static boolean isSetViewPath() {
-        return setViewPath;
-    }
 
     public static FlashManager flashManager() {
         if (flashManager == null) {

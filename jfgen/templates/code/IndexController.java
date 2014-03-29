@@ -1,6 +1,6 @@
 package app.controllers;
 
-import com.jfinal.config.BasicController;
+import com.github.sog.controller.BasicController;
 import com.jfinal.core.ActionKey;
 
 /**
