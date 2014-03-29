@@ -6,7 +6,7 @@
 package com.github.sog.test;
 
 import com.alibaba.druid.util.JdbcUtils;
-import com.github.sog.config.AppConfig;
+import com.github.sog.config.JFinalApp;
 import com.github.sog.kit.common.Reflect;
 import com.github.sog.initalizer.ConfigProperties;
 import com.github.sog.initalizer.ctxbox.ClassFinder;
@@ -47,7 +47,7 @@ import static com.github.sog.initalizer.InitConst.DB_SCRIPT_PATH;
 import static com.github.sog.initalizer.InitConst.DB_URL;
 import static com.github.sog.initalizer.InitConst.DB_USERNAME;
 
-public abstract class ControllerTestCase<T extends AppConfig> {
+public abstract class ControllerTestCase<T extends JFinalApp> {
     protected static final Logger logger = LoggerFactory.getLogger(ControllerTestCase.class);
 
     protected static ServletContext servletContext = new MockServletContext();

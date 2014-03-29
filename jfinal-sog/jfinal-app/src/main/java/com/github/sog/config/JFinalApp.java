@@ -14,6 +14,7 @@ import com.github.sog.controller.flash.FlashManager;
 import com.github.sog.controller.flash.SessionFlashManager;
 import com.github.sog.db.dialect.DB2Dialect;
 import com.github.sog.db.dialect.H2Dialect;
+import com.github.sog.exceptions.DatabaseException;
 import com.github.sog.initalizer.AppLoadEvent;
 import com.github.sog.initalizer.ConfigProperties;
 import com.github.sog.initalizer.ctxbox.ClassBox;
@@ -62,6 +63,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 
 import static com.github.sog.initalizer.InitConst.*;
 
@@ -74,14 +76,49 @@ import static com.github.sog.initalizer.InitConst.*;
  * @version 1.0 2013-12-12 13:50
  * @since JDK 1.5
  */
-public class AppConfig extends JFinalConfig {
+public class JFinalApp extends JFinalConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
+    /**
+     * 2 modes
+     */
+    public enum Mode {
+
+        /**
+         * Enable development-specific features, e.g. view the documentation at the URL {@literal "/@documentation"}.
+         */
+        DEV,
+        /**
+         * Disable development-specific features.
+         */
+        PROD;
+
+        public boolean isDev() {
+            return this == DEV;
+        }
+
+    }
+
+    private static final Logger logger = LoggerFactory.getLogger(JFinalApp.class);
+
+    public static Properties configuration;
+
+    /**
+     * The application mode
+     */
+    public static Mode mode;
 
     @Override
     public void configConstant(Constants constants) {
+        // set config propertis.
+        configuration = ConfigProperties.getConfigProps();
+
         constants.setLoggerFactory(new LogbackLoggerFactory());
-        constants.setDevMode(ConfigProperties.getPropertyToBoolean(DEV_MODE, false));
+
+        // dev_mode
+        final boolean dev_mode = ConfigProperties.getPropertyToBoolean(DEV_MODE, false);
+        mode = dev_mode ? Mode.DEV : Mode.PROD;
+        constants.setDevMode(dev_mode);
+
         view_path = ConfigProperties.getProperty(VIEW_PATH, "/WEB-INF/views/");
         if (!StringKit.isBlank(view_path)) {
             setViewPath = true;
@@ -96,6 +133,7 @@ public class AppConfig extends JFinalConfig {
         if (!StringKit.isBlank(view_type)) {
             setViewType(constants, view_type);
         } else {
+            constants.setFreeMarkerViewExtension(".ftl");
             setFtlSharedVariable();
         }
         String view_404 = ConfigProperties.getProperty(VIEW_404);
@@ -118,8 +156,7 @@ public class AppConfig extends JFinalConfig {
     @Override
     public void configPlugin(Plugins plugins) {
         String db_url = ConfigProperties.getProperty(DB_URL);
-        final boolean devMode = ConfigProperties.getPropertyToBoolean(DEV_MODE, false);
-        initDataSource(plugins, db_url, devMode);
+        initDataSource(plugins, db_url);
 
         if (ConfigProperties.getPropertyToBoolean(SECURITY, false)) {
             plugins.add(new ShiroPlugin(this.routes));
@@ -152,59 +189,6 @@ public class AppConfig extends JFinalConfig {
 
     }
 
-    /**
-     * init databases.
-     *
-     * @param plugins plugin.
-     * @param db_url  db_url
-     * @param devMode devmode
-     */
-    private void initDataSource(Plugins plugins, String db_url, boolean devMode) {
-        if (!Strings.isNullOrEmpty(db_url)) {
-            String dbtype = JdbcUtils.getDbType(db_url, StringUtils.EMPTY);
-            String driverClassName;
-            try {
-                driverClassName = JdbcUtils.getDriverClassName(db_url);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            final DruidPlugin druidPlugin = new DruidPlugin(
-                    db_url
-                    , ConfigProperties.getProperty(DB_USERNAME)
-                    , ConfigProperties.getProperty(DB_PASSWORD)
-                    , driverClassName);
-            druidPlugin.setFilters("stat,wall");
-            final WallFilter wall = new WallFilter();
-            wall.setDbType(JdbcConstants.MYSQL);
-            druidPlugin.addFilter(wall);
-            plugins.add(druidPlugin);
-
-            //  setting db table name like 'dev_info'
-            final AutoTableBindPlugin atbp = new AutoTableBindPlugin(druidPlugin, SimpleNameStyles.LOWER_UNDERLINE);
-
-            if (!StringUtils.equals(dbtype, JdbcConstants.MYSQL)) {
-                if (StringUtils.equals(dbtype, JdbcConstants.ORACLE)) {
-                    atbp.setDialect(new OracleDialect());
-                } else if (StringUtils.equals(dbtype, JdbcConstants.POSTGRESQL)) {
-                    atbp.setDialect(new PostgreSqlDialect());
-                } else if (StringUtils.equals(dbtype, JdbcConstants.DB2)) {
-                    atbp.setDialect(new DB2Dialect());
-                } else if (StringUtils.equals(dbtype, JdbcConstants.H2)) {
-                    atbp.setDialect(new H2Dialect());
-                } else if (StringUtils.equals(dbtype, "sqlite")) {
-                    atbp.setDialect(new Sqlite3Dialect());
-                } else {
-                    System.err.println("database type is use mysql.");
-                }
-            }
-            atbp.setShowSql(devMode);
-            plugins.add(atbp);
-            if (ConfigProperties.getPropertyToBoolean(DB_SQLINXML, false)) {
-                plugins.add(new SqlInXmlPlugin());
-            }
-        }
-
-    }
 
     @Override
     public void configInterceptor(Interceptors interceptors) {
@@ -228,7 +212,6 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configHandler(Handlers handlers) {
-//        handlers.add(new SessionHandler());
         //访问路径是/admin/monitor
         DruidStatViewHandler dvh = new DruidStatViewHandler("/admin/monitor", new IDruidStatViewAuth() {
             public boolean isPermitted(HttpServletRequest request) {//获得查看权限
@@ -266,6 +249,59 @@ public class AppConfig extends JFinalConfig {
         super.beforeJFinalStop();
     }
 
+
+    /**
+     * init databases.
+     *
+     * @param plugins plugin.
+     * @param db_url  db_url
+     */
+    private void initDataSource(Plugins plugins, String db_url) {
+        if (!Strings.isNullOrEmpty(db_url)) {
+            String dbtype = JdbcUtils.getDbType(db_url, StringUtils.EMPTY);
+            String driverClassName;
+            try {
+                driverClassName = JdbcUtils.getDriverClassName(db_url);
+            } catch (SQLException e) {
+                throw new DatabaseException(e.getMessage(), e);
+            }
+            final DruidPlugin druidPlugin = new DruidPlugin(
+                    db_url
+                    , ConfigProperties.getProperty(DB_USERNAME)
+                    , ConfigProperties.getProperty(DB_PASSWORD)
+                    , driverClassName);
+            druidPlugin.setFilters("stat,wall");
+            final WallFilter wall = new WallFilter();
+            wall.setDbType(JdbcConstants.MYSQL);
+            druidPlugin.addFilter(wall);
+            plugins.add(druidPlugin);
+
+            //  setting db table name like 'dev_info'
+            final AutoTableBindPlugin atbp = new AutoTableBindPlugin(druidPlugin, SimpleNameStyles.LOWER_UNDERLINE);
+
+            if (!StringUtils.equals(dbtype, JdbcConstants.MYSQL)) {
+                if (StringUtils.equals(dbtype, JdbcConstants.ORACLE)) {
+                    atbp.setDialect(new OracleDialect());
+                } else if (StringUtils.equals(dbtype, JdbcConstants.POSTGRESQL)) {
+                    atbp.setDialect(new PostgreSqlDialect());
+                } else if (StringUtils.equals(dbtype, JdbcConstants.DB2)) {
+                    atbp.setDialect(new DB2Dialect());
+                } else if (StringUtils.equals(dbtype, JdbcConstants.H2)) {
+                    atbp.setDialect(new H2Dialect());
+                } else if (StringUtils.equals(dbtype, "sqlite")) {
+                    atbp.setDialect(new Sqlite3Dialect());
+                } else {
+                    System.err.println("database type is use mysql.");
+                }
+            }
+            atbp.setShowSql(mode.isDev());
+            plugins.add(atbp);
+            if (ConfigProperties.getPropertyToBoolean(DB_SQLINXML, false)) {
+                plugins.add(new SqlInXmlPlugin());
+            }
+        }
+
+    }
 
     /**
      * set view type.

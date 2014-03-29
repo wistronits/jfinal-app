@@ -6,7 +6,7 @@
 
 package com.github.sog.kit.tpl;
 
-import com.github.sog.config.AppConfig;
+import com.github.sog.config.JFinalApp;
 import com.jfinal.kit.PathKit;
 import com.jfinal.render.FreeMarkerRender;
 import com.jfinal.render.RenderException;
@@ -50,7 +50,7 @@ public class FreemarkerKit {
             appConfig = (Configuration) FreeMarkerRender.getConfiguration().clone();
             try {
                 //设置模板路径
-                appConfig.setDirectoryForTemplateLoading(new File(PathKit.getWebRootPath() + AppConfig.getBaseViewPath()));
+                appConfig.setDirectoryForTemplateLoading(new File(PathKit.getWebRootPath() + JFinalApp.getBaseViewPath()));
                 appConfig.setObjectWrapper(new DefaultObjectWrapper());
             } catch (IOException e) {
                 // TODO log

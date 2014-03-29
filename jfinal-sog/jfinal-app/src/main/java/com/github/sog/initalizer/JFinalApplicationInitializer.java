@@ -59,7 +59,7 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
 
         final Properties p = ConfigProperties.getConfigProps();
 
-        boolean security = ConfigProperties.getPropertyToBoolean(InitConst.SECURITY, false);
+        boolean security = ConfigProperties.getPropertyToBoolean(InitConst.SECURITY, true);
         if (security) {
             ctx.addListener("org.apache.shiro.web.env.EnvironmentLoaderListener");
             ctx.addFilter("ShiroFilter", "org.apache.shiro.web.servlet.ShiroFilter")
@@ -73,7 +73,7 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
 
         FilterRegistration.Dynamic jfinalFilter = ctx.addFilter("jfinal@app", "com.jfinal.core.JFinalFilter");
 
-        jfinalFilter.setInitParameter("configClass", "com.github.sog.config.JFinalConfig");
+        jfinalFilter.setInitParameter("configClass", "com.github.sog.config.JFinalApp");
         jfinalFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         // 支持异步请求处理
         jfinalFilter.setAsyncSupported(true);

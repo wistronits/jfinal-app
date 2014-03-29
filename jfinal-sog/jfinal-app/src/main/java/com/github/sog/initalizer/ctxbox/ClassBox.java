@@ -36,7 +36,7 @@ public class ClassBox {
 
     private static final Map<ClassType, List<Class>> CLASS_BOX_MAP = Maps.newHashMap();
 
-    public List<Class> getClasses(ClassType classType) {
+    public  List<Class>  getClasses(ClassType classType) {
         return CLASS_BOX_MAP.get(classType);
     }
 

@@ -8,8 +8,8 @@ package test.controller;
 
 import app.dtos.Work;
 import com.alibaba.fastjson.JSON;
+import com.github.sog.config.JFinalApp;
 import com.github.sog.test.ControllerTestCase;
-import com.github.sog.config.AppConfig;
 import org.junit.Test;
 
 /**
@@ -21,7 +21,7 @@ import org.junit.Test;
  * @version 1.0 2014-02-24 11:02
  * @since JDK 1.6
  */
-public class IndexControllerTest extends ControllerTestCase<AppConfig> {
+public class IndexControllerTest extends ControllerTestCase<JFinalApp> {
 
 
     @Test

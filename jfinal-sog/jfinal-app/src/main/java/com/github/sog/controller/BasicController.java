@@ -6,7 +6,7 @@
 
 package com.github.sog.controller;
 
-import com.github.sog.config.AppConfig;
+import com.github.sog.config.JFinalApp;
 import com.github.sog.controller.datatables.core.DataSet;
 import com.github.sog.controller.datatables.core.DatatablesCriterias;
 import com.github.sog.controller.datatables.core.DatatablesResponse;
@@ -32,6 +32,7 @@ import java.util.Map;
 public abstract class BasicController extends Controller {
 
     protected static boolean flashflag = false;
+
 
 
     /**
@@ -150,7 +151,7 @@ public abstract class BasicController extends Controller {
      */
     public void setFlash(String key, Object value) {
         String actionPath = getRequest().getRequestURI();
-        AppConfig.flashManager().setFlash(this.getSession(false), actionPath, key, value);
+        JFinalApp.flashManager().setFlash(this.getSession(false), actionPath, key, value);
         flashflag = true;
     }
 
@@ -159,7 +160,7 @@ public abstract class BasicController extends Controller {
         if (flashflag) {//若有新加入的Flash。更换key。
             String actionPath = getRequest().getRequestURI();
             //将以当前actionPath为key更替为下一个请求actionPath作为key
-            AppConfig.flashManager().updateFlashKey(this.getSession(false), actionPath, actionUrl);
+            JFinalApp.flashManager().updateFlashKey(this.getSession(false), actionPath, actionUrl);
             flashflag = false;
         }
         super.forwardAction(actionUrl);
@@ -170,7 +171,7 @@ public abstract class BasicController extends Controller {
         if (flashflag) {
             String actionPath = getRequest().getRequestURI();
             String newActionPath = parsePath(actionPath, url);
-            AppConfig.flashManager().updateFlashKey(this.getSession(false), actionPath, newActionPath);
+            JFinalApp.flashManager().updateFlashKey(this.getSession(false), actionPath, newActionPath);
             flashflag = false;
         }
         super.redirect(url);
@@ -181,7 +182,7 @@ public abstract class BasicController extends Controller {
         if (flashflag) {
             String actionPath = this.getRequest().getRequestURI();
             String newActionPath = parsePath(actionPath, url);
-            AppConfig.flashManager().updateFlashKey(this.getSession(false), actionPath, newActionPath);
+            JFinalApp.flashManager().updateFlashKey(this.getSession(false), actionPath, newActionPath);
             flashflag = false;
         }
         super.redirect(url, withQueryString);
