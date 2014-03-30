@@ -1,6 +1,6 @@
 package com.github.sog.initalizer;
 
-import com.github.sog.kit.lang.PropertiesKit;
+import com.github.sog.kit.io.ResourceKit;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Properties;
@@ -47,7 +47,7 @@ public class ConfigProperties {
      */
     private static void readConf() {
         Properties p = new Properties();
-        PropertiesKit.loadFileInProperties(APPLICATION_PROP, p);
+        ResourceKit.loadFileInProperties(APPLICATION_PROP, p);
         if (checkNullOrEmpty(p)) {
             throw new IllegalArgumentException("Properties file can not be empty. " + APPLICATION_PROP);
         }

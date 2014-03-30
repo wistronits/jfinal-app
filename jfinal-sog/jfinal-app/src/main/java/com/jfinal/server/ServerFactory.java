@@ -66,10 +66,10 @@ public class ServerFactory {
 	
 	private static String detectWebAppDir() {
 		String rootClassPath = PathKit.getRootClassPath();
-		String[] temp = null;
-		if (rootClassPath.indexOf("\\WEB-INF\\") != -1)
+		String[] temp;
+		if (rootClassPath.contains("\\WEB-INF\\"))
 			temp = rootClassPath.split("\\\\");
-		else if (rootClassPath.indexOf("/WEB-INF/") != -1)
+		else if (rootClassPath.contains("/WEB-INF/"))
 			temp = rootClassPath.split("/");
 		else
 			throw new RuntimeException("WEB-INF directory not found.");

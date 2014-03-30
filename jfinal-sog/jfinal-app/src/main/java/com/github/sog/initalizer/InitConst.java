@@ -23,7 +23,7 @@ public interface InitConst {
     String SECURITY = "security";
     String CACHE    = "cache";
     String JOB      = "job";
-    String FLASH      = "flash";
+    String FLASH    = "flash";
 
     /* View Configuration. */
     String VIEW_PATH = "view.path";
@@ -40,11 +40,11 @@ public interface InitConst {
 
 
     /* MongoDB Configuration */
-    String MONGO_HOST   = "mongo.host";
-    String MONGO_URL    = "mongo.url";
-    String MONGO_PORT   = "mongo.port";
-    String MONGO_DB     = "mongo.db";
-    String MONGO_MORIPH = "mongo.moriph";
+    String MONGO_HOST        = "mongo.host";
+    String MONGO_URL         = "mongo.url";
+    String MONGO_PORT        = "mongo.port";
+    String MONGO_DB          = "mongo.db";
+    String MONGO_MORIPH      = "mongo.moriph";
     String MONGO_MORIPH_PKGS = "mongo.moriph_pkgs";
 
     /* Redis Configuration */

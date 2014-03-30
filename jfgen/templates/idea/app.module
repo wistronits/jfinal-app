@@ -13,14 +13,17 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
-      <sourceFolder url="file://{{gen_path}}/deps/test" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/logs" />
       <excludeFolder url="file://{{gen_path}}/deps/compile" />
       <excludeFolder url="file://{{gen_path}}/deps/test" />
     </content>
@@ -48,15 +51,6 @@
       <library>
         <CLASSES>
           <root url="jar://{{gen_path}}/deps/compile/activation-1.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://{{gen_path}}/deps/compile/asm-4.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -488,97 +482,133 @@
     <orderEntry type="module-library" scope="PROVIDED">
       <library>
         <CLASSES>
-          <root url="jar://{{gen_path}}/deps/test/javax.servlet-api-3.1.0.jar!/" />
+          <root url="jar://{{gen_path}}/deps/provided/javax.servlet-api-3.1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
+    <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://{{gen_path}}/deps/test/javax.servlet-3.0.0.v201112011016.jar!/" />
+          <root url="jar://{{gen_path}}/deps/runtime/javax.servlet-3.0.0.v201112011016.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
+    <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://{{gen_path}}/deps/test/jetty-continuation-8.1.8.v20121106.jar!/" />
+          <root url="jar://{{gen_path}}/deps/runtime/jetty-continuation-8.1.8.v20121106.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
+    <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://{{gen_path}}/deps/test/jetty-http-8.1.8.v20121106.jar!/" />
+          <root url="jar://{{gen_path}}/deps/runtime/jetty-http-8.1.8.v20121106.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
+    <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://{{gen_path}}/deps/test/jetty-io-8.1.8.v20121106.jar!/" />
+          <root url="jar://{{gen_path}}/deps/runtime/jetty-io-8.1.8.v20121106.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
+    <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://{{gen_path}}/deps/test/jetty-security-8.1.8.v20121106.jar!/" />
+          <root url="jar://{{gen_path}}/deps/runtime/jetty-security-8.1.8.v20121106.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
+    <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://{{gen_path}}/deps/test/jetty-server-8.1.8.jar!/" />
+          <root url="jar://{{gen_path}}/deps/runtime/jetty-server-8.1.8.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
+    <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://{{gen_path}}/deps/test/jetty-server-8.1.8.v20121106.jar!/" />
+          <root url="jar://{{gen_path}}/deps/runtime/jetty-server-8.1.8.v20121106.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
+    <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://{{gen_path}}/deps/test/jetty-servlet-8.1.8.v20121106.jar!/" />
+          <root url="jar://{{gen_path}}/deps/runtime/jetty-servlet-8.1.8.v20121106.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
+    <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://{{gen_path}}/deps/test/jetty-util-8.1.8.v20121106.jar!/" />
+          <root url="jar://{{gen_path}}/deps/runtime/jetty-util-8.1.8.v20121106.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
+    <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://{{gen_path}}/deps/test/jetty-xml-8.1.8.v20121106.jar!/" />
+          <root url="jar://{{gen_path}}/deps/runtime/jetty-xml-8.1.8.v20121106.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="RUNTIME">
+      <library>
+        <CLASSES>
+          <root url="jar://{{gen_path}}/deps/runtime/jetty-annotations-8.1.8.v20121106.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="RUNTIME">
+      <library>
+        <CLASSES>
+          <root url="jar://{{gen_path}}/deps/runtime/jetty-plus-8.1.8.v20121106.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="RUNTIME">
+      <library>
+        <CLASSES>
+          <root url="jar://{{gen_path}}/deps/runtime/org.objectweb.asm-3.1.0.v200803061910.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="RUNTIME">
+      <library>
+        <CLASSES>
+          <root url="jar://{{gen_path}}/deps/runtime/javax.annotation-1.1.0.v201108011116.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
