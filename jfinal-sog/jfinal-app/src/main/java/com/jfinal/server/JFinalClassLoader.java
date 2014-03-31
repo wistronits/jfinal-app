@@ -38,7 +38,7 @@ class JFinalClassLoader extends WebAppClassLoader {
 					path = path.substring(3);
 				}
 				
-				if(entry.startsWith("-n-") == false){
+				if(!entry.startsWith("-n-")){
 					super.addClassPath(path);
 				}
 			}

@@ -4,7 +4,6 @@
  * Copyright (c) 2013-2014 sagyf Yang. The Four Group.
  */
 
-import com.github.sog.config.JFinalApp;
 import com.github.sog.initalizer.InitConst;
 import com.github.sog.kit.io.ResourceKit;
 import com.jfinal.server.ServerFactory;
@@ -26,7 +25,7 @@ public class JFinalAppServer {
 
         final Map<String, String> conf = ResourceKit.readProperties("application.conf");
 
-        ServerFactory.getServer("src/main/webapp", 9000, "/" + conf.get(InitConst.APP)).start();
+        ServerFactory.getServer("src/main/webapp", 9000, "/" + conf.get(InitConst.APP), 0).start();
 
     }
 }
