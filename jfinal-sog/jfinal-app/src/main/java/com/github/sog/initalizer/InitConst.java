@@ -19,6 +19,7 @@ public interface InitConst {
     /*App Configurate*/
     String APP      = "app";
     String DEV_MODE = "dev.mode";
+    String DEV_SCAN = "dev.scan";
     String DOMAIN   = "domain";
     String SECURITY = "security";
     String CACHE    = "cache";
