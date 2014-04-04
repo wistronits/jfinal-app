@@ -9,12 +9,12 @@ package com.jfinal.module.wxchat.api;
  * @version 1.0 2014-02-12 13:41
  * @since JDK 1.6
  */
-public class Api {
+public interface Api {
 
     /**
      * access_token相关api
      */
-    public static class AccessToken {
+    public static interface AccessToken {
         /** 获取ACCESS_TOKEN连接 */
         public static final String GET_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token";
     }
@@ -22,7 +22,7 @@ public class Api {
     /**
      * 自定义菜单相关api
      */
-    public static class MENU {
+    public static interface MENU {
         /** 创建菜单连接 */
         public static final String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create";
         /** 获取菜单连接 */

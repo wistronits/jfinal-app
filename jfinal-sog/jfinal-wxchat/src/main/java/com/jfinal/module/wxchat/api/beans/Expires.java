@@ -9,18 +9,10 @@ package com.jfinal.module.wxchat.api.beans;
  * @version 1.0 2014-02-12 13:41
  * @since JDK 1.6
  */
-public abstract class Expires {
-    private long access; //访问时间
+public interface Expires {
 
-    public long getAccess() {
-        return access;
-    }
+    long getAccess();
 
-    public void setAccess(long access) {
-        this.access = access;
-    }
-
-    public abstract long getExpires_in();
-
+    long getExpires_in();
 
 }

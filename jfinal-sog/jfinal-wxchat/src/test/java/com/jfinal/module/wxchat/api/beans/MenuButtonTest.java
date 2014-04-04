@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.jfinal.module.wxchat.core.Constants;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class MenuButtonTest {
 
     @Test
     public void toJson() {
-        MenuButton menuButton = new MenuButton();
+        Button menuButton = new Button(new ArrayList<Menu>());
 
         Menu menu1 = new Menu();
         menu1.setType(Constants.EVENT_CLICK);

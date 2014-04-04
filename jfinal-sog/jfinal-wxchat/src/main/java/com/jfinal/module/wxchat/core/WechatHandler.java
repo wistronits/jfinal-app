@@ -35,10 +35,8 @@ public class WechatHandler extends Handler {
 
     public WechatHandler(Properties properties) {
         config.init(properties);
-        String className = config.get(Configuration.WECHAT_PROCESSOR);
+        String className = config.get(Constants.WECHAT_PROCESSOR);
         createProcessor(className);
-
-
     }
 
     private void createProcessor(String configClass) {

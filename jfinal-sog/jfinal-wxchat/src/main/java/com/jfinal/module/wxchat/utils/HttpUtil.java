@@ -1,8 +1,8 @@
 package com.jfinal.module.wxchat.utils;
 
-import com.github.sog.config.StringPool;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
+import org.apache.http.entity.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +23,7 @@ import java.util.Set;
  * @version 1.0 2014-03-26 22:03
  * @since JDK 1.6
  */
-public class HttpUtil {
+public final class HttpUtil {
     private static Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
     private final static int DEFAULT_TIMEOUT = 3000;
@@ -83,7 +83,7 @@ public class HttpUtil {
         try {
            is = Request.Post(url).connectTimeout(DEFAULT_TIMEOUT)
                     .socketTimeout(DEFAULT_TIMEOUT)
-                    .bodyByteArray(params.getBytes(StringPool.UTF_8))
+                    .bodyString(params, ContentType.APPLICATION_JSON)
                     .execute().returnContent().asStream();
             return parseResult(is);
         } catch (IOException e) {
@@ -120,6 +120,8 @@ public class HttpUtil {
             }
         }
     }
+
+
 
     private static Form toForm(Map<String, Object> params) {
         Form form = Form.form();

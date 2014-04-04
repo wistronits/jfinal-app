@@ -3,7 +3,6 @@ package com.jfinal.module.wxchat.api;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.jfinal.module.wxchat.api.beans.AccessToken;
-import com.jfinal.module.wxchat.core.Configuration;
 import com.jfinal.module.wxchat.exceptions.WechatException;
 import com.jfinal.module.wxchat.utils.HttpUtil;
 import org.slf4j.Logger;
@@ -24,17 +23,6 @@ import java.util.Map;
 public class AccessTokenApi {
     private static Logger logger = LoggerFactory.getLogger(MenuApi.class);
     private final static String GRANT_TYPE = "client_credential";
-
-    private static Configuration config = Configuration.me;
-
-    /**
-     * 获取 使用凭证
-     *
-     * @return 使用凭证 AccessToken
-     */
-    public static AccessToken getAccessToken() {
-        return getAccessToken(config.getAppid(), config.getAppsecret());
-    }
 
     /**
      * 获取 使用凭证
@@ -59,7 +47,6 @@ public class AccessTokenApi {
             String result = HttpUtil.get(Api.AccessToken.GET_ACCESS_TOKEN_URL, map);
             if (result.contains("access_token") && result.contains("expires_in")) {
                 AccessToken at = JSON.parseObject(result, AccessToken.class);
-                at.setAccess(System.currentTimeMillis());
                 return at;
             } else {
                 logger.error("Error to Get AccessToken, err code and msg: ", result);

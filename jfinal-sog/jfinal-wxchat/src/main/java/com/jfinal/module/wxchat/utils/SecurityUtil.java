@@ -15,7 +15,7 @@ import java.util.List;
  * @version 1.0 2014-03-26 01:03
  * @since JDK 1.6
  */
-public class SecurityUtil {
+public final class SecurityUtil {
     private static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5',
             '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
