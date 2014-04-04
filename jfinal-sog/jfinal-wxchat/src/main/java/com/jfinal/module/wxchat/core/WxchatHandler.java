@@ -1,11 +1,12 @@
 package com.jfinal.module.wxchat.core;
 
+import com.github.sog.config.JFinalApp;
 import com.github.sog.config.StringPool;
+import com.jfinal.handler.Handler;
 import com.jfinal.module.wxchat.message.OutputMessage;
 import com.jfinal.module.wxchat.processor.Processor;
 import com.jfinal.module.wxchat.utils.MessageUtil;
 import com.jfinal.module.wxchat.utils.SecurityUtil;
-import com.jfinal.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * <p>
@@ -27,18 +27,15 @@ import java.util.Properties;
  * @version 1.0 2014-02-12 13:41
  * @since JDK 1.6
  */
-public class WechatHandler extends Handler {
-    private final Logger logger = LoggerFactory.getLogger(WechatHandler.class);
+public class WxchatHandler extends Handler {
+    private final Logger logger = LoggerFactory.getLogger(WxchatHandler.class);
     private final Configuration config = Configuration.me;
 
     private Processor processor;
 
-    public WechatHandler(Properties properties) {
-        config.init(properties);
-        String className = config.get(Configuration.WECHAT_PROCESSOR);
+    public WxchatHandler() {
+        String className = JFinalApp.configuration.getProperty(Constants.WECHAT_PROCESSOR);
         createProcessor(className);
-
-
     }
 
     private void createProcessor(String configClass) {

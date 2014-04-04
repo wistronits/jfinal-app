@@ -1,5 +1,6 @@
 package com.jfinal.module.wxchat.core;
 
+import com.github.sog.config.JFinalApp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,44 +23,17 @@ public class Configuration {
     private String appid;
     private String appsecret;
     private String token = DEFAULR_TOKEN;
-    private String menu;
-
-    public static final String WECHAT_APPID = "wechat.appid";
-    public static final String WECHAT_APPSECRET = "wechat.appsecret";
-    public static final String WECHAT_MENU = "wechat.menu";
-    public static final String WECHAT_TOKEN = "wechat.token"; //预设TOKEN
-    public static final String WECHAT_PROCESSOR = "wechat.processor"; //处理消息的具体实现类
 
     public final static Configuration me = new Configuration();
 
-    private Properties properties;
-
+    /**
+     * 创建配置信息
+     */
     private Configuration() {
-
-    }
-
-    /**
-     * 初始化配置
-     *
-     * @param properties
-     */
-    public void init(Properties properties) {
-        this.properties = properties;
-
-        logger.info("init properties configuration");
-        appid = (String) properties.get(WECHAT_APPID);
-        appsecret = (String) properties.get(WECHAT_APPSECRET);
-        token = (String) properties.get(WECHAT_TOKEN);
-        menu = (String)  properties.get(WECHAT_MENU);
-    }
-
-    /**
-     * 获取属性方法
-     * @param key
-     * @return
-     */
-    public String get(String key) {
-        return (String) properties.get(key);
+        logger.info("create Configuration");
+        appid = JFinalApp.configuration.getProperty(Constants.WECHAT_APPID);
+        appsecret = JFinalApp.configuration.getProperty(Constants.WECHAT_APPSECRET);
+        token = JFinalApp.configuration.getProperty(Constants.WECHAT_TOKEN);
     }
 
     public String getAppid() {
@@ -72,9 +46,5 @@ public class Configuration {
 
     public String getToken() {
         return token;
-    }
-
-    public String getMenu() {
-        return menu;
     }
 }

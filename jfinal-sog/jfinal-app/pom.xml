@@ -26,16 +26,6 @@
             </roles>
             <timezone>+8</timezone>
         </developer>
-        <developer>
-            <id>Jerry</id>
-            <name>Jerry Ou</name>
-            <email>xioudi@gmail.com</email>
-            <organization>Sog2Y</organization>
-            <roles>
-                <role>Project Developer</role>
-            </roles>
-            <timezone>+8</timezone>
-        </developer>
     </developers>
     <licenses>
         <license>

@@ -55,7 +55,7 @@ public class Menu {
     private String key; //类型为click时指定
     private String url; //类型为view时指定
 
-    private List<Menu> sub_button;
+    private List<Menu> sub_button; //子菜单
 
     public String getType() {
         return type;
@@ -80,7 +80,7 @@ public class Menu {
     /**
      * 只有在type是click时候才能指定
      *
-     * @param key
+     * @param key 类型为click时指定，表click的键职
      */
     public void setKey(String key) {
         if (!Constants.EVENT_CLICK.equals(type)) {
@@ -96,7 +96,7 @@ public class Menu {
     /**
      * 只有在type是view时候才能指定
      *
-     * @param url
+     * @param url 类型为view时指定，表示view的地址
      */
     public void setUrl(String url) {
         if (!Constants.EVENT_VIEW.equals(type)) {

@@ -9,9 +9,16 @@ package com.jfinal.module.wxchat.core;
  * @version 1.0 2014-03-25 23:03
  * @since JDK 1.6
  */
-public class Constants {
-    public static final String CONFIG_FILENAME = "wechat.properties";
+public interface Constants {
+    //微信配置信息
+    public static final String WECHAT_APPID = "wechat.appid";
+    public static final String WECHAT_APPSECRET = "wechat.appsecret";
+    public static final String WECHAT_TOKEN = "wechat.token"; //预设TOKEN
 
+
+    public static final String WECHAT_PROCESSOR = "wechat.processor"; //处理消息的具体实现类
+
+    //---请求方式---
     public static final String GET = "GET";
     public static final String POST = "POST";
 

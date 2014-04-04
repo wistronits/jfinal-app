@@ -1,5 +1,8 @@
 package com.jfinal.module.wxchat.api.beans;
 
+import com.alibaba.fastjson.annotation.JSONCreator;
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * <p>
  *     全局返回码json对应java实体
@@ -15,19 +18,19 @@ public class ErrCodeMsg {
     private String errcode;
     private String errmsg;
 
-    public String getErrcode() {
-        return errcode;
+    @JSONCreator
+    public ErrCodeMsg(@JSONField(name="errcode") String errcode,
+                      @JSONField(name="errmsg") String errmsg) {
+        this.errcode = errcode;
+        this.errmsg = errmsg;
     }
 
-    public void setErrcode(String errcode) {
-        this.errcode = errcode;
+    public String getErrcode() {
+        return errcode;
     }
 
     public String getErrmsg() {
         return errmsg;
     }
 
-    public void setErrmsg(String errmsg) {
-        this.errmsg = errmsg;
-    }
 }

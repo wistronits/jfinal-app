@@ -1,10 +1,9 @@
 package com.jfinal.module.wxchat.api;
 
 import com.alibaba.fastjson.JSON;
+import com.jfinal.module.wxchat.api.beans.Button;
 import com.jfinal.module.wxchat.api.beans.ErrCodeMsg;
-import com.jfinal.module.wxchat.api.beans.Menu;
-import com.jfinal.module.wxchat.api.beans.MenuButton;
-import com.jfinal.module.wxchat.api.beans.MenuButtonBeanHelp;
+import com.jfinal.module.wxchat.api.beans.MenuButtonHelp;
 import com.jfinal.module.wxchat.exceptions.WechatException;
 import com.jfinal.module.wxchat.utils.HttpUtil;
 import org.slf4j.Logger;
@@ -30,11 +29,10 @@ public class MenuApi {
      *
      * @param menu 菜单json数据
      * @param accessToken 使用凭证
-     * @return
+     * @return 响应结果
      */
-    public static ErrCodeMsg createMenu(String menu, String accessToken){
+    private static ErrCodeMsg createMenu(String menu, String accessToken){
         try {
-
             String result = HttpUtil.post(Api.MENU.CREATE_MENU_URL + "?access_token="+ accessToken, menu);
             return parseResult(result);
         } catch (Exception e) {
@@ -46,12 +44,12 @@ public class MenuApi {
     /**
      * 创建菜单
      *
-     * @param menuButton 菜单按钮
+     * @param button 菜单按钮
      * @param accessToken 使用凭证
      * @return 响应结果
      */
-    public static ErrCodeMsg createMenu(MenuButton menuButton,String accessToken) {
-        String menuJson = menuButton.toJSONString();
+    public static ErrCodeMsg createMenu(Button button,String accessToken) {
+        String menuJson = button.toJSONString();
         return createMenu(menuJson, accessToken);
     }
 
@@ -61,7 +59,7 @@ public class MenuApi {
      * @param accessToken -- 使用凭证
      * @return 菜单json字符串
      */
-    public static MenuButton getMenu(String accessToken) {
+    public static Button getMenu(String accessToken) {
         try {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("access_token", accessToken);
@@ -70,11 +68,11 @@ public class MenuApi {
                 return null;
             }
             //{"menu":{"button":[..]}} 需要转换一下取出MenuButton
-            MenuButtonBeanHelp help = JSON.parseObject(result, MenuButtonBeanHelp.class);
-            return help.getMenu();
+            MenuButtonHelp help = JSON.parseObject(result, MenuButtonHelp.class);
+            return help.getButton();
         } catch (Exception e) {
             logger.error("Failed access method get menu", e);
-            throw new WechatException("Error create menu", e);
+            throw new WechatException("Error get menu", e);
         }
     }
 
@@ -82,7 +80,7 @@ public class MenuApi {
      * 删除菜单
      *
      * @param accessToken -- 使用凭证
-     * @return 响应结果json字符串
+     * @return 响应结果
      */
     public static ErrCodeMsg deleteMenu(String accessToken) {
         try {
@@ -100,8 +98,9 @@ public class MenuApi {
 
     /**
      * 结果转成ErrCodeMsg对象
+     *
      * @param result
-     * @return
+     * @return 响应结果
      */
     private static ErrCodeMsg parseResult(String result) {
         ErrCodeMsg errCodeMsg = JSON.parseObject(result, ErrCodeMsg.class);

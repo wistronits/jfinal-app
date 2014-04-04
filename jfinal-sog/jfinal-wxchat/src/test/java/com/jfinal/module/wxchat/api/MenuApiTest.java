@@ -1,7 +1,8 @@
 package com.jfinal.module.wxchat.api;
 
+import com.alibaba.fastjson.JSONObject;
+import com.jfinal.module.wxchat.api.beans.Button;
 import com.jfinal.module.wxchat.api.beans.ErrCodeMsg;
-import com.jfinal.module.wxchat.api.beans.MenuButton;
 import org.junit.Test;
 
 /**
@@ -41,7 +42,7 @@ public class MenuApiTest {
             "            },\n" +
             "            {\n" +
             "               \"type\":\"click\",\n" +
-            "               \"name\":\"赞一下我们\",\n" +
+            "               \"name\":\"赞一下我们aaaaaaaaa\",\n" +
             "               \"key\":\"V1001_GOOD\"\n" +
             "            }]\n" +
             "       }]\n" +
@@ -50,14 +51,21 @@ public class MenuApiTest {
 
     @Test
     public void testCreateMenu() {
-       ErrCodeMsg s = MenuApi.createMenu(menu, AccessTokenApi.getAccessToken(DefaultApp.AppId, DefaultApp.AppSecret).getAccess_token());
-       System.out.println(s.getErrcode() + "===" + s.getErrmsg());
+        /*ErrCodeMsg s = MenuApi.createMenu(menu, AccessTokenApi.getAccessToken(DefaultApp.AppId, DefaultApp.AppSecret).getAccess_token());
+        System.out.println(s.getErrcode() + "===" + s.getErrmsg());*/
+        Button button = JSONObject.parseObject(menu, Button.class);
+        System.out.println(button.getButton());
+        System.out.println(button.getButton().get(0).getName());
+        ErrCodeMsg s = MenuApi.createMenu(button, AccessTokenApi.getAccessToken(DefaultApp.AppId, DefaultApp.AppSecret).getAccess_token());
+        System.out.println(s.getErrcode() + "===" + s.getErrmsg());
     }
 
     @Test
     public void testGetMenu() {
-        MenuButton menu = MenuApi.getMenu(AccessTokenApi.getAccessToken(DefaultApp.AppId, DefaultApp.AppSecret).getAccess_token());
-        System.out.println(menu.toJSONString());
+        Button menu = MenuApi.getMenu(AccessTokenApi.getAccessToken(DefaultApp.AppId, DefaultApp.AppSecret).getAccess_token());
+        if (menu != null) {
+            System.out.println(menu.toJSONString());
+        }
     }
 
     @Test

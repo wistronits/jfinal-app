@@ -1,6 +1,8 @@
 package com.jfinal.module.wxchat.api.beans;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONCreator;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -14,16 +16,17 @@ import java.util.List;
  * @version 1.0 2014-03-27 22:03
  * @since JDK 1.6
  */
-public class MenuButton {
+public class Button {
 
     public List<Menu> button = Lists.newArrayList();
 
-    public List<Menu> getButton() {
-        return button;
+    @JSONCreator
+    public Button(@JSONField(name = "button") List<Menu> button) {
+        this.button = button;
     }
 
-    public void setButton(List<Menu> button) {
-        this.button.addAll(button);
+    public List<Menu> getButton() {
+        return button;
     }
 
     /**
