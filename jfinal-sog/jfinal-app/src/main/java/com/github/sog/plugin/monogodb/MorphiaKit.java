@@ -42,8 +42,8 @@ public final class MorphiaKit {
         morphia.mapPackage(entity_package);
     }
 
-    public static MorphiaKit create(final Mongo mongo, final String db, String entity_package){
-        if(MorphiaKit.getDataStore() != null){
+    public static MorphiaKit create(final Mongo mongo, final String db, String entity_package) {
+        if (MorphiaKit.getDataStore() != null) {
             throw new IllegalStateException();
         } else {
             return new MorphiaKit(mongo, db, entity_package);

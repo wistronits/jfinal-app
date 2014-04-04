@@ -21,39 +21,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class AjaxMessage<E> {
 
-    /**
-     * 请求消息处理状态
-     */
-    private enum MessageStatus {
-        /**
-         * 正常
-         */
-        OK,
-        /**
-         * 发生内部错误
-         */
-        ERROR,
-        /**
-         * 处理失败
-         */
-        FAILURE,
-        /**
-         * 没有数据
-         */
-        NODATA,
-        /**
-         * 禁止访问
-         */
-        FORBIDDEN,
-        /**
-         * 没有登录
-         */
-        NOLOGIN
-
-    }
-
     private static final String SUCCESS_MSG = "您好，请求以筋斗云的速度请求成功，恭喜你！";
-
     /**
      * 没有权限访问的提示语
      */
@@ -61,19 +29,19 @@ public class AjaxMessage<E> {
     /**
      * 没有权限访问的提示语
      */
-    private static final String NODATA_MSG = "您好，你所请求的内容为空!";
+    private static final String NODATA_MSG    = "您好，你所请求的内容为空!";
     /**
      * 没有登录的提示语
      */
-    private static final String NOLOGIN_MSG = "您好，你是不是没有登录?只有登录后才能访问。";
+    private static final String NOLOGIN_MSG   = "您好，你是不是没有登录?只有登录后才能访问。";
     /**
      * 返回带的消息数据
      */
-    private final E data;
+    private final E             data;
     /**
      * 消息提示语
      */
-    private final String message;
+    private final String        message;
     /**
      * 消息状态
      */
@@ -81,8 +49,7 @@ public class AjaxMessage<E> {
     /**
      * 异常
      */
-    private final Exception exception;
-
+    private final Exception     exception;
     /**
      * 构造函数
      *
@@ -278,7 +245,6 @@ public class AjaxMessage<E> {
         return failure(message, null, null);
     }
 
-
     /**
      * 返回处理失败的消息内容
      *
@@ -336,6 +302,37 @@ public class AjaxMessage<E> {
      */
     public String toJSON() {
         return JSON.toJSONString(this);
+    }
+
+    /**
+     * 请求消息处理状态
+     */
+    private enum MessageStatus {
+        /**
+         * 正常
+         */
+        OK,
+        /**
+         * 发生内部错误
+         */
+        ERROR,
+        /**
+         * 处理失败
+         */
+        FAILURE,
+        /**
+         * 没有数据
+         */
+        NODATA,
+        /**
+         * 禁止访问
+         */
+        FORBIDDEN,
+        /**
+         * 没有登录
+         */
+        NOLOGIN
+
     }
 
 }

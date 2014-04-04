@@ -35,18 +35,30 @@ import java.util.Map;
  */
 public class JxlsRender extends Render {
     private static final String CONTENT_TYPE = "application/vnd.ms-excel;charset=" + getEncoding();
+    private final String templetFile;
+    private Map<String, Object> beans    = Maps.newHashMap();
+    private String              filename = "file1.xls";
+
+    public JxlsRender(String templetFile) {
+        this.templetFile = templetFile;
+    }
 
     public static JxlsRender me(String templetFile) {
         return new JxlsRender(templetFile);
     }
 
-    private Map<String, Object> beans    = Maps.newHashMap();
-    private String              filename = "file1.xls";
+    private static String encodeChineseDownloadFileName(HttpServletRequest request, String filename) {
+        String agent = request.getHeader("USER-AGENT");
+        try {
+            if (!Strings.isNullOrEmpty(agent) && agent.contains("MSIE")) {
+                filename = URLEncoder.encode(filename, StringPool.UTF_8);
+            } else {
+                filename = new String(filename.getBytes(StringPool.UTF_8), "iso8859-1");
+            }
+        } catch (UnsupportedEncodingException ignored) {
 
-    private final String templetFile;
-
-    public JxlsRender(String templetFile) {
-        this.templetFile = templetFile;
+        }
+        return filename;
     }
 
     public JxlsRender beans(Map<String, Object> beans) {
@@ -85,19 +97,5 @@ public class JxlsRender extends Render {
         } catch (Exception e) {
             throw new RenderException(e);
         }
-    }
-
-    private static String encodeChineseDownloadFileName(HttpServletRequest request, String filename) {
-        String agent = request.getHeader("USER-AGENT");
-        try {
-            if (!Strings.isNullOrEmpty(agent) && agent.contains("MSIE")) {
-                filename = URLEncoder.encode(filename, StringPool.UTF_8);
-            } else {
-                filename = new String(filename.getBytes(StringPool.UTF_8), "iso8859-1");
-            }
-        } catch (UnsupportedEncodingException ignored) {
-
-        }
-        return filename;
     }
 }

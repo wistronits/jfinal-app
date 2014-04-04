@@ -17,6 +17,47 @@ package com.github.sog.config;
  */
 public class Constants {
 
+    /**
+     * 整数常量
+     */
+    public static final int INTEGER_NORMAL     = 0;
+    /**
+     * 负整数常量
+     */
+    public static final int INTEGER_NEGATIVE   = -1;
+    /**
+     * 非负整数常量
+     */
+    public static final int INTEGER_UNNEGATIVE = 10;
+    /**
+     * 正整数常量
+     */
+    public static final int INTEGER_POSITIVE   = 1;
+    /**
+     * 非正整数常量
+     */
+    public static final int INTEGER_UNPOSITIVE = -10;
+    /**
+     * 浮点数常量
+     */
+    public static final int FLOAT_NORMAL       = INTEGER_NORMAL;
+    /**
+     * 负浮点数常量
+     */
+    public static final int FLOAT_NEGATIVE     = INTEGER_NEGATIVE;
+    /**
+     * 非负浮点数常量
+     */
+    public static final int FLOAT_UNNEGATIVE   = INTEGER_UNNEGATIVE;
+    /**
+     * 正浮点数常量
+     */
+    public static final int FLOAT_POSITIVE     = INTEGER_POSITIVE;
+    /**
+     * 非正浮点数常量
+     */
+    public static final int FLOAT_UNPOSITIVE   = INTEGER_UNPOSITIVE;
+
     public static class ValidatorRegex {
         /**
          * 全中文验证
@@ -184,45 +225,4 @@ public class Constants {
         public static final String DATE              = "(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29)";
 
     }
-
-    /**
-     * 整数常量
-     */
-    public static final int INTEGER_NORMAL     = 0;
-    /**
-     * 负整数常量
-     */
-    public static final int INTEGER_NEGATIVE   = -1;
-    /**
-     * 非负整数常量
-     */
-    public static final int INTEGER_UNNEGATIVE = 10;
-    /**
-     * 正整数常量
-     */
-    public static final int INTEGER_POSITIVE   = 1;
-    /**
-     * 非正整数常量
-     */
-    public static final int INTEGER_UNPOSITIVE = -10;
-    /**
-     * 浮点数常量
-     */
-    public static final int FLOAT_NORMAL       = INTEGER_NORMAL;
-    /**
-     * 负浮点数常量
-     */
-    public static final int FLOAT_NEGATIVE     = INTEGER_NEGATIVE;
-    /**
-     * 非负浮点数常量
-     */
-    public static final int FLOAT_UNNEGATIVE   = INTEGER_UNNEGATIVE;
-    /**
-     * 正浮点数常量
-     */
-    public static final int FLOAT_POSITIVE     = INTEGER_POSITIVE;
-    /**
-     * 非正浮点数常量
-     */
-    public static final int FLOAT_UNPOSITIVE   = INTEGER_UNPOSITIVE;
 }

@@ -155,6 +155,16 @@ public class Images {
 
     }
 
+    /**
+     * Encode an image to base64 using a data: URI
+     *
+     * @param image The image file
+     * @return The base64 encoded value
+     * @throws java.io.IOException
+     */
+    public static String toBase64(File image) throws IOException {
+        return "data:" + MimeTypes.getMimeType(image.getName()) + ";base64," + Codec.encodeBASE64(IO.readContent(image));
+    }
 
     /**
      * 将指定的图片加入到当前图片中的指定位置. 即向图片中打水印.
@@ -233,17 +243,6 @@ public class Images {
             g.drawImage(src, WW, HH, ww, hh, null);
             g.dispose();
         }
-    }
-
-    /**
-     * Encode an image to base64 using a data: URI
-     *
-     * @param image The image file
-     * @return The base64 encoded value
-     * @throws java.io.IOException
-     */
-    public static String toBase64(File image) throws IOException {
-        return "data:" + MimeTypes.getMimeType(image.getName()) + ";base64," + Codec.encodeBASE64(IO.readContent(image));
     }
 
 }

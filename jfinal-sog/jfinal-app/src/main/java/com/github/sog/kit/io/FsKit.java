@@ -1,11 +1,18 @@
 package com.github.sog.kit.io;
 
-import com.jfinal.core.Const;
-import com.jfinal.log.Logger;
 import com.github.sog.config.StringPool;
 import com.github.sog.kit.lang.TxtKit;
+import com.jfinal.core.Const;
+import com.jfinal.log.Logger;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
@@ -16,6 +23,8 @@ import java.util.Properties;
  * </p>
  */
 public class FsKit {
+
+    private static final Logger log = Logger.getLogger(FsKit.class);
 
     private FsKit() {
     }
@@ -298,7 +307,6 @@ public class FsKit {
         return false;
     }
 
-
     /**
      * 读取文本文件的内容.
      *
@@ -347,7 +355,6 @@ public class FsKit {
     public static String readFile(File file) throws IOException {
         return readFile(file, Const.DEFAULT_ENCODING);
     }
-
 
     /**
      * 将文本内容保存为文件. <br />
@@ -524,6 +531,4 @@ public class FsKit {
         }
         return isOk;
     }
-
-    private static final Logger log = Logger.getLogger(FsKit.class);
 }

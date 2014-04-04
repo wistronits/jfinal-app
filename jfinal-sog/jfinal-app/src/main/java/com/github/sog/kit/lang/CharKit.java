@@ -44,6 +44,7 @@ public class CharKit {
 
     /**
      * Converts char sequence into byte array.
+     *
      * @see #toSimpleByteArray(char[])
      */
     public static byte[] toSimpleByteArray(CharSequence charSequence) {
@@ -173,7 +174,7 @@ public class CharKit {
      * Match if one character equals to any of the given character.
      *
      * @return <code>true</code> if characters match any character from given array,
-     *         otherwise <code>false</code>
+     * otherwise <code>false</code>
      */
     public static boolean equalsOne(char c, char[] match) {
         for (char aMatch : match) {
@@ -374,8 +375,6 @@ public class CharKit {
     }
 
 
-
-
     /**
      * @see #indexOfChars(String, String, int)
      */
@@ -426,14 +425,12 @@ public class CharKit {
     }
 
 
-
     /**
      * Returns if string starts with given character.
      */
     public static boolean startsWithChar(String s, char c) {
         return s.length() != 0 && s.charAt(0) == c;
     }
-
 
 
     /**
@@ -471,14 +468,13 @@ public class CharKit {
      * characters. Delimiter may contains any number of character and it is
      * always surrounded by two strings.
      *
-     * @param src    source to examine
-     * @param d      string with delimiter characters
-     *
+     * @param src source to examine
+     * @param d   string with delimiter characters
      * @return array of tokens
      */
     public static String[] splitc(String src, String d) {
-        if ((d.length() == 0) || (src.length() == 0) ) {
-            return new String[] {src};
+        if ((d.length() == 0) || (src.length() == 0)) {
+            return new String[]{src};
         }
         char[] delimiters = d.toCharArray();
         char[] srcc = src.toCharArray();
@@ -491,14 +487,14 @@ public class CharKit {
 
         start[0] = 0;
         int s = 0, e;
-        if (CharKit.equalsOne(srcc[0], delimiters)) {	// string starts with delimiter
+        if (CharKit.equalsOne(srcc[0], delimiters)) {    // string starts with delimiter
             end[0] = 0;
             count++;
             s = CharKit.findFirstDiff(srcc, 1, delimiters);
-            if (s == -1) {							// nothing after delimiters
-                return new String[] {StringUtils.EMPTY, StringUtils.EMPTY};
+            if (s == -1) {                            // nothing after delimiters
+                return new String[]{StringUtils.EMPTY, StringUtils.EMPTY};
             }
-            start[1] = s;							// new start
+            start[1] = s;                            // new start
         }
         while (true) {
             // find new end
@@ -530,14 +526,13 @@ public class CharKit {
      * Splits a string in several parts (tokens) that are separated by single delimiter
      * characters. Delimiter is always surrounded by two strings.
      *
-     * @param src           source to examine
-     * @param delimiter     delimiter character
-     *
+     * @param src       source to examine
+     * @param delimiter delimiter character
      * @return array of tokens
      */
     public static String[] splitc(String src, char delimiter) {
         if (src.length() == 0) {
-            return new String[] {StringUtils.EMPTY};
+            return new String[]{StringUtils.EMPTY};
         }
         char[] srcc = src.toCharArray();
 
@@ -549,14 +544,14 @@ public class CharKit {
 
         start[0] = 0;
         int s = 0, e;
-        if (srcc[0] == delimiter) {	// string starts with delimiter
+        if (srcc[0] == delimiter) {    // string starts with delimiter
             end[0] = 0;
             count++;
             s = CharKit.findFirstDiff(srcc, 1, delimiter);
-            if (s == -1) {							// nothing after delimiters
-                return new String[] {StringUtils.EMPTY, StringUtils.EMPTY};
+            if (s == -1) {                            // nothing after delimiters
+                return new String[]{StringUtils.EMPTY, StringUtils.EMPTY};
             }
-            start[1] = s;							// new start
+            start[1] = s;                            // new start
         }
         while (true) {
             // find new end
@@ -583,7 +578,6 @@ public class CharKit {
         }
         return result;
     }
-
 
 
     /**

@@ -5,14 +5,14 @@
  */
 package com.github.sog.plugin.sqlinxml;
 
+import com.github.sog.config.StringPool;
+import com.github.sog.initalizer.ConfigProperties;
+import com.github.sog.kit.map.JaxbKit;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import com.jfinal.log.Logger;
-import com.github.sog.initalizer.ConfigProperties;
-import com.github.sog.config.StringPool;
-import com.github.sog.kit.map.JaxbKit;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
@@ -101,7 +101,8 @@ public class SqlKit {
                             FileFilterUtils.and(
                                     FileFilterUtils.fileFileFilter(),
                                     FileFilterUtils.suffixFileFilter(CONFIG_SUFFIX)),
-                            null);
+                            null
+                    );
 
                     observer.addListener(new SqlXmlFileListener(SQL_MAP));
                     observerList.add(observer);

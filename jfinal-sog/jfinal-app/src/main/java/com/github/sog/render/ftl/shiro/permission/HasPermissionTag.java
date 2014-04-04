@@ -16,8 +16,8 @@ package com.github.sog.render.ftl.shiro.permission;
  * @since JDK 1.5
  */
 public class HasPermissionTag extends PermissionTag {
-	@Override
-	protected boolean showTagBody(String p) {
-		return isPermitted(p);
-	}
+    @Override
+    protected boolean showTagBody(String p) {
+        return isPermitted(p);
+    }
 }

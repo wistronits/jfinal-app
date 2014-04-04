@@ -5,20 +5,19 @@
  */
 package com.github.sog.plugin.redis;
 
+import com.jfinal.log.Logger;
+import redis.clients.jedis.Tuple;
+
 import java.io.Serializable;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
-import redis.clients.jedis.Tuple;
-
-import com.jfinal.log.Logger;
 
 public class TopicConsumer {
     protected final Logger logger = Logger.getLogger(getClass());
 
     private TopicNest topic;
     private TopicNest subscriber;
-    private String id;
+    private String    id;
     private int interval = 1000;
 
     public TopicConsumer(final String id, final String topic) {
@@ -41,10 +40,10 @@ public class TopicConsumer {
         }
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public void consume(JedisMessage callback) {
         while (true) {
-            Serializable  message = readUntilEnd();
+            Serializable message = readUntilEnd();
             if (message != null) {
                 callback.onMessage(message);
                 goNext();
@@ -54,7 +53,7 @@ public class TopicConsumer {
         }
     }
 
-    public  <T extends Serializable> T consume() {
+    public <T extends Serializable> T consume() {
         T message = readUntilEnd();
         goNext();
         return message;
@@ -63,7 +62,7 @@ public class TopicConsumer {
     private <T extends Serializable> T readUntilEnd() {
         if (unreadMessages() > 0) {
             Serializable message = read();
-            return (T)message;
+            return (T) message;
         }
         return null;
     }
@@ -97,11 +96,11 @@ public class TopicConsumer {
         return topicSize;
     }
 
-    public <T extends Serializable> T  read() {
+    public <T extends Serializable> T read() {
         int lastReadMessage = getLastReadMessage();
-        logger.debug("lastReadMessage "+lastReadMessage);
+        logger.debug("lastReadMessage " + lastReadMessage);
         String key = topic.cat("message").cat(lastReadMessage + 1).key();
-        T  message = JedisKit.get(key);
+        T message = JedisKit.get(key);
         logger.info("consume the message," + "key[" + key + "],value[" + message + "]");
         return message;
     }

@@ -1,11 +1,11 @@
 package com.github.sog.interceptor.autoscan;
 
 import com.github.sog.annotation.AppInterceptor;
+import com.github.sog.initalizer.ctxbox.ClassBox;
+import com.github.sog.initalizer.ctxbox.ClassType;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.config.Interceptors;
 import com.jfinal.log.Logger;
-import com.github.sog.initalizer.ctxbox.ClassBox;
-import com.github.sog.initalizer.ctxbox.ClassType;
 
 import java.util.List;
 
@@ -20,9 +20,8 @@ import java.util.List;
  */
 public class AutoOnLoadInterceptor {
 
-    private final Interceptors interceptors;
-
     private static final Logger logger = Logger.getLogger(AutoOnLoadInterceptor.class);
+    private final Interceptors interceptors;
 
 
     public AutoOnLoadInterceptor(Interceptors interceptors) {

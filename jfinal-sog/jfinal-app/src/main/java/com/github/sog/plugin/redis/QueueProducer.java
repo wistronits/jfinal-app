@@ -5,9 +5,9 @@
  */
 package com.github.sog.plugin.redis;
 
-import java.io.Serializable;
-
 import com.jfinal.log.Logger;
+
+import java.io.Serializable;
 
 public class QueueProducer {
     protected final Logger logger = Logger.getLogger(getClass());

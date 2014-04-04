@@ -32,16 +32,11 @@ import java.util.regex.Pattern;
 public class Filter<M extends Model> {
 
     private static final Pattern PARAM_PARSE = Pattern.compile("\\?\\{(.*?)\\}");
-
-
-    private List<Condition> conditions = Lists.newArrayList();
-
     private final int pageNo;
-
     private final int perPage;
-
-    private       boolean shouldPage;
     private final String  tableName;
+    private List<Condition> conditions = Lists.newArrayList();
+    private       boolean shouldPage;
 
     public Filter(int perPage, int pageNo, M model, Condition... conditions) {
 

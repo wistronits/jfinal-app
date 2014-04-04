@@ -19,18 +19,14 @@ import com.google.common.base.Objects;
  */
 public class ColumnDef {
 
-    private String name;
-    private boolean sortable;
-    private boolean sorted;
-    private boolean filterable;
-    private boolean filtered;
-    private String regex;
-    private String search;
+    private String        name;
+    private boolean       sortable;
+    private boolean       sorted;
+    private boolean       filterable;
+    private boolean       filtered;
+    private String        regex;
+    private String        search;
     private SortDirection sortDirection;
-
-    public enum SortDirection {
-        ASC, DESC
-    }
 
     public String getName() {
         return name;
@@ -108,5 +104,9 @@ public class ColumnDef {
                 .add("search", search)
                 .add("sortDirection", sortDirection)
                 .toString();
+    }
+
+    public enum SortDirection {
+        ASC, DESC
     }
 }

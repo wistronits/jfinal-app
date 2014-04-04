@@ -18,11 +18,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * @version 1.0 2014-03-27 11:56
  * @since JDK 1.6
  */
-public class SessionFlashManager implements FlashManager{
+public class SessionFlashManager implements FlashManager {
     /**
-     *默认存储session前缀
+     * 默认存储session前缀
      */
     private final static String sessionKeyPrefix = "_flash_";
+
     @Override
     public void setFlash(HttpSession session, String curAction, String key, Object value) {
         String sessionKey = sessionKeyPrefix + curAction.replace("/", "_");

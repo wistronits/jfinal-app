@@ -6,11 +6,11 @@
 
 package com.github.sog.initalizer.ctxbox;
 
+import com.github.sog.initalizer.AppLoadEvent;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.Controller;
-import com.github.sog.initalizer.AppLoadEvent;
 import com.jfinal.plugin.activerecord.Model;
 import org.quartz.Job;
 
@@ -27,6 +27,14 @@ import java.util.Map;
  * @since JDK 1.6
  */
 public class ClassBox {
+    private static final Map<ClassType, List<Class>> CLASS_BOX_MAP = Maps.newHashMap();
+
+    /**
+     * 私有构造函数,确保对象只能通过单例方法来调用.
+     */
+    private ClassBox() {
+    }
+
     /**
      * 获取单例对象,如果要调用该单例的使用,只能通过该方法获取.
      */
@@ -34,9 +42,7 @@ public class ClassBox {
         return ClassBoxHolder.instance;
     }
 
-    private static final Map<ClassType, List<Class>> CLASS_BOX_MAP = Maps.newHashMap();
-
-    public  List<Class>  getClasses(ClassType classType) {
+    public List<Class> getClasses(ClassType classType) {
         return CLASS_BOX_MAP.get(classType);
     }
 
@@ -68,12 +74,6 @@ public class ClassBox {
         }
         classes.add(cls);
         CLASS_BOX_MAP.put(type, classes);
-    }
-
-    /**
-     * 私有构造函数,确保对象只能通过单例方法来调用.
-     */
-    private ClassBox() {
     }
 
     public void clearBox() {

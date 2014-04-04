@@ -14,40 +14,7 @@ import java.util.Date;
  */
 public class FnKit {
 
-    /**
-     * 时间间隔枚举.
-     * 此枚举供{@link FnKit#dateadd(FnKit.interval, int, java.util.Date)}和
-     * {@link FnKit#datediff(FnKit.interval, java.util.Date, java.util.Date)}方法的参数调用.
-     */
-    public static enum interval {
-        /**
-         * 代表年份.
-         */
-        Y,
-        /**
-         * 代表月份.
-         */
-        M,
-        /**
-         * 代表日期天
-         */
-        D,
-        /**
-         * 代表小时
-         */
-        h,
-        /**
-         * 代表分钟
-         */
-        m,
-        /**
-         * 代表秒
-         */
-        s,
-        /**
-         * 代表周(星期)
-         */
-        w
+    private FnKit() {
     }
 
     /**
@@ -221,6 +188,39 @@ public class FnKit {
         }
     }
 
-    private FnKit() {
+    /**
+     * 时间间隔枚举.
+     * 此枚举供{@link FnKit#dateadd(FnKit.interval, int, java.util.Date)}和
+     * {@link FnKit#datediff(FnKit.interval, java.util.Date, java.util.Date)}方法的参数调用.
+     */
+    public static enum interval {
+        /**
+         * 代表年份.
+         */
+        Y,
+        /**
+         * 代表月份.
+         */
+        M,
+        /**
+         * 代表日期天
+         */
+        D,
+        /**
+         * 代表小时
+         */
+        h,
+        /**
+         * 代表分钟
+         */
+        m,
+        /**
+         * 代表秒
+         */
+        s,
+        /**
+         * 代表周(星期)
+         */
+        w
     }
 }

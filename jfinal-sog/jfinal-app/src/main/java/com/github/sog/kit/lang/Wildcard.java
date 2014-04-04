@@ -17,6 +17,9 @@ package com.github.sog.kit.lang;
  */
 public class Wildcard {
 
+    protected static final String PATH_MATCH      = "**";
+    protected static final String PATH_SEPARATORS = "/\\";
+
     /**
      * Checks whether a string matches a given wildcard pattern.
      *
@@ -27,6 +30,9 @@ public class Wildcard {
     public static boolean match(String string, String pattern) {
         return match(string, pattern, 0, 0);
     }
+
+
+    // ---------------------------------------------------------------- utilities
 
     /**
      * Checks if two strings are equals or if they {@link #match(String, String)}.
@@ -112,8 +118,7 @@ public class Wildcard {
         }
     }
 
-
-    // ---------------------------------------------------------------- utilities
+    // ---------------------------------------------------------------- path
 
     /**
      * Matches string to at least one pattern.
@@ -144,11 +149,6 @@ public class Wildcard {
         }
         return -1;
     }
-
-    // ---------------------------------------------------------------- path
-
-    protected static final String PATH_MATCH      = "**";
-    protected static final String PATH_SEPARATORS = "/\\";
 
     /**
      * Matches path against pattern using *, ? and ** wildcards.

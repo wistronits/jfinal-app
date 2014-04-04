@@ -5,14 +5,13 @@
  */
 package com.github.sog.handler;
 
-import java.util.Map;
-import java.util.Map.Entry;
+import com.google.common.collect.Maps;
+import com.jfinal.handler.Handler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.common.collect.Maps;
-import com.jfinal.handler.Handler;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class AddHeaderHandler extends Handler {
     private final Map<String, Object> headers = Maps.newHashMap();

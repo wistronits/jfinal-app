@@ -8,7 +8,13 @@ package com.github.sog.render.ftl;
 import com.github.sog.config.StringPool;
 import freemarker.cache.TemplateCache;
 import freemarker.core.Environment;
-import freemarker.template.*;
+import freemarker.template.Configuration;
+import freemarker.template.SimpleScalar;
+import freemarker.template.Template;
+import freemarker.template.TemplateDirectiveBody;
+import freemarker.template.TemplateDirectiveModel;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateModel;
 
 import java.io.IOException;
 import java.util.Map;

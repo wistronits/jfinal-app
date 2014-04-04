@@ -27,7 +27,7 @@ public class CommonKit {
      */
     public static String getLimitLenStr(String str, int len) {
         if (str == null) {
-            return  StringPool.EMPTY;
+            return StringPool.EMPTY;
         }
         while (str.length() < len) {
             str = StringPool.ZERO + str;
@@ -46,7 +46,6 @@ public class CommonKit {
     }
 
 
-
     /**
      * 将字符串数字转化为int型数字
      *
@@ -61,6 +60,7 @@ public class CommonKit {
             return defValue;
         }
     }
+
     /**
      * 将字符串数字转化为double型数字
      *
@@ -86,6 +86,7 @@ public class CommonKit {
         DecimalFormat df = new DecimalFormat("######0.00");
         return df.format(value);
     }
+
     /**
      * 循环删除最后的某个字符，至不是以该字符结尾
      *
@@ -96,7 +97,7 @@ public class CommonKit {
     public static String removeEnd(String value, char c) {
 
         if (StringUtils.isBlank(value)) {
-            return  StringPool.EMPTY;
+            return StringPool.EMPTY;
         }
         String ret = value;
         while (StringUtils.isNotBlank(ret)
@@ -166,6 +167,7 @@ public class CommonKit {
 
     /**
      * 截取字符串并以"..."结尾
+     *
      * @param inputText 输入内容
      * @param length    截取字节数
      * @return 截取后的字符串

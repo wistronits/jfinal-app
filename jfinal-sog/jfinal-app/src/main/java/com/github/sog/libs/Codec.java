@@ -37,6 +37,7 @@ public class Codec {
 
     /**
      * Encode a String to base64
+     *
      * @param value The plain String
      * @return The base64 encoded String
      */
@@ -50,6 +51,7 @@ public class Codec {
 
     /**
      * Encode binary data to base64
+     *
      * @param value The binary data
      * @return The base64 encoded String
      */
@@ -59,6 +61,7 @@ public class Codec {
 
     /**
      * Decode a base64 value
+     *
      * @param value The base64 encoded String
      * @return decoded binary data
      */
@@ -72,6 +75,7 @@ public class Codec {
 
     /**
      * Build an hexadecimal MD5 hash for a String
+     *
      * @param value The String to hash
      * @return An hexadecimal Hash
      */
@@ -89,6 +93,7 @@ public class Codec {
 
     /**
      * Build an hexadecimal SHA1 hash for a String
+     *
      * @param value The String to hash
      * @return An hexadecimal Hash
      */

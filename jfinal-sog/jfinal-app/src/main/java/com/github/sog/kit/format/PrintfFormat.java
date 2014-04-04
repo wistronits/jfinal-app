@@ -15,6 +15,7 @@ import java.math.BigInteger;
  */
 public class PrintfFormat {
 
+    private static final BigInteger bgInt = new BigInteger("9223372036854775808");  // 2^63
     protected int           width;
     protected int           precision;
     protected StringBuilder pre;
@@ -27,7 +28,6 @@ public class PrintfFormat {
     protected boolean       groupDigits;
     protected char          fmt;                    // one of cdeEfgGiosxXos
     protected boolean       countSignInLen;
-    private static final BigInteger bgInt = new BigInteger("9223372036854775808");  // 2^63
 
     /**
      * Formats a number in a printf format, like C.
@@ -86,6 +86,20 @@ public class PrintfFormat {
      * For internal use with {@link #init(String, int)} and {@link #reinit(String)}.
      */
     public PrintfFormat() {
+    }
+
+    /**
+     * Returns new string created by repeating a single character.
+     */
+    protected static String repeat(char c, int n) {
+        if (n <= 0) {
+            return (StringPool.EMPTY);
+        }
+        char[] buffer = new char[n];
+        for (int i = 0; i < n; i++) {
+            buffer[i] = c;
+        }
+        return new String(buffer);
     }
 
     public PrintfFormat reinit(String s) {
@@ -338,20 +352,6 @@ public class PrintfFormat {
         } else {
             return pre + spaces + value + post;
         }
-    }
-
-    /**
-     * Returns new string created by repeating a single character.
-     */
-    protected static String repeat(char c, int n) {
-        if (n <= 0) {
-            return (StringPool.EMPTY);
-        }
-        char[] buffer = new char[n];
-        for (int i = 0; i < n; i++) {
-            buffer[i] = c;
-        }
-        return new String(buffer);
     }
 
     private String getAltPrefixFor(char fmt, String currentPrefix) {

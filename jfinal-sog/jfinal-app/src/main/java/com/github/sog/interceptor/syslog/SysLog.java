@@ -60,5 +60,5 @@ public class SysLog {
         return "SysLog [user=" + user + ", createTime=" + createTime + ", ip=" + ip + ", message=" + message + "]";
     }
 
-    
+
 }

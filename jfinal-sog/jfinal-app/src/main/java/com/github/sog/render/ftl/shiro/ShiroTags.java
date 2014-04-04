@@ -6,7 +6,11 @@
 
 package com.github.sog.render.ftl.shiro;
 
-import com.github.sog.render.ftl.shiro.auth.*;
+import com.github.sog.render.ftl.shiro.auth.AuthenticatedTag;
+import com.github.sog.render.ftl.shiro.auth.GuestTag;
+import com.github.sog.render.ftl.shiro.auth.NotAuthenticatedTag;
+import com.github.sog.render.ftl.shiro.auth.PrincipalTag;
+import com.github.sog.render.ftl.shiro.auth.UserTag;
 import com.github.sog.render.ftl.shiro.permission.HasPermissionTag;
 import com.github.sog.render.ftl.shiro.permission.LacksPermissionTag;
 import com.github.sog.render.ftl.shiro.role.HasAnyRolesTag;

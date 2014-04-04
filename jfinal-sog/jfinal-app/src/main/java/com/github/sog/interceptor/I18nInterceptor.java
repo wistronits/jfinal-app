@@ -5,23 +5,23 @@
  */
 package com.github.sog.interceptor;
 
-import java.util.Locale;
-
+import com.github.sog.config.StringPool;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.StringKit;
 import com.jfinal.render.Render;
 import com.jfinal.render.RenderFactory;
-import com.github.sog.config.StringPool;
+
+import java.util.Locale;
 
 public class I18nInterceptor implements Interceptor {
     private String defaultLanguage = "zh";
-    private String defaultCountry = "CN";
-    private String languagePara = "language";
-    private String countryPara = "country";
-    private String localePara = "locale";
-    private String skipFlagPara = "skipi18n";
+    private String defaultCountry  = "CN";
+    private String languagePara    = "language";
+    private String countryPara     = "country";
+    private String localePara      = "locale";
+    private String skipFlagPara    = "skipi18n";
 
     @Override
     public void intercept(ActionInvocation ai) {

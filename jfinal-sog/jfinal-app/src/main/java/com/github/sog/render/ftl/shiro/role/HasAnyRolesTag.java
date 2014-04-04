@@ -19,23 +19,23 @@ import org.apache.shiro.subject.Subject;
  * @since JDK 1.5
  */
 public class HasAnyRolesTag extends RoleTag {
-	// Delimeter that separates role names in tag attribute
+    // Delimeter that separates role names in tag attribute
 
-	@Override
-	protected boolean showTagBody(String roleName) {
-		boolean hasAnyRole = false;
-		Subject subject = getSubject();
+    @Override
+    protected boolean showTagBody(String roleName) {
+        boolean hasAnyRole = false;
+        Subject subject = getSubject();
 
-		if (subject != null) {
-			// Iterate through roles and check to see if the user has one of the roles
-			for (String role : roleName.split(StringPool.COMMA)) {
-				if (subject.hasRole(role.trim())) {
-					hasAnyRole = true;
-					break;
-				}
-			}
-		}
+        if (subject != null) {
+            // Iterate through roles and check to see if the user has one of the roles
+            for (String role : roleName.split(StringPool.COMMA)) {
+                if (subject.hasRole(role.trim())) {
+                    hasAnyRole = true;
+                    break;
+                }
+            }
+        }
 
-		return hasAnyRole;
-	}
+        return hasAnyRole;
+    }
 }

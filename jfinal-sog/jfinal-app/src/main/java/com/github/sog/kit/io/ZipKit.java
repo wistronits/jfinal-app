@@ -240,77 +240,6 @@ public class ZipKit {
     }
 
     /**
-     * Command: "add to zip".
-     */
-    public static class AddToZip {
-        private final ZipOutputStream zos;
-        private       File            file;
-        private       String          path;
-        private       String          comment;
-        private boolean recursive = true;
-
-        private AddToZip(ZipOutputStream zos) {
-            this.zos = zos;
-        }
-
-        /**
-         * Defines file or folder to be added to zip.
-         */
-        public AddToZip file(File file) {
-            this.file = file;
-            return this;
-        }
-
-        /**
-         * Defines file or folder to be added to zip.
-         */
-        public AddToZip file(String fileName) {
-            this.file = new File(fileName);
-            return this;
-        }
-
-        /**
-         * Defines file or folder to be added to zip.
-         */
-        public AddToZip file(String parent, String child) {
-            this.file = new File(parent, child);
-            return this;
-        }
-
-        /**
-         * Defines optional entry path.
-         */
-        public AddToZip path(String path) {
-            this.path = path;
-            return this;
-        }
-
-        /**
-         * Defines optional comment.
-         */
-        public AddToZip comment(String comment) {
-            this.comment = comment;
-            return this;
-        }
-
-        /**
-         * Defines if folders content should be added.
-         * Ignored for files.
-         */
-        public AddToZip recursive() {
-            this.recursive = true;
-            return this;
-        }
-
-        /**
-         * Invokes the adding command.
-         */
-        public void add() throws IOException {
-            addToZip(zos, file, path, comment, recursive);
-        }
-    }
-
-    /**
      * Adds single entry to ZIP output stream. For user-friendly way of adding entries to zip
      * see {@link #addToZip(java.util.zip.ZipOutputStream)}.
      *
@@ -384,8 +313,6 @@ public class ZipKit {
 
     }
 
-    // ---------------------------------------------------------------- close
-
     /**
      * Closes zip file safely.
      */
@@ -396,6 +323,79 @@ public class ZipKit {
             } catch (IOException ioex) {
                 // ignore
             }
+        }
+    }
+
+    // ---------------------------------------------------------------- close
+
+    /**
+     * Command: "add to zip".
+     */
+    public static class AddToZip {
+        private final ZipOutputStream zos;
+        private       File            file;
+        private       String          path;
+        private       String          comment;
+        private boolean recursive = true;
+
+        private AddToZip(ZipOutputStream zos) {
+            this.zos = zos;
+        }
+
+        /**
+         * Defines file or folder to be added to zip.
+         */
+        public AddToZip file(File file) {
+            this.file = file;
+            return this;
+        }
+
+        /**
+         * Defines file or folder to be added to zip.
+         */
+        public AddToZip file(String fileName) {
+            this.file = new File(fileName);
+            return this;
+        }
+
+        /**
+         * Defines file or folder to be added to zip.
+         */
+        public AddToZip file(String parent, String child) {
+            this.file = new File(parent, child);
+            return this;
+        }
+
+        /**
+         * Defines optional entry path.
+         */
+        public AddToZip path(String path) {
+            this.path = path;
+            return this;
+        }
+
+        /**
+         * Defines optional comment.
+         */
+        public AddToZip comment(String comment) {
+            this.comment = comment;
+            return this;
+        }
+
+        /**
+         * Defines if folders content should be added.
+         * Ignored for files.
+         */
+        public AddToZip recursive() {
+            this.recursive = true;
+            return this;
+        }
+
+        /**
+         * Invokes the adding command.
+         */
+        public void add() throws IOException {
+            addToZip(zos, file, path, comment, recursive);
         }
     }
 

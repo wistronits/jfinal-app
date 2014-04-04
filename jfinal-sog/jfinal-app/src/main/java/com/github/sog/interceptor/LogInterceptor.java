@@ -23,10 +23,10 @@ import com.jfinal.core.ActionInvocation;
  * LogInterceptor.
  */
 public class LogInterceptor implements Interceptor {
-	
-	// private FileWriter fw;
-	
-	public void intercept(ActionInvocation ai) {
-		throw new RuntimeException("Not finished");
-	}
+
+    // private FileWriter fw;
+
+    public void intercept(ActionInvocation ai) {
+        throw new RuntimeException("Not finished");
+    }
 }

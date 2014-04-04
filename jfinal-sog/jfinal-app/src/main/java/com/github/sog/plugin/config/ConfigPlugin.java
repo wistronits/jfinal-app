@@ -5,11 +5,11 @@
  */
 package com.github.sog.plugin.config;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.IPlugin;
+
+import java.util.List;
 
 public class ConfigPlugin implements IPlugin {
 
@@ -31,6 +31,10 @@ public class ConfigPlugin implements IPlugin {
         }
     }
 
+    public static void setSuffix(String suffix) {
+        ConfigPlugin.suffix = suffix;
+    }
+
     public ConfigPlugin excludeResource(String... resource) {
         if (includeResources != null) {
             for (String excludeResource : excludeResources) {
@@ -48,10 +52,6 @@ public class ConfigPlugin implements IPlugin {
     public ConfigPlugin reload(boolean reload) {
         this.reload = reload;
         return this;
-    }
-
-    public static void setSuffix(String suffix) {
-        ConfigPlugin.suffix = suffix;
     }
 
     @Override

@@ -37,6 +37,23 @@ public abstract class BasicController extends Controller {
 
     protected static boolean flashflag = false;
 
+    /**
+     * Send a 304 Not Modified response
+     */
+    protected static void notModified() {
+        new NotModified().render();
+    }
+
+    /**
+     * Send a 400 Bad request
+     */
+    protected static void badRequest() {
+        new BadRequest().render();
+    }
+
+    protected static void renderExcel(String templateFile, Map<String, Object> datas) {
+        JxlsRender.me(templateFile).beans(datas).render();
+    }
 
     @Override
     public void render(String view) {
@@ -124,31 +141,11 @@ public abstract class BasicController extends Controller {
         return DatatablesCriterias.criteriasWithRequest(getRequest());
     }
 
-
     protected <E> void renderDataTables(Page<E> datas, DatatablesCriterias criterias) {
         Preconditions.checkNotNull(criterias, "datatable criterias is must be not null.");
         DataSet<E> dataSet = DataSet.newSet(datas.getList(), datas.getTotalRow(), datas.getTotalRow());
         DatatablesResponse<E> response = DatatablesResponse.build(dataSet, criterias);
         renderJson(response);
-    }
-
-    /**
-     * Send a 304 Not Modified response
-     */
-    protected static void notModified() {
-        new NotModified().render();
-    }
-
-    /**
-     * Send a 400 Bad request
-     */
-    protected static void badRequest() {
-        new BadRequest().render();
-    }
-
-
-    protected static void renderExcel(String templateFile, Map<String, Object> datas) {
-        JxlsRender.me(templateFile).beans(datas).render();
     }
 
     /**

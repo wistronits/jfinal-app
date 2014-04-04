@@ -8,7 +8,7 @@ package com.github.sog.kit;
 import com.jfinal.plugin.activerecord.Model;
 
 public interface CallbackListener {
-    
+
     void beforeSave(Model m);
 
     void afterSave(Model m);

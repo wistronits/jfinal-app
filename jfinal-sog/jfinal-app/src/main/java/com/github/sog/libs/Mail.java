@@ -42,12 +42,10 @@ import java.util.concurrent.TimeoutException;
  */
 public class Mail {
 
+    private static final Logger logger = LoggerFactory.getLogger(Mail.class);
     public static Session session;
     public static boolean asynchronousSend = true;
-
-
-    private static final Logger logger = LoggerFactory.getLogger(Mail.class);
-
+    static ExecutorService executor = Executors.newCachedThreadPool();
 
     /**
      * Send an email
@@ -238,8 +236,6 @@ public class Mail {
             };
         }
     }
-
-    static ExecutorService executor = Executors.newCachedThreadPool();
 
     public static class SMTPAuthenticator extends Authenticator {
 

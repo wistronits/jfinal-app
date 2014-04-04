@@ -20,84 +20,66 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class F {
 
+    public static None<Object> None = new None<Object>();
+
+    public static Timeout Timeout(String delay) {
+        return new Timeout(delay);
+    }
+
+    public static Timeout Timeout(String token, String delay) {
+        return new Timeout(token, delay);
+    }
+
+    public static Timeout Timeout(long delay) {
+        return new Timeout(delay);
+    }
+
+    public static Timeout Timeout(String token, long delay) {
+        return new Timeout(token, delay);
+    }
+
+    public static <A> Some<A> Some(A a) {
+        return new Some(a);
+    }
+
+    public static <A, B> Tuple<A, B> Tuple(A a, B b) {
+        return new Tuple(a, b);
+    }
+
+    public static <A, B> T2<A, B> T2(A a, B b) {
+        return new T2(a, b);
+    }
+
+    public static <A, B, C> T3<A, B, C> T3(A a, B b, C c) {
+        return new T3(a, b, c);
+    }
+
+    public static <A, B, C, D> T4<A, B, C, D> T4(A a, B b, C c, D d) {
+        return new T4<A, B, C, D>(a, b, c, d);
+    }
+
+    public static <A, B, C, D, E> T5<A, B, C, D, E> T5(A a, B b, C c, D d, E e) {
+        return new T5<A, B, C, D, E>(a, b, c, d, e);
+    }
+
+    public static interface Action0 {
+
+        void invoke();
+    }
+
+    public static interface Action<T> {
+
+        void invoke(T result);
+    }
+
     public static class Promise<V> implements Future<V>, F.Action<V> {
 
         final CountDownLatch taskLock = new CountDownLatch(1);
         boolean cancelled = false;
-
-        public boolean cancel(boolean mayInterruptIfRunning) {
-            return false;
-        }
-
-        public boolean isCancelled() {
-            return false;
-        }
-
-        public boolean isDone() {
-            return invoked;
-        }
-
-        public V getOrNull() {
-            return result;
-        }
-
-        public V get() throws InterruptedException, ExecutionException {
-            taskLock.await();
-            if (exception != null) {
-                // The result of the promise is an exception - throw it
-                throw new ExecutionException(exception);
-            }
-            return result;
-        }
-
-        public V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
-            taskLock.await(timeout, unit);
-            if (exception != null) {
-                // The result of the promise is an exception - throw it
-                throw new ExecutionException(exception);
-            }
-            return result;
-        }
-
         List<F.Action<Promise<V>>> callbacks = new ArrayList<F.Action<Promise<V>>>();
         boolean                    invoked   = false;
         V                          result    = null;
         Throwable                  exception = null;
-
-        public void invoke(V result) {
-            invokeWithResultOrException(result, null);
-        }
-
-        public void invokeWithException(Throwable t) {
-            invokeWithResultOrException(null, t);
-        }
-
-        protected void invokeWithResultOrException(V result, Throwable t) {
-            synchronized (this) {
-                if (!invoked) {
-                    invoked = true;
-                    this.result = result;
-                    this.exception = t;
-                    taskLock.countDown();
-                } else {
-                    return;
-                }
-            }
-            for (F.Action<Promise<V>> callback : callbacks) {
-                callback.invoke(this);
-            }
-        }
-
-        public void onRedeem(F.Action<Promise<V>> callback) {
-            synchronized (this) {
-                if (!invoked) {
-                    callbacks.add(callback);
-                }
-            }
-            if (invoked) {
-                callback.invoke(this);
-            }
-        }
 
         public static <T> Promise<List<T>> waitAll(final Promise<T>... promises) {
             return waitAll(Arrays.asList(promises));
@@ -391,6 +373,75 @@ public class F {
 
             return result;
         }
+
+        public boolean cancel(boolean mayInterruptIfRunning) {
+            return false;
+        }
+
+        public boolean isCancelled() {
+            return false;
+        }
+
+        public boolean isDone() {
+            return invoked;
+        }
+
+        public V getOrNull() {
+            return result;
+        }
+
+        public V get() throws InterruptedException, ExecutionException {
+            taskLock.await();
+            if (exception != null) {
+                // The result of the promise is an exception - throw it
+                throw new ExecutionException(exception);
+            }
+            return result;
+        }
+
+        public V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+            taskLock.await(timeout, unit);
+            if (exception != null) {
+                // The result of the promise is an exception - throw it
+                throw new ExecutionException(exception);
+            }
+            return result;
+        }
+
+        public void invoke(V result) {
+            invokeWithResultOrException(result, null);
+        }
+
+        public void invokeWithException(Throwable t) {
+            invokeWithResultOrException(null, t);
+        }
+
+        protected void invokeWithResultOrException(V result, Throwable t) {
+            synchronized (this) {
+                if (!invoked) {
+                    invoked = true;
+                    this.result = result;
+                    this.exception = t;
+                    taskLock.countDown();
+                } else {
+                    return;
+                }
+            }
+            for (F.Action<Promise<V>> callback : callbacks) {
+                callback.invoke(this);
+            }
+        }
+
+        public void onRedeem(F.Action<Promise<V>> callback) {
+            synchronized (this) {
+                if (!invoked) {
+                    callbacks.add(callback);
+                }
+            }
+            if (invoked) {
+                callback.invoke(this);
+            }
+        }
     }
 
     public static class Timeout extends Promise<Timeout> {
@@ -429,22 +480,6 @@ public class F {
             return "Timeout(" + delay + ")";
         }
 
-    }
-
-    public static Timeout Timeout(String delay) {
-        return new Timeout(delay);
-    }
-
-    public static Timeout Timeout(String token, String delay) {
-        return new Timeout(token, delay);
-    }
-
-    public static Timeout Timeout(long delay) {
-        return new Timeout(delay);
-    }
-
-    public static Timeout Timeout(String token, long delay) {
-        return new Timeout(token, delay);
     }
 
     public static class EventStream<T> {
@@ -528,13 +563,13 @@ public class F {
             this.id = idGenerator.getAndIncrement();
         }
 
+        public static void resetIdGenerator() {
+            idGenerator.set(1);
+        }
+
         @Override
         public String toString() {
             return "Event(id: " + id + ", " + data + ")";
-        }
-
-        public static void resetIdGenerator() {
-            idGenerator.set(1);
         }
     }
 
@@ -631,21 +666,7 @@ public class F {
         }
     }
 
-    public static interface Action0 {
-
-        void invoke();
-    }
-
-    public static interface Action<T> {
-
-        void invoke(T result);
-    }
-
     public static abstract class Option<T> implements Iterable<T> {
-
-        public abstract boolean isDefined();
-
-        public abstract T get();
 
         public static <T> None<T> None() {
             return (None<T>) (Object) None;
@@ -654,10 +675,10 @@ public class F {
         public static <T> Some<T> Some(T value) {
             return new Some<T>(value);
         }
-    }
 
-    public static <A> Some<A> Some(A a) {
-        return new Some(a);
+        public abstract boolean isDefined();
+
+        public abstract T get();
     }
 
     public static class None<T> extends Option<T> {
@@ -681,8 +702,6 @@ public class F {
             return "None";
         }
     }
-
-    public static None<Object> None = new None<Object>();
 
     public static class Some<T> extends Option<T> {
 
@@ -867,19 +886,11 @@ public class F {
         }
     }
 
-    public static <A, B> Tuple<A, B> Tuple(A a, B b) {
-        return new Tuple(a, b);
-    }
-
     public static class T2<A, B> extends Tuple<A, B> {
 
         public T2(A _1, B _2) {
             super(_1, _2);
         }
-    }
-
-    public static <A, B> T2<A, B> T2(A a, B b) {
-        return new T2(a, b);
     }
 
     public static class T3<A, B, C> {
@@ -900,10 +911,6 @@ public class F {
         }
     }
 
-    public static <A, B, C> T3<A, B, C> T3(A a, B b, C c) {
-        return new T3(a, b, c);
-    }
-
     public static class T4<A, B, C, D> {
 
         final public A _1;
@@ -922,10 +929,6 @@ public class F {
         public String toString() {
             return "T4(_1: " + _1 + ", _2: " + _2 + ", _3:" + _3 + ", _4:" + _4 + ")";
         }
-    }
-
-    public static <A, B, C, D> T4<A, B, C, D> T4(A a, B b, C c, D d) {
-        return new T4<A, B, C, D>(a, b, c, d);
     }
 
     public static class T5<A, B, C, D, E> {
@@ -950,34 +953,7 @@ public class F {
         }
     }
 
-    public static <A, B, C, D, E> T5<A, B, C, D, E> T5(A a, B b, C c, D d, E e) {
-        return new T5<A, B, C, D, E>(a, b, c, d, e);
-    }
-
     public static abstract class Matcher<T, R> {
-
-        public abstract Option<R> match(T o);
-
-        public Option<R> match(Option<T> o) {
-            if (o.isDefined()) {
-                return match(o.get());
-            }
-            return Option.None();
-        }
-
-        public <NR> Matcher<T, NR> and(final Matcher<R, NR> nextMatcher) {
-            final Matcher<T, R> firstMatcher = this;
-            return new Matcher<T, NR>() {
-
-                @Override
-                public Option<NR> match(T o) {
-                    for (R r : firstMatcher.match(o)) {
-                        return nextMatcher.match(r);
-                    }
-                    return Option.None();
-                }
-            };
-        }
 
         public static Matcher<Object, String> String = new Matcher<Object, String>() {
 
@@ -1039,6 +1015,29 @@ public class F {
                 public Option<X> match(X o) {
                     if (o.equals(other)) {
                         return Option.Some(o);
+                    }
+                    return Option.None();
+                }
+            };
+        }
+
+        public abstract Option<R> match(T o);
+
+        public Option<R> match(Option<T> o) {
+            if (o.isDefined()) {
+                return match(o.get());
+            }
+            return Option.None();
+        }
+
+        public <NR> Matcher<T, NR> and(final Matcher<R, NR> nextMatcher) {
+            final Matcher<T, R> firstMatcher = this;
+            return new Matcher<T, NR>() {
+
+                @Override
+                public Option<NR> match(T o) {
+                    for (R r : firstMatcher.match(o)) {
+                        return nextMatcher.match(r);
                     }
                     return Option.None();
                 }

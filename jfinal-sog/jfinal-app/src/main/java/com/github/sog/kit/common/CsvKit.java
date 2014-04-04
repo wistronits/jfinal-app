@@ -6,9 +6,9 @@
 
 package com.github.sog.kit.common;
 
+import com.github.sog.config.StringPool;
 import com.github.sog.kit.lang.CharKit;
 import com.google.common.collect.Lists;
-import com.github.sog.config.StringPool;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -25,17 +25,17 @@ import java.util.List;
 public class CsvKit {
 
 
-    protected static final char FIELD_SEPARATOR = ',';
-    protected static final char FIELD_QUOTE = '"';
-    protected static final String DOUBLE_QUOTE = "\"\"";
-    protected static final String SPECIAL_CHARS = StringPool.CRLF;
+    protected static final char   FIELD_SEPARATOR = ',';
+    protected static final char   FIELD_QUOTE     = '"';
+    protected static final String DOUBLE_QUOTE    = "\"\"";
+    protected static final String SPECIAL_CHARS   = StringPool.CRLF;
 
     /**
      * Parse fields as csv string,
      */
     public static String toCsvString(Object... elements) {
         StringBuilder line = new StringBuilder();
-        int last = elements.length -1;
+        int last = elements.length - 1;
         for (int i = 0; i < elements.length; i++) {
             if (elements[i] == null) {
                 if (i != last) {
@@ -91,21 +91,21 @@ public class CsvKit {
         for (int i = 0; i < len; i++) {
             char c = line.charAt(i);
             if (c == FIELD_SEPARATOR) {
-                if (!inQuotedField) {	// ignore we are quoting
+                if (!inQuotedField) {    // ignore we are quoting
                     addField(row, line, fieldStart, i, inQuotedField);
                     fieldStart = i + 1;
                 }
             } else if (c == FIELD_QUOTE) {
                 if (inQuotedField) {
-                    if (i + 1 == len || line.charAt(i + 1) == FIELD_SEPARATOR) {	// we are already quoting - peek to see if this is the end of the field
+                    if (i + 1 == len || line.charAt(i + 1) == FIELD_SEPARATOR) {    // we are already quoting - peek to see if this is the end of the field
                         addField(row, line, fieldStart, i, inQuotedField);
                         fieldStart = i + 2;
                         i++; // and skip the comma
                         inQuotedField = false;
                     }
                 } else if (fieldStart == i) {
-                    inQuotedField = true;	// this is a beginning of a quote
-                    fieldStart++;			// move field start
+                    inQuotedField = true;    // this is a beginning of a quote
+                    fieldStart++;            // move field start
                 }
             }
         }

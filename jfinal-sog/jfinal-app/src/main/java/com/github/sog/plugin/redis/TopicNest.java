@@ -9,7 +9,7 @@ import com.github.sog.config.StringPool;
 
 public class TopicNest {
     private StringBuilder sb;
-    private String key;
+    private String        key;
 
     public TopicNest(String key) {
         this.key = key;

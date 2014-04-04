@@ -6,9 +6,9 @@
 package com.github.sog.plugin.tablebind;
 
 import com.github.sog.annotation.TableBind;
+import com.github.sog.config.StringPool;
 import com.github.sog.initalizer.ctxbox.ClassBox;
 import com.github.sog.initalizer.ctxbox.ClassType;
-import com.github.sog.config.StringPool;
 import com.jfinal.kit.StringKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.IDataSourceProvider;
@@ -21,9 +21,8 @@ import java.util.List;
 public class AutoTableBindPlugin extends ActiveRecordPlugin {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
-
-    private boolean autoScan = true;
     private final INameStyle nameStyle;
+    private boolean autoScan = true;
 
 
     public AutoTableBindPlugin(DataSource dataSource) {

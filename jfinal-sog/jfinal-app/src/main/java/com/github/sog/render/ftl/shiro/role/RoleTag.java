@@ -6,13 +6,13 @@
 
 package com.github.sog.render.ftl.shiro.role;
 
-import java.io.IOException;
-import java.util.Map;
-
 import com.github.sog.render.ftl.shiro.auth.SecureTag;
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateException;
+
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,23 +25,23 @@ import freemarker.template.TemplateException;
  */
 public abstract class RoleTag extends SecureTag {
 
-	/**
-	 * 获取角色名称，从但前的参数信息中.
-	 *
-	 * @param params 参数信息
-	 * @return 角色名称
-	 */
-	String getName(Map params) {
-		return getParam(params, "name");
-	}
+    /**
+     * 获取角色名称，从但前的参数信息中.
+     *
+     * @param params 参数信息
+     * @return 角色名称
+     */
+    String getName(Map params) {
+        return getParam(params, "name");
+    }
 
-	@Override
-	public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
-		boolean show = showTagBody(getName(params));
-		if (show) {
-			renderBody(env, body);
-		}
-	}
+    @Override
+    public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
+        boolean show = showTagBody(getName(params));
+        if (show) {
+            renderBody(env, body);
+        }
+    }
 
-	protected abstract boolean showTagBody(String roleName);
+    protected abstract boolean showTagBody(String roleName);
 }

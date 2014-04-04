@@ -5,14 +5,14 @@
  */
 package com.github.sog.kit;
 
+import com.github.sog.config.StringPool;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.github.sog.config.StringPool;
 
 @SuppressWarnings("serial")
 public class KeyLabel implements Comparable<KeyLabel>, Serializable {
@@ -37,7 +37,7 @@ public class KeyLabel implements Comparable<KeyLabel>, Serializable {
         return map;
     }
 
-    public static List<KeyLabel> converMapToList(Map<String,Object> map) {
+    public static List<KeyLabel> converMapToList(Map<String, Object> map) {
         List<KeyLabel> list = Lists.newArrayList();
         Set<String> keys = map.keySet();
         for (Object key : keys) {
@@ -72,7 +72,7 @@ public class KeyLabel implements Comparable<KeyLabel>, Serializable {
 
     @Override
     public String toString() {
-        return "KeyLabel["+this.label+", "+this.key+ StringPool.RIGHT_SQ_BRACKET;
+        return "KeyLabel[" + this.label + ", " + this.key + StringPool.RIGHT_SQ_BRACKET;
     }
 
     @Override

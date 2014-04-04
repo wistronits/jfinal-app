@@ -5,9 +5,9 @@
  */
 package com.github.sog.plugin.config;
 
-import com.google.common.collect.Maps;
 import com.github.sog.config.StringPool;
 import com.github.sog.kit.io.ResourceKit;
+import com.google.common.collect.Maps;
 import com.jfinal.kit.PathKit;
 import com.jfinal.log.Logger;
 

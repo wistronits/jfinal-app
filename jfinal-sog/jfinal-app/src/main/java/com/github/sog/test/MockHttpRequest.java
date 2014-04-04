@@ -75,6 +75,11 @@ public class MockHttpRequest implements HttpServletRequest {
     }
 
     @Override
+    public void setCharacterEncoding(String arg0) throws UnsupportedEncodingException {
+
+    }
+
+    @Override
     public int getContentLength() {
 
         return 0;
@@ -417,11 +422,6 @@ public class MockHttpRequest implements HttpServletRequest {
     @Override
     public void setAttribute(String key, Object value) {
         attr.put(key, value);
-    }
-
-    @Override
-    public void setCharacterEncoding(String arg0) throws UnsupportedEncodingException {
-
     }
 
     public void setParameter(String key, String val) {

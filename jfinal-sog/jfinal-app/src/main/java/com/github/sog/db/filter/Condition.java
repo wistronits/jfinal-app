@@ -6,8 +6,8 @@
 
 package com.github.sog.db.filter;
 
-import com.github.sog.libs.AppFunc;
 import com.github.sog.config.StringPool;
+import com.github.sog.libs.AppFunc;
 
 import java.util.List;
 
@@ -22,65 +22,9 @@ import java.util.List;
  */
 public class Condition {
 
-    public enum Operator {
-        eq("="),
-        ne("!="),
-        le("<="),
-        lt("<"),
-        ge(">="),
-        gt(">"),
-        /**
-         * betwwen and param is must be string[].
-         */
-        between(" between "),
-        in(" in "),
-        like(" like ");
-
-
-        private final String operator;
-
-        Operator(String operator) {
-            this.operator = operator;
-        }
-
-        public String constructCondition(String name, Object value) {
-
-            switch (this) {
-                case between:
-                    String[] param = (String[]) value;
-                    return name + operator + "?{" + param[0] + "} AND ?{" + param[1] + "} ";
-                case like:
-                    return name + operator + "?{%" + value + "}";
-                case in:
-                    List<String> params = AppFunc.COMMA_SPLITTER.splitToList(String.valueOf(value));
-                    StringBuilder condition = new StringBuilder(name);
-                    condition.append(operator).append(StringPool.LEFT_BRACE);
-                    if (params != null && !params.isEmpty()) {
-                        final int last_idx = params.size() - 1;
-                        for (int i = 0; i < last_idx; i++) {
-                            String _param = params.get(i);
-                            condition.append(StringPool.SINGLE_QUOTE)
-                                    .append(_param)
-                                    .append(StringPool.SINGLE_QUOTE)
-                                    .append(StringPool.COMMA);
-                        }
-                        condition.append(StringPool.SINGLE_QUOTE)
-                                .append(params.get(last_idx))
-                                .append(StringPool.SINGLE_QUOTE);
-                    }
-                    condition.append(StringPool.RIGHT_BRACE);
-                    return condition.toString();
-            }
-
-            return name + operator + "?{" + value + "}";
-        }
-    }
-
-
+    public static final String PARAM_CHAR = "?{";
     private String name;
-
     private Object value;
-
     private Operator operator;
 
     /**
@@ -99,7 +43,6 @@ public class Condition {
         this.value = value;
         this.operator = operator;
     }
-
 
     /**
      * @param name
@@ -153,5 +96,57 @@ public class Condition {
 
     public String constructQuery() {
         return operator.constructCondition(name, value);
+    }
+
+    public enum Operator {
+        eq("="),
+        ne("!="),
+        le("<="),
+        lt("<"),
+        ge(">="),
+        gt(">"),
+        /**
+         * betwwen and param is must be string[].
+         */
+        between(" between "),
+        in(" in "),
+        like(" like ");
+
+
+        private final String operator;
+
+        Operator(String operator) {
+            this.operator = operator;
+        }
+
+        public String constructCondition(String name, Object value) {
+
+            switch (this) {
+                case between:
+                    String[] param = (String[]) value;
+                    return name + operator + PARAM_CHAR + param[0] + "} AND ?{" + param[1] + StringPool.RIGHT_BRACE;
+                case like:
+                    return name + operator + "?{%" + value + StringPool.RIGHT_BRACE;
+                case in:
+                    List<String> params = AppFunc.COMMA_SPLITTER.splitToList(String.valueOf(value));
+                    StringBuilder condition = new StringBuilder(name);
+                    condition.append(operator).append(StringPool.LEFT_BRACKET);
+                    if (params != null && !params.isEmpty()) {
+                        final int last_idx = params.size() - 1;
+                        for (int i = 0; i < last_idx; i++) {
+                            String _param = params.get(i);
+                            condition.append(PARAM_CHAR).append(_param).append(StringPool.RIGHT_BRACE)
+                                    .append(StringPool.COMMA);
+                        }
+                        condition.append(PARAM_CHAR)
+                                .append(params.get(last_idx))
+                                .append(StringPool.RIGHT_BRACE);
+                    }
+                    condition.append(StringPool.RIGHT_BRACKET);
+                    return condition.toString();
+            }
+
+            return name + operator + PARAM_CHAR + value + StringPool.RIGHT_BRACE;
+        }
     }
 }

@@ -5,9 +5,9 @@
  */
 package com.github.sog.plugin.monogodb;
 
+import com.github.sog.config.StringPool;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.IPlugin;
-import com.github.sog.config.StringPool;
 import com.mongodb.MongoClient;
 
 import java.net.UnknownHostException;
@@ -19,18 +19,15 @@ public class MongodbPlugin implements IPlugin {
     public static final String DEFAULT_PKGS = "app.entitys";
 
     protected final Logger logger = Logger.getLogger(getClass());
-
-    private       MongoClient client;
     private final String      host;
     private final int         port;
     private final String      database;
-
     private final String morphia_pkgs;
-
     /**
      * 是否启用 morphia
      */
     private final boolean morphia;
+    private       MongoClient client;
 
     /**
      * 初始化MongoDB插件

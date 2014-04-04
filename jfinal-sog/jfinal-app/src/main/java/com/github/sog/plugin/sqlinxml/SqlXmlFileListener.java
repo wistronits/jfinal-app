@@ -6,9 +6,9 @@
 
 package com.github.sog.plugin.sqlinxml;
 
-import com.jfinal.log.Logger;
 import com.github.sog.config.StringPool;
 import com.github.sog.kit.map.JaxbKit;
+import com.jfinal.log.Logger;
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,8 +25,8 @@ import java.util.Map;
  * @since JDK 1.6
  */
 public class SqlXmlFileListener extends FileAlterationListenerAdaptor {
-    final Map<String, String> sqlMap;
     protected static final Logger logger = Logger.getLogger(SqlXmlFileListener.class);
+    final Map<String, String> sqlMap;
 
 
     public SqlXmlFileListener(Map<String, String> sqlMap) {

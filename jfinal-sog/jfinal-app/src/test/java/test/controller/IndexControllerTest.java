@@ -6,8 +6,6 @@
 
 package test.controller;
 
-import app.dtos.Work;
-import com.alibaba.fastjson.JSON;
 import com.github.sog.config.JFinalApp;
 import com.github.sog.test.ControllerTestCase;
 import org.junit.Test;

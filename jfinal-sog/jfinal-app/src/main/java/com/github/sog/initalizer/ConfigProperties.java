@@ -18,21 +18,18 @@ import java.util.Properties;
  */
 public class ConfigProperties {
 
+    public static final String REDIS_PREFIX = "redis";
+    public static final String MONGO_PREFIX = "mongo";
+    public static final String DB_PREFIX    = "db";
     private static final String                  APPLICATION_PROP = "application.conf";
     private static final ThreadLocal<Properties> configProps      = new ThreadLocal<Properties>();
-
     private static final Properties APPLICATION_CONFIG = new Properties();
     private static final Properties DATABASE_CONFIG    = new Properties();
     private static final Properties MONGODB_CONFIG     = new Properties();
     private static final Properties REDIS_CONFIG       = new Properties();
-
     static {
         readConf();
     }
-
-    public static final String REDIS_PREFIX = "redis";
-    public static final String MONGO_PREFIX = "mongo";
-    public static final String DB_PREFIX    = "db";
 
     /**
      * 重新加载配置文件

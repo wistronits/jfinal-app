@@ -24,15 +24,15 @@ import java.io.Serializable;
 public class AppUser implements Serializable {
     private static final long serialVersionUID = -4452393798317565037L;
     /** The Id. */
-    public final long id;
+    public final long    id;
     /** The Name. */
-    public final String name;
+    public final String  name;
     /** The nick name. */
-    public final String nickName;
+    public final String  nickName;
     /** The Email. */
-    public final String email;
+    public final String  email;
     /** The Avator. */
-    public final String avator;
+    public final String  avator;
     /**
      * The User Type
      */

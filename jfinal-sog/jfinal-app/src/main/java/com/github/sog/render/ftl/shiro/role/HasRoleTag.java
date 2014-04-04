@@ -18,9 +18,9 @@ import org.apache.shiro.subject.Subject;
  * @since JDK 1.5
  */
 public class HasRoleTag extends RoleTag {
-	@Override
-	protected boolean showTagBody(String roleName) {
-		final Subject subject = getSubject();
-		return subject != null && subject.hasRole(roleName);
-	}
+    @Override
+    protected boolean showTagBody(String roleName) {
+        final Subject subject = getSubject();
+        return subject != null && subject.hasRole(roleName);
+    }
 }

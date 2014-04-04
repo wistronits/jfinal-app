@@ -5,15 +5,14 @@
  */
 package com.github.sog.plugin.redis;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Set;
-
 import com.github.sog.kit.lang.SerializableKit;
+import com.jfinal.log.Logger;
 import redis.clients.jedis.Transaction;
 import redis.clients.jedis.Tuple;
 
-import com.jfinal.log.Logger;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 public class TopicPoducer {
     protected final Logger logger = Logger.getLogger(getClass());
@@ -47,16 +46,14 @@ public class TopicPoducer {
         Tuple next = zrangeWithScores.iterator().next();
         Integer lowest = (int) next.getScore();
         String key = topic.cat("message").cat(lowest).key();
-        logger.debug("clean key "+key);
+        logger.debug("clean key " + key);
         JedisKit.del(key);
     }
-        /**
-         *
-         * @param message
-         *            menssage
-         * @param seconds
-         *            expiry time
-         */
+
+    /**
+     * @param message menssage
+     * @param seconds expiry time
+     */
     public void publish(final Serializable message, final int seconds) {
         List<Object> exec = null;
         do {
@@ -66,12 +63,12 @@ public class TopicPoducer {
                 public void action(Transaction trans) {
                     Integer nextMessageId = getNextMessageId();
                     String msgKey = topic.cat("message").cat(nextMessageId).key();
-                    if(message instanceof  String){
-                        trans.set(msgKey, (String)message);
-                    }else{
+                    if (message instanceof String) {
+                        trans.set(msgKey, (String) message);
+                    } else {
                         trans.set(msgKey.getBytes(), SerializableKit.toByteArray(message));
                     }
-                    logger.info("produce a message,key[" + msgKey + "],message[" + message+"]");
+                    logger.info("produce a message,key[" + msgKey + "],message[" + message + "]");
                     trans.set(topic.key(), nextMessageId.toString());
                     if (seconds > 0) {
                         trans.expire(msgKey, seconds);

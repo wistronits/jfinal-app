@@ -7,7 +7,13 @@ package com.github.sog.kit.common;
 
 import com.google.common.collect.Maps;
 
-import java.lang.reflect.*;
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -30,11 +36,35 @@ import java.util.Map;
  */
 public class Reflect {
     /**
+     * The wrapped object
+     */
+    private final Object object;
+    /**
+     * A flag indicating whether the wrapped object is a {@link Class} (for accessing static fields and methods), or any
+     * other type of {@link Object} (for accessing instance fields and methods).
+     */
+    private final boolean isClass;
+
+    private Reflect(Class<?> type) {
+        this.object = type;
+        this.isClass = true;
+    }
+
+    // ---------------------------------------------------------------------
+    // Static API used as entrance points to the fluent API
+    // ---------------------------------------------------------------------
+
+    private Reflect(Object object) {
+        this.object = object;
+        this.isClass = false;
+    }
+
+    /**
      * Dynamic version of <code>instanceof</code>.
      *
-     * @param o			object to match
-     * @param target	target class
-     * @return			<code>true</code> if object is an instance of target class
+     * @param o      object to match
+     * @param target target class
+     * @return            <code>true</code> if object is an instance of target class
      */
     public static boolean isInstanceOf(Object o, Class target) {
         return isSubclass(o.getClass(), target);
@@ -76,7 +106,7 @@ public class Reflect {
     }
 
     // ---------------------------------------------------------------------
-    // Static API used as entrance points to the fluent API
+    // Members
     // ---------------------------------------------------------------------
 
     /**
@@ -105,6 +135,10 @@ public class Reflect {
     public static Reflect on(Class<?> clazz) {
         return new Reflect(clazz);
     }
+
+    // ---------------------------------------------------------------------
+    // Constructors
+    // ---------------------------------------------------------------------
 
     /**
      * Wrap an object.
@@ -137,37 +171,127 @@ public class Reflect {
     }
 
     // ---------------------------------------------------------------------
-    // Members
-    // ---------------------------------------------------------------------
-
-    /**
-     * The wrapped object
-     */
-    private final Object object;
-
-    /**
-     * A flag indicating whether the wrapped object is a {@link Class} (for accessing static fields and methods), or any
-     * other type of {@link Object} (for accessing instance fields and methods).
-     */
-    private final boolean isClass;
-
-    // ---------------------------------------------------------------------
-    // Constructors
-    // ---------------------------------------------------------------------
-
-    private Reflect(Class<?> type) {
-        this.object = type;
-        this.isClass = true;
-    }
-
-    private Reflect(Object object) {
-        this.object = object;
-        this.isClass = false;
-    }
-
-    // ---------------------------------------------------------------------
     // Fluent Reflection API
     // ---------------------------------------------------------------------
+
+    /**
+     * Get the POJO property name of an getter/setter
+     */
+    private static String property(String string) {
+        int length = string.length();
+
+        if (length == 0) {
+            return "";
+        } else if (length == 1) {
+            return string.toLowerCase();
+        } else {
+            return string.substring(0, 1).toLowerCase() + string.substring(1);
+        }
+    }
+
+    /**
+     * Wrap an object created from a constructor
+     */
+    private static Reflect on(Constructor<?> constructor, Object... args) throws ReflectException {
+        try {
+            return on(accessible(constructor).newInstance(args));
+        } catch (Exception e) {
+            throw new ReflectException(e);
+        }
+    }
+
+    /**
+     * Wrap an object returned from a method
+     */
+    private static Reflect on(Method method, Object object, Object... args) throws ReflectException {
+        try {
+            accessible(method);
+
+            if (method.getReturnType() == void.class) {
+                method.invoke(object, args);
+                return on(object);
+            } else {
+                return on(method.invoke(object, args));
+            }
+        } catch (Exception e) {
+            throw new ReflectException(e);
+        }
+    }
+
+    /**
+     * Unwrap an object
+     */
+    private static Object unwrap(Object object) {
+        if (object instanceof Reflect) {
+            return ((Reflect) object).get();
+        }
+
+        return object;
+    }
+
+    /**
+     * Get an array of types for an array of objects
+     *
+     * @see Object#getClass()
+     */
+    private static Class<?>[] types(Object... values) {
+        if (values == null) {
+            return new Class[0];
+        }
+
+        Class<?>[] result = new Class[values.length];
+
+        for (int i = 0; i < values.length; i++) {
+            Object value = values[i];
+            result[i] = value == null ? Object.class : value.getClass();
+        }
+
+        return result;
+    }
+
+    /**
+     * Load a class
+     *
+     * @see Class#forName(String)
+     */
+    private static Class<?> forName(String name) throws ReflectException {
+        try {
+            return Class.forName(name);
+        } catch (Exception e) {
+            throw new ReflectException(e);
+        }
+    }
+
+    /**
+     * Get a wrapper type for a primitive type, or the argument type itself, if it is not a primitive type.
+     */
+    public static Class<?> wrapper(Class<?> type) {
+        if (type == null) {
+            return null;
+        } else if (type.isPrimitive()) {
+            if (boolean.class == type) {
+                return Boolean.class;
+            } else if (int.class == type) {
+                return Integer.class;
+            } else if (long.class == type) {
+                return Long.class;
+            } else if (short.class == type) {
+                return Short.class;
+            } else if (byte.class == type) {
+                return Byte.class;
+            } else if (double.class == type) {
+                return Double.class;
+            } else if (float.class == type) {
+                return Float.class;
+            } else if (char.class == type) {
+                return Character.class;
+            } else if (void.class == type) {
+                return Void.class;
+            }
+        }
+
+        return type;
+    }
 
     /**
      * Get the wrapped object
@@ -378,6 +502,10 @@ public class Reflect {
         }
     }
 
+    // ---------------------------------------------------------------------
+    // Object API
+    // ---------------------------------------------------------------------
+
     /**
      * Searches a method with the exact same signature as desired.
      * <p/>
@@ -450,6 +578,10 @@ public class Reflect {
     public Reflect create() throws ReflectException {
         return create(new Object[0]);
     }
+
+    // ---------------------------------------------------------------------
+    // Utility methods
+    // ---------------------------------------------------------------------
 
     /**
      * Call a constructor.
@@ -542,25 +674,6 @@ public class Reflect {
     }
 
     /**
-     * Get the POJO property name of an getter/setter
-     */
-    private static String property(String string) {
-        int length = string.length();
-
-        if (length == 0) {
-            return "";
-        } else if (length == 1) {
-            return string.toLowerCase();
-        } else {
-            return string.substring(0, 1).toLowerCase() + string.substring(1);
-        }
-    }
-
-    // ---------------------------------------------------------------------
-    // Object API
-    // ---------------------------------------------------------------------
-
-    /**
      * Check whether two arrays of types match, converting primitive types to their corresponding wrappers.
      */
     private boolean match(Class<?>[] declaredTypes, Class<?>[] actualTypes) {
@@ -602,83 +715,6 @@ public class Reflect {
         return object.toString();
     }
 
-    // ---------------------------------------------------------------------
-    // Utility methods
-    // ---------------------------------------------------------------------
-
-    /**
-     * Wrap an object created from a constructor
-     */
-    private static Reflect on(Constructor<?> constructor, Object... args) throws ReflectException {
-        try {
-            return on(accessible(constructor).newInstance(args));
-        } catch (Exception e) {
-            throw new ReflectException(e);
-        }
-    }
-
-    /**
-     * Wrap an object returned from a method
-     */
-    private static Reflect on(Method method, Object object, Object... args) throws ReflectException {
-        try {
-            accessible(method);
-
-            if (method.getReturnType() == void.class) {
-                method.invoke(object, args);
-                return on(object);
-            } else {
-                return on(method.invoke(object, args));
-            }
-        } catch (Exception e) {
-            throw new ReflectException(e);
-        }
-    }
-
-    /**
-     * Unwrap an object
-     */
-    private static Object unwrap(Object object) {
-        if (object instanceof Reflect) {
-            return ((Reflect) object).get();
-        }
-
-        return object;
-    }
-
-    /**
-     * Get an array of types for an array of objects
-     *
-     * @see Object#getClass()
-     */
-    private static Class<?>[] types(Object... values) {
-        if (values == null) {
-            return new Class[0];
-        }
-
-        Class<?>[] result = new Class[values.length];
-
-        for (int i = 0; i < values.length; i++) {
-            Object value = values[i];
-            result[i] = value == null ? Object.class : value.getClass();
-        }
-
-        return result;
-    }
-
-    /**
-     * Load a class
-     *
-     * @see Class#forName(String)
-     */
-    private static Class<?> forName(String name) throws ReflectException {
-        try {
-            return Class.forName(name);
-        } catch (Exception e) {
-            throw new ReflectException(e);
-        }
-    }
-
     /**
      * Get the type of the wrapped object.
      *
@@ -690,36 +726,5 @@ public class Reflect {
         } else {
             return object.getClass();
         }
-    }
-
-    /**
-     * Get a wrapper type for a primitive type, or the argument type itself, if it is not a primitive type.
-     */
-    public static Class<?> wrapper(Class<?> type) {
-        if (type == null) {
-            return null;
-        } else if (type.isPrimitive()) {
-            if (boolean.class == type) {
-                return Boolean.class;
-            } else if (int.class == type) {
-                return Integer.class;
-            } else if (long.class == type) {
-                return Long.class;
-            } else if (short.class == type) {
-                return Short.class;
-            } else if (byte.class == type) {
-                return Byte.class;
-            } else if (double.class == type) {
-                return Double.class;
-            } else if (float.class == type) {
-                return Float.class;
-            } else if (char.class == type) {
-                return Character.class;
-            } else if (void.class == type) {
-                return Void.class;
-            }
-        }
-
-        return type;
     }
 }
