@@ -7,7 +7,7 @@
 package com.github.sog.controller.security;
 
 import com.github.sog.config.JFinalApp;
-import com.github.sog.config.AppFunc;
+import com.github.sog.libs.AppFunc;
 import com.github.sog.config.StringPool;
 import com.github.sog.kit.encry.DigestsKit;
 import com.github.sog.kit.encry.EncodeKit;

@@ -85,10 +85,10 @@ public class PrintfFormat {
     /**
      * For internal use with {@link #init(String, int)} and {@link #reinit(String)}.
      */
-    protected PrintfFormat() {
+    public PrintfFormat() {
     }
 
-    protected PrintfFormat reinit(String s) {
+    public PrintfFormat reinit(String s) {
         if (pre == null) {
             init(s, 0);
         } else {

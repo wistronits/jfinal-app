@@ -30,55 +30,12 @@ public class IndexControllerTest extends ControllerTestCase<JFinalApp> {
         String resp = use(url).invoke();
         System.out.println(resp);
     }
-    @Test
-    public void testAutoParamWithString() throws Exception {
-        String url = "/index/find?name=jfinal-app";
-        String resp = use(url).invoke();
-        System.out.println(resp);
-    }
 
     @Test
-    public void testParamToDate() throws Exception {
-        String url = "/index/date?name=jfinal-app&day=2014-02-23 14:20:20";
+    public void testFilter() throws Exception {
+        String url = "/index/filter";
         String resp = use(url).invoke();
         System.out.println(resp);
-    }
 
-    @Test
-    public void testParamToDouble() throws Exception {
-        String url = "/index/doubleNumber?name=jfinal-app&num=3.141592";
-        String resp = use(url).invoke();
-        System.out.println(resp);
-    }
-
-    @Test
-    public void testParamToFloat() throws Exception {
-        String url = "/index/floadNumber?name=jfinal-app&num=3.11";
-        String resp = use(url).invoke();
-        System.out.println(resp);
-    }
-
-    @Test
-    public void testParamToInt() throws Exception {
-        String url = "/index/intNumber?name=jfinal-app&num="+Integer.MAX_VALUE;
-        String resp = use(url).invoke();
-        System.out.println(resp);
-    }
-
-    @Test
-    public void testParamToLong() throws Exception {
-        String url = "/index/longNumber?name=jfinal-app&num="+Long.MAX_VALUE;
-        String resp = use(url).invoke();
-        System.out.println(resp);
-    }
-
-    @Test
-    public void testParamToJson() throws Exception {
-        Work work = new Work("jfinal", 1);
-        String params = JSON.toJSONString(work);
-
-        String url = "/index/json?work="+params;
-        String resp = use(url).invoke();
-        System.out.println(resp);
     }
 }

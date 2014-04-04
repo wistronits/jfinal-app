@@ -6,7 +6,7 @@
 
 package com.github.sog.kit.lang;
 
-import com.github.sog.config.AppFunc;
+import com.github.sog.libs.AppFunc;
 
 import java.lang.reflect.Array;
 

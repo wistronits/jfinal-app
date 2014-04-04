@@ -7,7 +7,7 @@
 package com.github.sog.kit.cst;
 
 import com.google.common.collect.Lists;
-import com.github.sog.config.AppFunc;
+import com.github.sog.libs.AppFunc;
 import org.junit.Assert;
 import org.junit.Test;
 

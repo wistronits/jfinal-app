@@ -7,7 +7,7 @@
 package com.github.sog.render.ftl;
 
 import com.google.common.base.Strings;
-import com.github.sog.config.AppFunc;
+import com.github.sog.libs.AppFunc;
 import com.github.sog.kit.date.DateProvider;
 import freemarker.core.Environment;
 import freemarker.template.*;

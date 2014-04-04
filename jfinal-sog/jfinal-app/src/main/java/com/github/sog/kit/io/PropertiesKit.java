@@ -1,7 +1,7 @@
 package com.github.sog.kit.io;
 
 import com.google.common.base.Splitter;
-import com.github.sog.config.AppFunc;
+import com.github.sog.libs.AppFunc;
 import com.github.sog.config.StringPool;
 
 import java.io.*;

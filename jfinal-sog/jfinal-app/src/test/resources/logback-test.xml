@@ -14,6 +14,8 @@
 
     <!-- project default level -->
     <logger name="app" level="DEBUG"/>
+    <logger name="com.github.sog" level="DEBUG"/>
+    <logger name="com.jfinal" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="console"/>

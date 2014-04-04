@@ -270,6 +270,7 @@ public class JFinalApp extends JFinalConfig {
             druidPlugin.addFilter(wall);
             plugins.add(druidPlugin);
 
+
             //  setting db table name like 'dev_info'
             final AutoTableBindPlugin atbp = new AutoTableBindPlugin(druidPlugin, SimpleNameStyles.LOWER_UNDERLINE);
 
