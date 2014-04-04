@@ -13,12 +13,12 @@ public interface Constants {
     //微信配置信息
     public static final String WECHAT_APPID = "wechat.appid";
     public static final String WECHAT_APPSECRET = "wechat.appsecret";
-    public static final String WECHAT_MENU = "wechat.menu";
     public static final String WECHAT_TOKEN = "wechat.token"; //预设TOKEN
+
+
     public static final String WECHAT_PROCESSOR = "wechat.processor"; //处理消息的具体实现类
 
     //---请求方式---
-
     public static final String GET = "GET";
     public static final String POST = "POST";
 
