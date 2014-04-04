@@ -26,11 +26,10 @@ import javax.servlet.SessionTrackingMode;
 import javax.servlet.descriptor.JspConfigDescriptor;
 
 public class MockServletContext implements ServletContext {
-
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#addFilter(String, Class)
+     *
+     *
+     * @see javax.servlet.ServletContext#addFilter(java.lang.String, java.lang.Class)
      */
     @Override
     public Dynamic addFilter(String arg0, Class<? extends Filter> arg1) {
@@ -39,9 +38,9 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#addFilter(String, javax.servlet.Filter)
+     *
+     *
+     * @see javax.servlet.ServletContext#addFilter(java.lang.String, javax.servlet.Filter)
      */
     @Override
     public Dynamic addFilter(String arg0, Filter arg1) {
@@ -50,9 +49,9 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#addFilter(String, String)
+     *
+     *
+     * @see javax.servlet.ServletContext#addFilter(java.lang.String, java.lang.String)
      */
     @Override
     public Dynamic addFilter(String arg0, String arg1) {
@@ -61,9 +60,9 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#addListener(Class)
+     *
+     *
+     * @see javax.servlet.ServletContext#addListener(java.lang.Class)
      */
     @Override
     public void addListener(Class<? extends EventListener> arg0) {
@@ -71,9 +70,9 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#addListener(String)
+     *
+     *
+     * @see javax.servlet.ServletContext#addListener(java.lang.String)
      */
     @Override
     public void addListener(String arg0) {
@@ -81,8 +80,8 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @see javax.servlet.ServletContext#addListener(java.util.EventListener)
      */
     @Override
@@ -91,42 +90,42 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#addServlet(String, Class)
+     *
+     *
+     * @see javax.servlet.ServletContext#addServlet(java.lang.String, java.lang.Class)
      */
     @Override
-    public ServletRegistration.Dynamic addServlet(String arg0, Class<? extends Servlet> arg1) {
+    public javax.servlet.ServletRegistration.Dynamic addServlet(String arg0, Class<? extends Servlet> arg1) {
 
         return null;
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#addServlet(String, javax.servlet.Servlet)
+     *
+     *
+     * @see javax.servlet.ServletContext#addServlet(java.lang.String, javax.servlet.Servlet)
      */
     @Override
-    public ServletRegistration.Dynamic addServlet(String arg0, Servlet arg1) {
+    public javax.servlet.ServletRegistration.Dynamic addServlet(String arg0, Servlet arg1) {
 
         return null;
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#addServlet(String, String)
+     *
+     *
+     * @see javax.servlet.ServletContext#addServlet(java.lang.String, java.lang.String)
      */
     @Override
-    public ServletRegistration.Dynamic addServlet(String arg0, String arg1) {
+    public javax.servlet.ServletRegistration.Dynamic addServlet(String arg0, String arg1) {
 
         return null;
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#createFilter(Class)
+     *
+     *
+     * @see javax.servlet.ServletContext#createFilter(java.lang.Class)
      */
     @Override
     public <T extends Filter> T createFilter(Class<T> arg0) throws ServletException {
@@ -135,9 +134,9 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#createListener(Class)
+     *
+     *
+     * @see javax.servlet.ServletContext#createListener(java.lang.Class)
      */
     @Override
     public <T extends EventListener> T createListener(Class<T> arg0) throws ServletException {
@@ -146,9 +145,9 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#createServlet(Class)
+     *
+     *
+     * @see javax.servlet.ServletContext#createServlet(java.lang.Class)
      */
     @Override
     public <T extends Servlet> T createServlet(Class<T> arg0) throws ServletException {
@@ -157,18 +156,13 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#declareRoles(String[])
+     *
+     *
+     * @see javax.servlet.ServletContext#declareRoles(java.lang.String[])
      */
     @Override
     public void declareRoles(String... arg0) {
 
-    }
-
-    @Override
-    public String getVirtualServerName() {
-        return "jfina-test";
     }
 
     @Override
@@ -185,8 +179,8 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @see javax.servlet.ServletContext#getClassLoader()
      */
     @Override
@@ -208,8 +202,8 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @see javax.servlet.ServletContext#getDefaultSessionTrackingModes()
      */
     @Override
@@ -219,8 +213,8 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @see javax.servlet.ServletContext#getEffectiveMajorVersion()
      */
     @Override
@@ -230,8 +224,8 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @see javax.servlet.ServletContext#getEffectiveMinorVersion()
      */
     @Override
@@ -241,8 +235,8 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @see javax.servlet.ServletContext#getEffectiveSessionTrackingModes()
      */
     @Override
@@ -252,9 +246,9 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#getFilterRegistration(String)
+     *
+     *
+     * @see javax.servlet.ServletContext#getFilterRegistration(java.lang.String)
      */
     @Override
     public FilterRegistration getFilterRegistration(String arg0) {
@@ -263,8 +257,8 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @see javax.servlet.ServletContext#getFilterRegistrations()
      */
     @Override
@@ -286,8 +280,8 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @see javax.servlet.ServletContext#getJspConfigDescriptor()
      */
     @Override
@@ -374,9 +368,9 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
-     * @see javax.servlet.ServletContext#getServletRegistration(String)
+     *
+     *
+     * @see javax.servlet.ServletContext#getServletRegistration(java.lang.String)
      */
     @Override
     public ServletRegistration getServletRegistration(String arg0) {
@@ -385,8 +379,8 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @see javax.servlet.ServletContext#getServletRegistrations()
      */
     @Override
@@ -402,8 +396,8 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @see javax.servlet.ServletContext#getSessionCookieConfig()
      */
     @Override
@@ -414,13 +408,11 @@ public class MockServletContext implements ServletContext {
 
     @Override
     public void log(Exception arg0, String arg1) {
-        arg0.printStackTrace();
-        System.out.println(arg1);
+
     }
 
     @Override
     public void log(String arg0) {
-        System.out.println(arg0);
 
     }
 
@@ -440,7 +432,7 @@ public class MockServletContext implements ServletContext {
     }
 
     /**
-     * @see javax.servlet.ServletContext#setInitParameter(String, String)
+     * @see javax.servlet.ServletContext#setInitParameter(java.lang.String, java.lang.String)
      */
     @Override
     public boolean setInitParameter(String arg0, String arg1) {
@@ -455,5 +447,4 @@ public class MockServletContext implements ServletContext {
     public void setSessionTrackingModes(Set<SessionTrackingMode> arg0) {
 
     }
-
 }

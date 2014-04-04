@@ -187,11 +187,6 @@ public class MockHttpResponse implements HttpServletResponse {
     }
 
     @Override
-    public void setContentLengthLong(long len) {
-
-    }
-
-    @Override
     public void setContentType(String arg0) {
 
     }

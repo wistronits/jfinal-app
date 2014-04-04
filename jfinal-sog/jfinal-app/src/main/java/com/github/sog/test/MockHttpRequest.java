@@ -6,7 +6,6 @@
 package com.github.sog.test;
 
 import com.google.common.collect.Maps;
-import com.github.sog.config.StringPool;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
@@ -20,7 +19,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,11 +31,11 @@ import java.util.Locale;
 import java.util.Map;
 
 public class MockHttpRequest implements HttpServletRequest {
-    private final Map<String, Object> attr = Maps.newHashMap();
+    private Map<String, Object> attr = Maps.newHashMap();
 
-    private final Map<String, String> para = Maps.newHashMap();
+    private Map<String, String> para = Maps.newHashMap();
 
-    private final String body;
+    private String body;
 
     public MockHttpRequest(String body) {
         this.body = body;
@@ -73,17 +71,12 @@ public class MockHttpRequest implements HttpServletRequest {
 
     @Override
     public String getCharacterEncoding() {
-        return StringPool.UTF_8;
+        return "UTF-8";
     }
 
     @Override
     public int getContentLength() {
 
-        return 0;
-    }
-
-    @Override
-    public long getContentLengthLong() {
         return 0;
     }
 
@@ -205,11 +198,6 @@ public class MockHttpRequest implements HttpServletRequest {
     @Override
     public Part getPart(String arg0) throws IOException, ServletException {
 
-        return null;
-    }
-
-    @Override
-    public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
         return null;
     }
 
@@ -352,11 +340,6 @@ public class MockHttpRequest implements HttpServletRequest {
     }
 
     @Override
-    public String changeSessionId() {
-        return null;
-    }
-
-    @Override
     public HttpSession getSession(boolean arg0) {
 
         return null;
@@ -456,5 +439,4 @@ public class MockHttpRequest implements HttpServletRequest {
 
         return null;
     }
-
 }
