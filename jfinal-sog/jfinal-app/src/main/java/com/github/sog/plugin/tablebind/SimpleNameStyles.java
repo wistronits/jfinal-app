@@ -5,8 +5,8 @@
  */
 package com.github.sog.plugin.tablebind;
 
-import com.jfinal.kit.StringKit;
 import com.github.sog.config.StringPool;
+import com.jfinal.kit.StringKit;
 
 public class SimpleNameStyles {
     public static final INameStyle DEFAULT = new INameStyle() {

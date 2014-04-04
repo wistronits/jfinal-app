@@ -5,6 +5,7 @@
  */
 
 package com.github.sog.libs;
+
 import com.github.sog.config.StringPool;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -35,13 +36,14 @@ import java.util.regex.Pattern;
 public class Time {
 
 
-    static Pattern days = Pattern.compile("^([0-9]+)d$");
-    static Pattern hours = Pattern.compile("^([0-9]+)h$");
+    static Pattern days    = Pattern.compile("^([0-9]+)d$");
+    static Pattern hours   = Pattern.compile("^([0-9]+)h$");
     static Pattern minutes = Pattern.compile("^([0-9]+)mi?n$");
     static Pattern seconds = Pattern.compile("^([0-9]+)s$");
 
     /**
      * Parse a duration
+     *
      * @param duration 3h, 2mn, 7s
      * @return The number of seconds
      */
@@ -75,6 +77,7 @@ public class Time {
 
     /**
      * Parse a CRON expression
+     *
      * @param cron The CRON String
      * @return The next Date that satisfy the expression
      */
@@ -88,6 +91,7 @@ public class Time {
 
     /**
      * Compute the number of milliseconds between the next valid date and the one after
+     *
      * @param cron The CRON String
      * @return the number of milliseconds between the next valid date and the one after,
      * with an invalid interval between
@@ -98,6 +102,7 @@ public class Time {
 
     /**
      * Compute the number of milliseconds between the next valid date and the one after
+     *
      * @param cron The CRON String
      * @param date The date to start search
      * @return the number of milliseconds between the next valid date and the one after,
@@ -113,7 +118,7 @@ public class Time {
 
     /**
      * Thanks to Quartz project, https://quartz.dev.java.net
-     *
+     * <p/>
      * Provides a parser and evaluator for unix-like cron expressions. Cron
      * expressions provide the ability to specify complex time combinations such as
      * &quot;At 8:00am every Monday through Friday&quot; or &quot;At 1:30am every
@@ -121,7 +126,7 @@ public class Time {
      * <P>
      * Cron expressions are comprised of 6 required fields and one optional field
      * separated by white space. The fields respectively are described as follows:
-     *
+     * <p/>
      * <table cellspacing="8">
      * <tr>
      * <th align="left">Field Name</th>
@@ -254,7 +259,7 @@ public class Time {
      * <P>
      * The legal characters and the names of months and days of the week are not
      * case sensitive.
-     *
+     * <p/>
      * <p>
      * <b>NOTES:</b>
      * <ul>
@@ -264,27 +269,26 @@ public class Time {
      * </ul>
      * </p>
      *
-     *
      * @author Sharada Jambula, James House
      * @author Contributions from Mads Henderson
      * @author Refactoring from CronTrigger to CronExpression by Aaron Craven
      */
     public static class CronExpression implements Serializable, Cloneable {
 
-        private static final long serialVersionUID = 12423409423L;
-        protected static final int SECOND = 0;
-        protected static final int MINUTE = 1;
-        protected static final int HOUR = 2;
-        protected static final int DAY_OF_MONTH = 3;
-        protected static final int MONTH = 4;
-        protected static final int DAY_OF_WEEK = 5;
-        protected static final int YEAR = 6;
-        protected static final int ALL_SPEC_INT = 99; // '*'
-        protected static final int NO_SPEC_INT = 98; // '?'
-        protected static final Integer ALL_SPEC = new Integer(ALL_SPEC_INT);
-        protected static final Integer NO_SPEC = new Integer(NO_SPEC_INT);
-        protected static Map<String, Integer> monthMap = new HashMap<String, Integer>(20);
-        protected static Map<String, Integer> dayMap = new HashMap<String, Integer>(60);
+        protected static final int                  SECOND           = 0;
+        protected static final int                  MINUTE           = 1;
+        protected static final int                  HOUR             = 2;
+        protected static final int                  DAY_OF_MONTH     = 3;
+        protected static final int                  MONTH            = 4;
+        protected static final int                  DAY_OF_WEEK      = 5;
+        protected static final int                  YEAR             = 6;
+        protected static final int                  ALL_SPEC_INT     = 99; // '*'
+        protected static final int                  NO_SPEC_INT      = 98; // '?'
+        protected static final Integer              ALL_SPEC         = new Integer(ALL_SPEC_INT);
+        protected static final Integer              NO_SPEC          = new Integer(NO_SPEC_INT);
+        private static final   long                 serialVersionUID = 12423409423L;
+        protected static       Map<String, Integer> monthMap         = new HashMap<String, Integer>(20);
+        protected static       Map<String, Integer> dayMap           = new HashMap<String, Integer>(60);
 
         static {
             monthMap.put("JAN", new Integer(0));
@@ -308,8 +312,6 @@ public class Time {
             dayMap.put("FRI", new Integer(6));
             dayMap.put("SAT", new Integer(7));
         }
-        private String cronExpression = null;
-        private TimeZone timeZone = null;
         protected transient TreeSet<Integer> seconds;
         protected transient TreeSet<Integer> minutes;
         protected transient TreeSet<Integer> hours;
@@ -317,11 +319,13 @@ public class Time {
         protected transient TreeSet<Integer> months;
         protected transient TreeSet<Integer> daysOfWeek;
         protected transient TreeSet<Integer> years;
-        protected transient boolean lastdayOfWeek = false;
-        protected transient int nthdayOfWeek = 0;
-        protected transient boolean lastdayOfMonth = false;
-        protected transient boolean nearestWeekday = false;
+        protected transient boolean lastdayOfWeek    = false;
+        protected transient int     nthdayOfWeek     = 0;
+        protected transient boolean lastdayOfMonth   = false;
+        protected transient boolean nearestWeekday   = false;
         protected transient boolean expressionParsed = false;
+        private String   cronExpression = null;
+        private TimeZone timeZone       = null;
 
         /**
          * Constructs a new <CODE>CronExpression</CODE> based on the specified
@@ -329,9 +333,8 @@ public class Time {
          *
          * @param cronExpression String representation of the cron expression the
          *                       new object should represent
-         * @throws java.text.ParseException
-         *         if the string expression cannot be parsed into a valid
-         *         <CODE>CronExpression</CODE>
+         * @throws java.text.ParseException if the string expression cannot be parsed into a valid
+         *                                  <CODE>CronExpression</CODE>
          */
         public CronExpression(String cronExpression) throws ParseException {
             if (cronExpression == null) {
@@ -344,13 +347,32 @@ public class Time {
         }
 
         /**
+         * Indicates whether the specified cron expression can be parsed into a
+         * valid cron expression
+         *
+         * @param cronExpression the expression to evaluate
+         * @return a boolean indicating whether the given expression is a valid cron
+         * expression
+         */
+        public static boolean isValidExpression(String cronExpression) {
+
+            try {
+                new CronExpression(cronExpression);
+            } catch (ParseException pe) {
+                return false;
+            }
+
+            return true;
+        }
+
+        /**
          * Indicates whether the given date satisfies the cron expression. Note that
          * milliseconds are ignored, so two Dates falling on different milliseconds
          * of the same second will always have the same result here.
          *
          * @param date the date to evaluate
          * @return a boolean indicating whether the given date satisfies the cron
-         *         expression
+         * expression
          */
         public boolean isSatisfiedBy(Date date) {
             Calendar testDateCal = Calendar.getInstance();
@@ -414,6 +436,7 @@ public class Time {
 
         /**
          * Return the interval between the next valid date and the one after
+         *
          * @param date the date/time at which to begin the search
          * @return the number of milliseconds between the next valid and the one after
          */
@@ -454,24 +477,6 @@ public class Time {
             return cronExpression;
         }
 
-        /**
-         * Indicates whether the specified cron expression can be parsed into a
-         * valid cron expression
-         *
-         * @param cronExpression the expression to evaluate
-         * @return a boolean indicating whether the given expression is a valid cron
-         *         expression
-         */
-        public static boolean isValidExpression(String cronExpression) {
-
-            try {
-                new CronExpression(cronExpression);
-            } catch (ParseException pe) {
-                return false;
-            }
-
-            return true;
-        }
         ////////////////////////////////////////////////////////////////////////////
         //
         // Expression Parsing Functions

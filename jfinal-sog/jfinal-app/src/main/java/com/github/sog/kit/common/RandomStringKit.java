@@ -18,6 +18,10 @@ public class RandomStringKit {
     protected static final Random rnd = new Random();
 
     // ---------------------------------------------------------------- string
+    protected static final char[] ALPHA_RANGE         = new char[]{'A', 'Z', 'a', 'z'};
+    protected static final char[] ALPHA_NUMERIC_RANGE = new char[]{'0', '9', 'A', 'Z', 'a', 'z'};
+
+    // ---------------------------------------------------------------- range
 
     /**
      * Creates random string whose length is the number of characters specified.
@@ -41,8 +45,6 @@ public class RandomStringKit {
     public static String random(int count, String chars) {
         return random(count, chars.toCharArray());
     }
-
-    // ---------------------------------------------------------------- range
 
     /**
      * Creates random string whose length is the number of characters specified.
@@ -113,9 +115,6 @@ public class RandomStringKit {
         }
         return new String(result);
     }
-
-    protected static final char[] ALPHA_RANGE         = new char[]{'A', 'Z', 'a', 'z'};
-    protected static final char[] ALPHA_NUMERIC_RANGE = new char[]{'0', '9', 'A', 'Z', 'a', 'z'};
 
     /**
      * Creates random string of characters.

@@ -7,12 +7,12 @@
 package com.github.sog.interceptor;
 
 
-import com.google.common.base.Strings;
-import com.jfinal.core.Controller;
+import com.github.sog.config.StringPool;
 import com.github.sog.interceptor.syslog.LogConfig;
 import com.github.sog.interceptor.syslog.LogProcessor;
 import com.github.sog.interceptor.syslog.SysLog;
-import com.github.sog.config.StringPool;
+import com.google.common.base.Strings;
+import com.jfinal.core.Controller;
 
 import java.util.Map;
 import java.util.Set;
@@ -26,7 +26,7 @@ import java.util.Set;
  * @version 1.0 2013-12-12 3:45
  * @since JDK 1.5
  */
-public class  SystemLogProcessor implements LogProcessor {
+public class SystemLogProcessor implements LogProcessor {
     @Override
     public void process(SysLog sysLog) {
         // todo save log into db or other storage.

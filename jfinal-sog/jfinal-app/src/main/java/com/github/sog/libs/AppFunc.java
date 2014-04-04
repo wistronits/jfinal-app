@@ -7,9 +7,9 @@
 package com.github.sog.libs;
 
 import com.github.sog.config.StringPool;
+import com.github.sog.kit.date.DateProvider;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
-import com.github.sog.kit.date.DateProvider;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 

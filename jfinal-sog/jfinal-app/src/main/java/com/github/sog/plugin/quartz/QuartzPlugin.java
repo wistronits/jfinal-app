@@ -10,7 +10,11 @@ import com.github.sog.initalizer.ctxbox.ClassBox;
 import com.github.sog.initalizer.ctxbox.ClassType;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.IPlugin;
-import org.quartz.*;
+import org.quartz.Job;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
 import java.util.Date;
@@ -26,9 +30,8 @@ public class QuartzPlugin implements IPlugin {
     private static final String JOB = "job";
 
     private static final Logger logger = Logger.getLogger(QuartzPlugin.class);
-
-    private boolean autoScan = true;
     private final Scheduler sched;
+    private boolean autoScan = true;
 
     public QuartzPlugin() {
         Scheduler tmp_sched = null;

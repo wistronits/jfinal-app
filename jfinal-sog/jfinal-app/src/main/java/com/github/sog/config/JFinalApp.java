@@ -78,30 +78,30 @@ import static com.github.sog.initalizer.InitConst.*;
  */
 public class JFinalApp extends JFinalConfig {
 
-    public static boolean initlization = false;
-
-    /**
-     * 2 modes
-     */
-    public enum Mode {
-
-        /**
-         * Enable development-specific features, e.g. view the documentation at the URL {@literal "/@documentation"}.
-         */
-        DEV,
-        /**
-         * Disable development-specific features.
-         */
-        PROD;
-
-        public boolean isDev() {
-            return this == DEV;
-        }
-
-    }
-
     private static final Logger logger = LoggerFactory.getLogger(JFinalApp.class);
+    private static final String DEFAULT_DOMAIN = "http://127.0.0.1:8080/app";
+    public static boolean initlization = false;
+    public static Properties configuration;
+    /**
+     * The application mode
+     */
+    public static Mode mode;
+    public static String  viewPath;
+    public static String  domain;
+    public static boolean setViewPath;
+    public static String  appName;
+    private static FlashManager flashManager;
+    /**
+     * Global routing system configuration.
+     */
+    private Routes routes;
 
+    public static FlashManager flashManager() {
+        if (flashManager == null) {
+            flashManager = new SessionFlashManager();
+        }
+        return flashManager;
+    }
 
     @Override
     public void configConstant(Constants constants) {
@@ -144,7 +144,6 @@ public class JFinalApp extends JFinalConfig {
         }
     }
 
-
     @Override
     public void configRoute(Routes routes) {
         this.routes = routes;
@@ -186,7 +185,6 @@ public class JFinalApp extends JFinalConfig {
         }
 
     }
-
 
     @Override
     public void configInterceptor(Interceptors interceptors) {
@@ -246,7 +244,6 @@ public class JFinalApp extends JFinalConfig {
     public void beforeJFinalStop() {
         super.beforeJFinalStop();
     }
-
 
     /**
      * init databases.
@@ -331,33 +328,23 @@ public class JFinalApp extends JFinalConfig {
         config.setSharedVariable("prettyTime", new PrettyTimeDirective());
     }
 
-
     /**
-     * Global routing system configuration.
+     * 2 modes
      */
-    private Routes routes;
+    public enum Mode {
 
-    private static final String DEFAULT_DOMAIN = "http://127.0.0.1:8080/app";
+        /**
+         * Enable development-specific features, e.g. view the documentation at the URL {@literal "/@documentation"}.
+         */
+        DEV,
+        /**
+         * Disable development-specific features.
+         */
+        PROD;
 
-    public static Properties configuration;
-
-    /**
-     * The application mode
-     */
-    public static Mode mode;
-
-    public static String  viewPath;
-    public static String  domain;
-    public static boolean setViewPath;
-    public static String  appName;
-
-
-    private static FlashManager flashManager;
-
-    public static FlashManager flashManager() {
-        if (flashManager == null) {
-            flashManager = new SessionFlashManager();
+        public boolean isDev() {
+            return this == DEV;
         }
-        return flashManager;
+
     }
 }

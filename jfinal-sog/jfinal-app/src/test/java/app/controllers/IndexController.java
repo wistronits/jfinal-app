@@ -7,9 +7,9 @@
 package app.controllers;
 
 import app.module.Task;
+import com.github.sog.controller.BasicController;
 import com.github.sog.db.filter.Condition;
 import com.github.sog.db.filter.Filter;
-import com.github.sog.controller.BasicController;
 
 /**
  * <p>
@@ -28,15 +28,13 @@ public class IndexController extends BasicController {
     }
 
 
-
-    public void filter(){
+    public void filter() {
         Filter<Task> filter = new Filter<Task>(Task.dao);
-        filter.addCondition("title", Condition.Operator.eq, "Try SpringFuse");
-        filter.addCondition("", Condition.Operator.like, "ccc");
-        filter.addCondition("", Condition.Operator.like, "ccc");
-        filter.addCondition("", Condition.Operator.like, "ccc");
-        filter.addCondition("", Condition.Operator.like, "ccc");
-        filter.addCondition("", Condition.Operator.like, "ccc");
+//        filter.addCondition("title", Condition.Operator.eq, "Try SpringFuse");
+        filter.addCondition("title", Condition.Operator.like, "Try");
+//        filter.addCondition("user_id", Condition.Operator.gt, 1);
+//        filter.addCondition("user_id", Condition.Operator.between, new String[]{"1","3"});
+        filter.addCondition("id", Condition.Operator.in, "1,2,3");
         renderJson(filter.fetch("id, title"));
     }
 }

@@ -20,6 +20,6 @@ import org.junit.Test;
 public class PrintfTest {
     @Test
     public void testStr() throws Exception {
-        System.out.println(Printf.str("%s","xxx"));
+        System.out.println(Printf.str("%s", "xxx"));
     }
 }

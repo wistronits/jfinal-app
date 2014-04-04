@@ -33,21 +33,24 @@ public class EhCacheFlashManager implements FlashManager {
      * 锁
      */
     private ReentrantLock lock = new ReentrantLock();
+
     /**
      * 构造函数
-     * @param flashCacheName  ehcache 中的key值。
+     *
+     * @param flashCacheName ehcache 中的key值。
      */
-    public EhCacheFlashManager(String flashCacheName ) {
-        if (StringKit.isBlank(flashCacheName)){
+    public EhCacheFlashManager(String flashCacheName) {
+        if (StringKit.isBlank(flashCacheName)) {
             throw new IllegalArgumentException("flashCacheName can not be blank.");
         }
         this.flashCacheName = flashCacheName;
     }
+
     @Override
     public void setFlash(HttpSession session, String curAction, String key, Object value) {
         String sessionKey = session.getId();
         sessionKey = sessionKey + curAction.replace("/", "_");
-        try{
+        try {
             lock.lock();
             ConcurrentHashMap<String, Object> map;
             Object obj = CacheKit.get(flashCacheName, sessionKey);
@@ -58,7 +61,7 @@ public class EhCacheFlashManager implements FlashManager {
                 CacheKit.put(flashCacheName, sessionKey, map);
             }
             map.put(key, value);
-        }finally{
+        } finally {
             lock.unlock();
         }
     }
@@ -68,14 +71,14 @@ public class EhCacheFlashManager implements FlashManager {
         String sessionKey = session.getId();
         String oldKey = sessionKey + curAction.replace("/", "_");
         String newkey = sessionKey + nextAction.replace("/", "_");
-        try{
+        try {
             lock.lock();
             Object obj = CacheKit.get(flashCacheName, oldKey);
             if (obj != null) {
                 CacheKit.remove(flashCacheName, oldKey);
                 CacheKit.put(flashCacheName, newkey, obj);
             }
-        }finally{
+        } finally {
             lock.unlock();
         }
     }
@@ -85,14 +88,14 @@ public class EhCacheFlashManager implements FlashManager {
         String sessionKey = session.getId();
         String sessionActionKey = sessionKey + curAction.replace("/", "_");
         ConcurrentHashMap<String, Object> map = null;
-        try{
+        try {
             lock.lock();
             Object obj = CacheKit.get(flashCacheName, sessionActionKey);
             if (obj != null) {
                 map = (ConcurrentHashMap<String, Object>) obj;
                 CacheKit.remove(flashCacheName, sessionActionKey);
             }
-        }finally{
+        } finally {
             lock.unlock();
         }
         return map;

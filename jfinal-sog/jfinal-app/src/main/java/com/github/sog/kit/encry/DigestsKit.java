@@ -6,14 +6,14 @@
 
 package com.github.sog.kit.encry;
 
+import com.github.sog.kit.lang.ExceptionKit;
+import org.apache.commons.lang3.Validate;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
-
-import com.github.sog.kit.lang.ExceptionKit;
-import org.apache.commons.lang3.Validate;
 
 /**
  * <p>
@@ -25,8 +25,8 @@ import org.apache.commons.lang3.Validate;
  * @since JDK 1.5
  */
 public class DigestsKit {
-    private static final String MD5 = "MD5";
-    private static SecureRandom random = new SecureRandom();
+    private static final String       MD5    = "MD5";
+    private static       SecureRandom random = new SecureRandom();
 
     /** 对输入字符串进行sha1散列. */
     public static byte[] sha1(byte[] input) {

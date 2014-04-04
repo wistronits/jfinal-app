@@ -5,19 +5,19 @@
  */
 package com.github.sog.render.csv;
 
+import com.jfinal.render.Render;
+import com.jfinal.render.RenderException;
+
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.List;
 
-import com.jfinal.render.Render;
-import com.jfinal.render.RenderException;
-
 @SuppressWarnings("serial")
 public class CsvRender extends Render {
     private List<String> clomuns;
-    private List<?> data;
+    private List<?>      data;
     private String encodeType = "gbk";
-    private String fileName = "default.csv";
+    private String fileName   = "default.csv";
     private List<String> headers;
 
     public CsvRender(List<String> headers, List<?> data) {

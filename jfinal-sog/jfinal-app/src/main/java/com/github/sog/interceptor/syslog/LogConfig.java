@@ -17,12 +17,12 @@ public class LogConfig {
     /**
      * 日志描述
      */
-     final String title;
+    final String title;
 
     /**
      * key 请求参数 value 参数描述
      */
-     final Map<String, String> params = Maps.newHashMap();
+    final Map<String, String> params = Maps.newHashMap();
 
     /**
      * 内容模板

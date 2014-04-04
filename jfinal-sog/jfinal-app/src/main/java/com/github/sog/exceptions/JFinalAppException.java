@@ -54,7 +54,6 @@ public abstract class JFinalAppException extends RuntimeException {
     }
 
 
-
     public String getMoreHTML() {
         return null;
     }

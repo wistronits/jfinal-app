@@ -12,7 +12,12 @@ import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.AbstractSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -29,10 +34,12 @@ import static com.github.sog.controller.session.ref.ReferenceType.STRONG;
  */
 public class ReferenceMap<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> {
 
-    protected transient ConcurrentMap<Object, Object> delegate;
-
     protected final ReferenceType keyReferenceType;
     protected final ReferenceType valueReferenceType;
+    protected transient ConcurrentMap<Object, Object> delegate;
+    private volatile Set<Map.Entry<K, V>> entrySet;
+
+    // ---------------------------------------------------------------- map implementations
 
     /**
      * Concurrent hash map that wraps keys and/or values based on specified
@@ -53,7 +60,38 @@ public class ReferenceMap<K, V> extends AbstractMap<K, V> implements ConcurrentM
         this.valueReferenceType = valueReferenceType;
     }
 
-    // ---------------------------------------------------------------- map implementations
+    /**
+     * Tests weak and soft references for identity equality. Compares references
+     * to other references and wrappers. If o is a reference, this returns true if
+     * r == o or if r and o reference the same non-null object. If o is a wrapper,
+     * this returns true if r's referent is identical to the wrapped object.
+     */
+    private static boolean referenceEquals(Reference r, Object o) {
+        if (o instanceof InternalReference) {   // compare reference to reference.
+            if (o == r) {       // are they the same reference? used in cleanup.
+                return true;
+            }
+            Object referent = ((Reference) o).get();    // do they reference identical values? used in conditional puts.
+            return referent != null && referent == r.get();
+        }
+        return ((ReferenceAwareWrapper) o).unwrap() == r.get();     // is the wrapped object identical to the referent? used in lookups.
+    }
+
+    /**
+     * Returns <code>true</code> if the specified value reference has been garbage
+     * collected. The value behind the reference is also passed in, rather than
+     * queried inside this method, to ensure that the return statement of this
+     * method will still hold true after it has returned (that is, a value
+     * reference exists outside of this method which will prevent that value from
+     * being garbage collected).
+     *
+     * @param valueReference the value reference to be tested
+     * @param value          the object referenced by <code>valueReference</code>
+     * @return <code>true</code> if <code>valueReference</code> is non-null and <code>value</code> is <code>null</code>
+     */
+    private static boolean isExpired(Object valueReference, Object value) {
+        return (valueReference != null) && (value == null);
+    }
 
     @Override
     public V get(final Object key) {
@@ -130,6 +168,8 @@ public class ReferenceMap<K, V> extends AbstractMap<K, V> implements ConcurrentM
         //return (V) PutStrategy.PUT_IF_ABSENT.execute(this, referenceKey, referenceValue);
     }
 
+    // ---------------------------------------------------------------- conversions
+
     public boolean remove(Object key, Object value) {
         return delegate.remove(makeKeyReferenceAware(key), makeValueReferenceAware(value));
     }
@@ -163,8 +203,6 @@ public class ReferenceMap<K, V> extends AbstractMap<K, V> implements ConcurrentM
         } while (true);
         //return (V) PutStrategy.REPLACE.execute(this, referenceKey, referenceValue);
     }
-
-    // ---------------------------------------------------------------- conversions
 
     /**
      * Dereferences an entry. Returns <code>null</code> if the key or value has been gc'ed.
@@ -222,6 +260,8 @@ public class ReferenceMap<K, V> extends AbstractMap<K, V> implements ConcurrentM
         return referenceType == STRONG ? reference : ((Reference) reference).get();
     }
 
+    // ---------------------------------------------------------------- inner classes
+
     /**
      * Creates a reference for a value.
      */
@@ -252,7 +292,13 @@ public class ReferenceMap<K, V> extends AbstractMap<K, V> implements ConcurrentM
         return valueReferenceType == STRONG ? o : new ReferenceAwareWrapper(o);
     }
 
-    // ---------------------------------------------------------------- inner classes
+    @Override
+    public Set<Map.Entry<K, V>> entrySet() {
+        if (entrySet == null) {
+            entrySet = new EntrySet();
+        }
+        return entrySet;
+    }
 
     /**
      * Marker interface to differentiate external and internal references. Also
@@ -266,39 +312,6 @@ public class ReferenceMap<K, V> extends AbstractMap<K, V> implements ConcurrentM
         void finalizeReferent();
 
         Object get();
-    }
-
-    /**
-     * Tests weak and soft references for identity equality. Compares references
-     * to other references and wrappers. If o is a reference, this returns true if
-     * r == o or if r and o reference the same non-null object. If o is a wrapper,
-     * this returns true if r's referent is identical to the wrapped object.
-     */
-    private static boolean referenceEquals(Reference r, Object o) {
-        if (o instanceof InternalReference) {   // compare reference to reference.
-            if (o == r) {       // are they the same reference? used in cleanup.
-                return true;
-            }
-            Object referent = ((Reference) o).get();    // do they reference identical values? used in conditional puts.
-            return referent != null && referent == r.get();
-        }
-        return ((ReferenceAwareWrapper) o).unwrap() == r.get();     // is the wrapped object identical to the referent? used in lookups.
-    }
-
-    /**
-     * Returns <code>true</code> if the specified value reference has been garbage
-     * collected. The value behind the reference is also passed in, rather than
-     * queried inside this method, to ensure that the return statement of this
-     * method will still hold true after it has returned (that is, a value
-     * reference exists outside of this method which will prevent that value from
-     * being garbage collected).
-     *
-     * @param valueReference the value reference to be tested
-     * @param value          the object referenced by <code>valueReference</code>
-     * @return <code>true</code> if <code>valueReference</code> is non-null and <code>value</code> is <code>null</code>
-     */
-    private static boolean isExpired(Object valueReference, Object value) {
-        return (valueReference != null) && (value == null);
     }
 
     /**
@@ -338,6 +351,51 @@ public class ReferenceMap<K, V> extends AbstractMap<K, V> implements ConcurrentM
         @Override
         public int hashCode() {
             return System.identityHashCode(wrapped);
+        }
+    }
+
+    static class FinalizableReferenceQueue extends ReferenceQueue<Object> {
+
+        static final ReferenceQueue<Object> instance = createAndStart();
+
+        private FinalizableReferenceQueue() {
+        }
+
+        static FinalizableReferenceQueue createAndStart() {
+            FinalizableReferenceQueue queue = new FinalizableReferenceQueue();
+            queue.start();
+            return queue;
+        }
+
+        /**
+         * Gets instance.
+         */
+        public static ReferenceQueue<Object> getInstance() {
+            return instance;
+        }
+
+        void cleanUp(Reference reference) {
+            try {
+                ((InternalReference) reference).finalizeReferent();
+            } catch (Throwable t) {
+                throw new IllegalStateException("Clean up after reference error", t);
+            }
+        }
+
+        void start() {
+            Thread thread = new Thread("FinalizableReferenceQueue") {
+                @Override
+                @SuppressWarnings({"InfiniteLoopStatement"})
+                public void run() {
+                    while (true) {
+                        try {
+                            cleanUp(remove());
+                        } catch (InterruptedException iex) { /* ignore */ }
+                    }
+                }
+            };
+            thread.setDaemon(true);
+            thread.start();
         }
     }
 
@@ -387,6 +445,8 @@ public class ReferenceMap<K, V> extends AbstractMap<K, V> implements ConcurrentM
         }
     }
 
+    // ---------------------------------------------------------------- map entry set
+
     class SoftValueReference extends SoftReference<Object> implements InternalReference {
         final Object keyReference;
 
@@ -422,54 +482,6 @@ public class ReferenceMap<K, V> extends AbstractMap<K, V> implements ConcurrentM
             return referenceEquals(this, obj);
         }
     }
-
-    static class FinalizableReferenceQueue extends ReferenceQueue<Object> {
-
-        private FinalizableReferenceQueue() {
-        }
-
-        void cleanUp(Reference reference) {
-            try {
-                ((InternalReference) reference).finalizeReferent();
-            } catch (Throwable t) {
-                throw new IllegalStateException("Clean up after reference error", t);
-            }
-        }
-
-
-        void start() {
-            Thread thread = new Thread("FinalizableReferenceQueue") {
-                @Override
-                @SuppressWarnings({"InfiniteLoopStatement"})
-                public void run() {
-                    while (true) {
-                        try {
-                            cleanUp(remove());
-                        } catch (InterruptedException iex) { /* ignore */ }
-                    }
-                }
-            };
-            thread.setDaemon(true);
-            thread.start();
-        }
-
-        static final ReferenceQueue<Object> instance = createAndStart();
-
-        static FinalizableReferenceQueue createAndStart() {
-            FinalizableReferenceQueue queue = new FinalizableReferenceQueue();
-            queue.start();
-            return queue;
-        }
-
-        /**
-         * Gets instance.
-         */
-        public static ReferenceQueue<Object> getInstance() {
-            return instance;
-        }
-    }
-
-    // ---------------------------------------------------------------- map entry set
 
     class Entry implements Map.Entry<K, V> {
         final K key;
@@ -512,17 +524,6 @@ public class ReferenceMap<K, V> extends AbstractMap<K, V> implements ConcurrentM
         public String toString() {
             return key + StringPool.EQUALS + value;
         }
-    }
-
-
-    private volatile Set<Map.Entry<K, V>> entrySet;
-
-    @Override
-    public Set<Map.Entry<K, V>> entrySet() {
-        if (entrySet == null) {
-            entrySet = new EntrySet();
-        }
-        return entrySet;
     }
 
     private class EntrySet extends AbstractSet<Map.Entry<K, V>> {

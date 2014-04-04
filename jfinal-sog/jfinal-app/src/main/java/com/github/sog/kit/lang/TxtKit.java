@@ -1,7 +1,7 @@
 package com.github.sog.kit.lang;
 
-import com.jfinal.core.Const;
 import com.github.sog.config.StringPool;
+import com.jfinal.core.Const;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version 1.0 2014-03-29 14:06
  * @since JDK 1.6
  */
-public class NotModified extends Render{
+public class NotModified extends Render {
 
     String etag;
 
@@ -31,10 +31,11 @@ public class NotModified extends Render{
     public NotModified(String etag) {
         this.etag = etag;
     }
+
     @Override
     public void render() {
         response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-        if(!Strings.isNullOrEmpty(etag)){
+        if (!Strings.isNullOrEmpty(etag)) {
             response.setHeader("Etag", etag);
         }
     }

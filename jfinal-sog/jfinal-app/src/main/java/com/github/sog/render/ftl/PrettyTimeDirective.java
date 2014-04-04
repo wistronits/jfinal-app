@@ -6,11 +6,16 @@
 
 package com.github.sog.render.ftl;
 
-import com.google.common.base.Strings;
-import com.github.sog.libs.AppFunc;
 import com.github.sog.kit.date.DateProvider;
+import com.github.sog.libs.AppFunc;
+import com.google.common.base.Strings;
 import freemarker.core.Environment;
-import freemarker.template.*;
+import freemarker.template.SimpleScalar;
+import freemarker.template.TemplateDirectiveBody;
+import freemarker.template.TemplateDirectiveModel;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateModel;
+import freemarker.template.TemplateModelException;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -29,7 +34,6 @@ import java.util.Map;
  * @since JDK 1.6
  */
 public class PrettyTimeDirective implements TemplateDirectiveModel {
-
 
 
     @Override

@@ -17,8 +17,8 @@ import com.github.sog.controller.BasicController;
  * @version 1.0 2014-03-27 21:38
  * @since JDK 1.6
  */
-public class AppController extends BasicController{
-    public void index(){
+public class AppController extends BasicController {
+    public void index() {
 
     }
 }

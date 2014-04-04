@@ -7,10 +7,10 @@ package com.github.sog.test;
 
 import com.alibaba.druid.util.JdbcUtils;
 import com.github.sog.config.JFinalApp;
-import com.github.sog.kit.common.Reflect;
+import com.github.sog.config.StringPool;
 import com.github.sog.initalizer.ConfigProperties;
 import com.github.sog.initalizer.ctxbox.ClassFinder;
-import com.github.sog.config.StringPool;
+import com.github.sog.kit.common.Reflect;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
@@ -69,6 +69,14 @@ public abstract class ControllerTestCase<T extends JFinalApp> {
 
     private Class<? extends JFinalConfig> config;
 
+    @SuppressWarnings("unchecked")
+    public ControllerTestCase() {
+        Type genericSuperclass = getClass().getGenericSuperclass();
+        Preconditions.checkArgument(genericSuperclass instanceof ParameterizedType,
+                "Your ControllerTestCase must have genericType");
+        config = (Class<? extends JFinalConfig>) ((ParameterizedType) genericSuperclass).getActualTypeArguments()[0];
+    }
+
     private static void initConfig(Class<JFinal> clazz, JFinal me, ServletContext servletContext, JFinalConfig config) {
         Reflect.on(me).call("init", config, servletContext);
     }
@@ -92,7 +100,6 @@ public abstract class ControllerTestCase<T extends JFinalApp> {
 
     }
 
-
     private static void runScriptInitDb(final Properties p) {
         try {
 
@@ -106,7 +113,7 @@ public abstract class ControllerTestCase<T extends JFinalApp> {
             final File script_dir = new File(real_script_path);
             if (script_dir.exists() && script_dir.isDirectory()) {
                 final String db_url = p.getProperty(DB_URL);
-                Preconditions.checkNotNull(db_url , "The DataBase connection url is must!");
+                Preconditions.checkNotNull(db_url, "The DataBase connection url is must!");
                 Collection<File> list_script_files
                         = Ordering.natural()
                         .sortedCopy(FileUtils.listFiles(script_dir, new String[]{"sql"}, false));
@@ -134,12 +141,9 @@ public abstract class ControllerTestCase<T extends JFinalApp> {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public ControllerTestCase() {
-        Type genericSuperclass = getClass().getGenericSuperclass();
-        Preconditions.checkArgument(genericSuperclass instanceof ParameterizedType,
-                "Your ControllerTestCase must have genericType");
-        config = (Class<? extends JFinalConfig>) ((ParameterizedType) genericSuperclass).getActualTypeArguments()[0];
+    @AfterClass
+    public static void stop() throws Exception {
+        configInstance.beforeJFinalStop();
     }
 
     public Object findAttrAfterInvoke(String key) {
@@ -166,11 +170,6 @@ public abstract class ControllerTestCase<T extends JFinalApp> {
     @Before
     public void init() throws Exception {
         start(config);
-    }
-
-    @AfterClass
-    public static void stop() throws Exception {
-        configInstance.beforeJFinalStop();
     }
 
     public String invoke() {

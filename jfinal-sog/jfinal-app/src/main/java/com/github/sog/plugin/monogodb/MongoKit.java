@@ -5,13 +5,6 @@
  */
 package com.github.sog.plugin.monogodb;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.regex.Pattern;
-
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
@@ -22,12 +15,19 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.regex.Pattern;
+
 public class MongoKit {
 
     protected static Logger logger = Logger.getLogger(MongoKit.class);
 
     private static MongoClient client;
-    private static DB defaultDb;
+    private static DB          defaultDb;
 
     protected static void init(MongoClient client, String database) {
         MongoKit.client = client;
@@ -73,12 +73,12 @@ public class MongoKit {
     }
 
     public static Page<Record> paginate(String collection, int pageNumber, int pageSize, Map<String, Object> filter,
-            Map<String, Object> like) {
+                                        Map<String, Object> like) {
         return paginate(collection, pageNumber, pageSize, filter, like, null);
     }
 
     public static Page<Record> paginate(String collection, int pageNumber, int pageSize, Map<String, Object> filter,
-            Map<String, Object> like, Map<String, Object> sort) {
+                                        Map<String, Object> like, Map<String, Object> sort) {
         DBCollection logs = MongoKit.getCollection(collection);
         BasicDBObject conditons = new BasicDBObject();
         buildFilter(filter, conditons);

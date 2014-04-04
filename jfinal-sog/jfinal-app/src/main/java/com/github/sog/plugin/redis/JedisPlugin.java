@@ -5,11 +5,11 @@
  */
 package com.github.sog.plugin.redis;
 
-import com.jfinal.kit.StringKit;
-import com.jfinal.plugin.IPlugin;
+import com.github.sog.config.StringPool;
 import com.github.sog.initalizer.ConfigProperties;
 import com.github.sog.initalizer.InitConst;
-import com.github.sog.config.StringPool;
+import com.jfinal.kit.StringKit;
+import com.jfinal.plugin.IPlugin;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -23,15 +23,12 @@ import java.util.Set;
 @SuppressWarnings("UnusedDeclaration")
 public class JedisPlugin implements IPlugin {
 
-    public JedisPool pool;
-
     public static final String DEFAULT_HOST = StringPool.LOCAL_HOST;
     public static final int    DEFAULT_PORT = Protocol.DEFAULT_PORT;
-
     private final String host;
     private final int    port;
     private final int    timeout;
-
+    public JedisPool pool;
     private String password;
     private int     maxidle                        = GenericObjectPoolConfig.DEFAULT_MAX_IDLE;
     private int     maxTotal                       = GenericObjectPoolConfig.DEFAULT_MAX_TOTAL;

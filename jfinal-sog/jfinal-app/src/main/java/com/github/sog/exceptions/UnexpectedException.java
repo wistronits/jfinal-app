@@ -31,7 +31,7 @@ public class UnexpectedException extends JFinalAppException {
 
     @Override
     public String getErrorTitle() {
-        if(getCause() == null) {
+        if (getCause() == null) {
             return "Unexpected error";
         }
         return String.format("Oops: %s", getCause().getClass().getSimpleName());
@@ -39,7 +39,7 @@ public class UnexpectedException extends JFinalAppException {
 
     @Override
     public String getErrorDescription() {
-        if(getCause() != null && getCause().getClass() != null)
+        if (getCause() != null && getCause().getClass() != null)
             return String.format("An unexpected error occured caused by exception <strong>%s</strong>:<br/> <strong>%s</strong>", getCause().getClass().getSimpleName(), getCause().getMessage());
         else return String.format("Unexpected error : %s", getMessage());
     }

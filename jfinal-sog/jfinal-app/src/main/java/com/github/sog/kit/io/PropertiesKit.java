@@ -1,13 +1,24 @@
 package com.github.sog.kit.io;
 
-import com.google.common.base.Splitter;
-import com.github.sog.libs.AppFunc;
 import com.github.sog.config.StringPool;
+import com.github.sog.libs.AppFunc;
+import com.google.common.base.Splitter;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.InvalidPropertiesFormatException;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * <p>
@@ -24,19 +35,15 @@ public class PropertiesKit {
      * 不使用系统属性,这个是默认值
      */
     public static final int SYSTEM_PROPERTIES_MODE_NEVER = 0;
-
+    private int systemPropertiesMode = SYSTEM_PROPERTIES_MODE_NEVER;
     /**
      * 如果在properties中没有找到属性值,则查找系统属性
      */
     public static final int SYSTEM_PROPERTIES_MODE_FALLBACK = 1;
-
     /**
      * 首先查找系统属性,如果没有找到值,再查找properties,这可以用于系统属性覆盖properties中的值
      */
     public static final int SYSTEM_PROPERTIES_MODE_OVERRIDE = 2;
-
-    private int systemPropertiesMode = SYSTEM_PROPERTIES_MODE_NEVER;
-
     private Properties p;
 
     public PropertiesKit(Properties p) {
@@ -49,6 +56,29 @@ public class PropertiesKit {
             throw new IllegalArgumentException("error systemPropertiesMode mode:" + systemPropertiesMode);
         }
         this.systemPropertiesMode = systemPropertiesMode;
+    }
+
+    public static Properties restoreFromString(String str) {
+        if (str == null) return new Properties();
+        Properties p = new Properties();
+        try {
+            p.load(new ByteArrayInputStream(str.getBytes()));
+        } catch (IOException e) {
+            throw new IllegalStateException("restore properties from String occer error. str:" + str, e);
+        }
+        return p;
+    }
+
+    private static boolean isBlankString(String value) {
+        return value == null || "".equals(value.trim());
+    }
+
+    private static int[] toIntArray(String[] array) {
+        int[] result = new int[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = Integer.parseInt(array[i]);
+        }
+        return result;
     }
 
     public Properties getProperties() {
@@ -463,28 +493,5 @@ public class PropertiesKit {
 
     public String toString() {
         return p.toString();
-    }
-
-    public static Properties restoreFromString(String str) {
-        if (str == null) return new Properties();
-        Properties p = new Properties();
-        try {
-            p.load(new ByteArrayInputStream(str.getBytes()));
-        } catch (IOException e) {
-            throw new IllegalStateException("restore properties from String occer error. str:" + str, e);
-        }
-        return p;
-    }
-
-    private static boolean isBlankString(String value) {
-        return value == null || "".equals(value.trim());
-    }
-
-    private static int[] toIntArray(String[] array) {
-        int[] result = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            result[i] = Integer.parseInt(array[i]);
-        }
-        return result;
     }
 }

@@ -30,9 +30,8 @@ import java.util.List;
  */
 public class ExcelRender extends Render {
     private static final long serialVersionUID = -3568563627255175353L;
-
-    protected final      Logger LOG          = Logger.getLogger(getClass());
     private final static String CONTENT_TYPE = "application/msexcel;charset=" + getEncoding();
+    protected final      Logger LOG          = Logger.getLogger(getClass());
     private final List<?>  data;
     private       String[] headers;
     private String sheetName = "sheet1";
@@ -47,6 +46,20 @@ public class ExcelRender extends Render {
 
     public static ExcelRender me(List<?> data) {
         return new ExcelRender(data);
+    }
+
+    private static String encodeChineseDownloadFileName(HttpServletRequest request, String filename) {
+        String agent = request.getHeader("USER-AGENT");
+        try {
+            if (!Strings.isNullOrEmpty(agent) && agent.contains("MSIE")) {
+                filename = URLEncoder.encode(filename, "utf-8");
+            } else {
+                filename = new String(filename.getBytes("utf-8"), "iso8859-1");
+            }
+        } catch (UnsupportedEncodingException ignored) {
+
+        }
+        return filename;
     }
 
     @Override
@@ -73,21 +86,6 @@ public class ExcelRender extends Render {
 
         }
     }
-
-    private static String encodeChineseDownloadFileName(HttpServletRequest request, String filename) {
-        String agent = request.getHeader("USER-AGENT");
-        try {
-            if (!Strings.isNullOrEmpty(agent) && agent.contains("MSIE")) {
-                filename = URLEncoder.encode(filename, "utf-8");
-            } else {
-                filename = new String(filename.getBytes("utf-8"), "iso8859-1");
-            }
-        } catch (UnsupportedEncodingException ignored) {
-
-        }
-        return filename;
-    }
-
 
     public ExcelRender headers(String... headers) {
         this.headers = headers;

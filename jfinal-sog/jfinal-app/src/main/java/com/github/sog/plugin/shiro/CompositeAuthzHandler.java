@@ -5,27 +5,27 @@
  */
 package com.github.sog.plugin.shiro;
 
-import java.util.List;
-
 import org.apache.shiro.authz.AuthorizationException;
+
+import java.util.List;
 
 /**
  * 组合模式访问控制处理器
- * @author dafei
  *
+ * @author dafei
  */
 class CompositeAuthzHandler implements AuthzHandler {
 
-	private final List<AuthzHandler> authzHandlers;
+    private final List<AuthzHandler> authzHandlers;
 
-	public CompositeAuthzHandler(List<AuthzHandler> authzHandlers){
-		this.authzHandlers = authzHandlers;
-	}
+    public CompositeAuthzHandler(List<AuthzHandler> authzHandlers) {
+        this.authzHandlers = authzHandlers;
+    }
 
-	@Override
+    @Override
     public void assertAuthorized() throws AuthorizationException {
-		for(AuthzHandler authzHandler : authzHandlers){
-			authzHandler.assertAuthorized();
-		}
-	}
+        for (AuthzHandler authzHandler : authzHandlers) {
+            authzHandler.assertAuthorized();
+        }
+    }
 }

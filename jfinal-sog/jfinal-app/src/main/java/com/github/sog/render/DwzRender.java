@@ -5,61 +5,22 @@
  */
 package com.github.sog.render;
 
+import com.jfinal.render.Render;
+import com.jfinal.render.RenderException;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 
-import com.jfinal.render.Render;
-import com.jfinal.render.RenderException;
-
 @SuppressWarnings("serial")
 public class DwzRender extends Render {
     private static final String CONTENT_TYPE = "text/html;charset=" + getEncoding();
-    public static DwzRender closeCurrentAndRefresh(String refreshNavTabId) {
-        DwzRender dwzRender = new DwzRender();
-        dwzRender.navTabId = refreshNavTabId;
-        dwzRender.callbackType = "closeCurrent";
-        return dwzRender;
-    }
-    public static DwzRender error() {
-        DwzRender dwzRender = new DwzRender();
-        dwzRender.statusCode = "300";
-        dwzRender.message = "操作失败";
-        return dwzRender;
-    }
-    public static DwzRender error(String errorMsg) {
-        DwzRender dwzRender = new DwzRender();
-        dwzRender.statusCode = "300";
-        dwzRender.message = errorMsg;
-        return dwzRender;
-    }
-    public static Render refresh(String refreshNavTabId) {
-        DwzRender dwzRender = new DwzRender();
-        dwzRender.navTabId = refreshNavTabId;
-        return dwzRender;
-    }
-    public static DwzRender success() {
-        DwzRender dwzRender = new DwzRender();
-        dwzRender.message("操作成功");
-        return dwzRender;
-    }
-    public static DwzRender success(String successMsg) {
-        DwzRender dwzRender = new DwzRender();
-        dwzRender.message(successMsg);
-        return dwzRender;
-    }
     private String callbackType = "";
-
     private String confirmMsg = "";
-
     private String forwardUrl = "";
-
     private String message = "";
-
     private String navTabId = "";
-
     private String rel = "";
-
     private String statusCode = "200";
 
     public DwzRender() {
@@ -69,6 +30,45 @@ public class DwzRender extends Render {
         this.message = message;
         this.navTabId = navTabId;
         this.callbackType = callbackType;
+    }
+
+    public static DwzRender closeCurrentAndRefresh(String refreshNavTabId) {
+        DwzRender dwzRender = new DwzRender();
+        dwzRender.navTabId = refreshNavTabId;
+        dwzRender.callbackType = "closeCurrent";
+        return dwzRender;
+    }
+
+    public static DwzRender error() {
+        DwzRender dwzRender = new DwzRender();
+        dwzRender.statusCode = "300";
+        dwzRender.message = "操作失败";
+        return dwzRender;
+    }
+
+    public static DwzRender error(String errorMsg) {
+        DwzRender dwzRender = new DwzRender();
+        dwzRender.statusCode = "300";
+        dwzRender.message = errorMsg;
+        return dwzRender;
+    }
+
+    public static Render refresh(String refreshNavTabId) {
+        DwzRender dwzRender = new DwzRender();
+        dwzRender.navTabId = refreshNavTabId;
+        return dwzRender;
+    }
+
+    public static DwzRender success() {
+        DwzRender dwzRender = new DwzRender();
+        dwzRender.message("操作成功");
+        return dwzRender;
+    }
+
+    public static DwzRender success(String successMsg) {
+        DwzRender dwzRender = new DwzRender();
+        dwzRender.message(successMsg);
+        return dwzRender;
     }
 
     public DwzRender callbackType(String callbackType) {
@@ -111,8 +111,8 @@ public class DwzRender extends Render {
                 + "\n}";
         try {
             response.setHeader("Pragma", "no-cache"); // HTTP/1.0 caches might not implement Cache-Control and might
-                                                      // only implement Pragma:
-                                                      // no-cache
+            // only implement Pragma:
+            // no-cache
             response.setHeader("Cache-Control", "no-cache");
             response.setDateHeader("Expires", 0);
             response.setContentType(CONTENT_TYPE);

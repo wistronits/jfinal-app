@@ -5,9 +5,9 @@
  */
 package com.github.sog.kit.servlet;
 
-import com.google.common.net.HttpHeaders;
 import com.github.sog.config.StringPool;
 import com.github.sog.kit.encry.EncodeKit;
+import com.google.common.net.HttpHeaders;
 import com.jfinal.kit.StringKit;
 import org.apache.commons.lang3.Validate;
 
@@ -15,7 +15,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 public class ServletKit {
 
@@ -209,25 +213,25 @@ public class ServletKit {
 
     public static class MediaTypes {
 
-        public final static String APPLICATION_XML = "application/xml";
+        public final static String APPLICATION_XML       = "application/xml";
         public final static String APPLICATION_XML_UTF_8 = "application/xml; charset=UTF-8";
 
-        public final static String JSON = "application/json";
+        public final static String JSON       = "application/json";
         public final static String JSON_UTF_8 = "application/json; charset=UTF-8";
 
-        public final static String JAVASCRIPT = "application/javascript";
+        public final static String JAVASCRIPT       = "application/javascript";
         public final static String JAVASCRIPT_UTF_8 = "application/javascript; charset=UTF-8";
 
-        public final static String APPLICATION_XHTML_XML = "application/xhtml+xml";
+        public final static String APPLICATION_XHTML_XML       = "application/xhtml+xml";
         public final static String APPLICATION_XHTML_XML_UTF_8 = "application/xhtml+xml; charset=UTF-8";
 
-        public final static String TEXT_PLAIN = "text/plain";
+        public final static String TEXT_PLAIN       = "text/plain";
         public final static String TEXT_PLAIN_UTF_8 = "text/plain; charset=UTF-8";
 
-        public final static String TEXT_XML = "text/xml";
+        public final static String TEXT_XML       = "text/xml";
         public final static String TEXT_XML_UTF_8 = "text/xml; charset=UTF-8";
 
-        public final static String TEXT_HTML = "text/html";
+        public final static String TEXT_HTML       = "text/html";
         public final static String TEXT_HTML_UTF_8 = "text/html; charset=UTF-8";
     }
 

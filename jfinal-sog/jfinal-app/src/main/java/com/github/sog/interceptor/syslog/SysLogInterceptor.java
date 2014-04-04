@@ -7,15 +7,15 @@ package com.github.sog.interceptor.syslog;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.github.sog.config.StringPool;
+import com.github.sog.interceptor.syslog.config.LogPathConfig;
+import com.github.sog.kit.servlet.ServletKit;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
 import com.jfinal.core.Controller;
-import com.github.sog.interceptor.syslog.config.LogPathConfig;
-import com.github.sog.config.StringPool;
-import com.github.sog.kit.servlet.ServletKit;
 import com.jfinal.kit.StringKit;
 
 import java.io.File;
@@ -27,8 +27,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 public class SysLogInterceptor implements Interceptor {
-    private static final Map<String, LogConfig> acitonLogs = Maps.newConcurrentMap();
-    private LogProcessor logProcesser = null;
+    private static final Map<String, LogConfig> acitonLogs   = Maps.newConcurrentMap();
+    private              LogProcessor           logProcesser = null;
 
     public SysLogInterceptor setLogProcesser(LogProcessor logProcesser, String path) {
         this.logProcesser = logProcesser;

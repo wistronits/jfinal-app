@@ -6,8 +6,8 @@
 
 package com.github.sog.kit.lang;
 
-import com.google.common.collect.Maps;
 import com.github.sog.config.StringPool;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.NumberFormat;
@@ -26,22 +26,10 @@ import java.util.Map;
 public class LocaleKit {
 
 
-    /**
-     * Holds all per-Locale data.
-     */
-    static class LocaleData {
-        LocaleData(Locale locale) {
-            this.locale = locale;
-        }
-
-        final Locale locale;
-        NumberFormat        numberFormat;
-    }
+    protected static Map<String, LocaleData> locales = Maps.newHashMap();
 
 
     // ---------------------------------------------------------------- locale cache
-
-    protected static Map<String, LocaleData> locales = Maps.newHashMap();
 
     /**
      * Lookups for locale data and creates new if it doesn't exist.
@@ -60,9 +48,6 @@ public class LocaleKit {
         return lookupLocaleData(resolveLocaleCode(locale));
     }
 
-
-    // ---------------------------------------------------------------- get cached locales
-
     /**
      * Returns Locale from cache.
      */
@@ -70,6 +55,9 @@ public class LocaleKit {
         LocaleData localeData = lookupLocaleData(resolveLocaleCode(language, country, variant));
         return localeData.locale;
     }
+
+
+    // ---------------------------------------------------------------- get cached locales
 
     /**
      * Returns Locale from cache.
@@ -87,8 +75,6 @@ public class LocaleKit {
         return localeData.locale;
     }
 
-    // ---------------------------------------------------------------- convert
-
     /**
      * Transforms locale data to locale code. <code>null</code> values are allowed.
      */
@@ -102,6 +88,8 @@ public class LocaleKit {
         }
         return code.toString();
     }
+
+    // ---------------------------------------------------------------- convert
 
     /**
      * Resolves locale code from locale.
@@ -127,10 +115,6 @@ public class LocaleKit {
         return result;
     }
 
-    // ---------------------------------------------------------------- locale elements
-
-
-
     /**
      * Returns cached <code>NumberFormat</code> instance for specified locale.
      */
@@ -142,5 +126,18 @@ public class LocaleKit {
             localeData.numberFormat = nf;
         }
         return nf;
+    }
+
+    // ---------------------------------------------------------------- locale elements
+
+    /**
+     * Holds all per-Locale data.
+     */
+    static class LocaleData {
+        final Locale locale;
+        NumberFormat numberFormat;
+        LocaleData(Locale locale) {
+            this.locale = locale;
+        }
     }
 }

@@ -5,11 +5,9 @@
  */
 package com.github.sog.kit.common;
 
-import java.lang.reflect.InvocationTargetException;
-
 /**
  * A unchecked wrapper for any of Java's checked reflection exceptions:
- * <p>
+ * <p/>
  * These exceptions are
  * <ul>
  * <li> {@link ClassNotFoundException}</li>

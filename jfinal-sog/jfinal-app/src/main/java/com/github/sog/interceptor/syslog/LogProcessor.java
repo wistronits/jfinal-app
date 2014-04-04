@@ -5,9 +5,9 @@
  */
 package com.github.sog.interceptor.syslog;
 
-import java.util.Map;
-
 import com.jfinal.core.Controller;
+
+import java.util.Map;
 
 /**
  * 日志处理器

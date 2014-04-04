@@ -11,7 +11,6 @@ import com.github.sog.initalizer.ctxbox.ClassBox;
 import com.github.sog.initalizer.ctxbox.ClassType;
 import com.google.common.base.Preconditions;
 import com.jfinal.config.Routes;
-import com.jfinal.core.Controller;
 import com.jfinal.kit.StringKit;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -22,10 +21,8 @@ import java.util.List;
 public class AutoBindRoutes extends Routes {
 
 
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
-
     private static final String suffix = "Controller";
-
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public void config() {

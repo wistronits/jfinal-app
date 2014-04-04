@@ -16,167 +16,167 @@ import java.util.List;
  */
 public abstract class BinarySearch<E> {
 
-	/**
-	 * Creates binary search wrapper over a list of comparable elements.
-	 */
-	public static <T extends Comparable> BinarySearch<T> forList(final List<T> list) {
-		return new BinarySearch<T>() {
-			@Override
-			@SuppressWarnings( {"unchecked"})
-			protected int compare(int index, T element) {
-				return list.get(index).compareTo(element);
-			}
+    /**
+     * Creates binary search wrapper over a list of comparable elements.
+     */
+    public static <T extends Comparable> BinarySearch<T> forList(final List<T> list) {
+        return new BinarySearch<T>() {
+            @Override
+            @SuppressWarnings({"unchecked"})
+            protected int compare(int index, T element) {
+                return list.get(index).compareTo(element);
+            }
 
-			@Override
-			protected int getLastIndex() {
-				return list.size() - 1;
-			}
-		};
-	}
+            @Override
+            protected int getLastIndex() {
+                return list.size() - 1;
+            }
+        };
+    }
 
-	/**
-	 * Creates binary search wrapper over a list with given comparator.
-	 */
-	public static <T> BinarySearch<T> forList(final List<T> list, final Comparator<T> comparator) {
-		return new BinarySearch<T>() {
-			@Override
-			@SuppressWarnings( {"unchecked"})
-			protected int compare(int index, T element) {
-				return comparator.compare(list.get(index), element);
-			}
+    /**
+     * Creates binary search wrapper over a list with given comparator.
+     */
+    public static <T> BinarySearch<T> forList(final List<T> list, final Comparator<T> comparator) {
+        return new BinarySearch<T>() {
+            @Override
+            @SuppressWarnings({"unchecked"})
+            protected int compare(int index, T element) {
+                return comparator.compare(list.get(index), element);
+            }
 
-			@Override
-			protected int getLastIndex() {
-				return list.size() - 1;
-			}
-		};
-	}
+            @Override
+            protected int getLastIndex() {
+                return list.size() - 1;
+            }
+        };
+    }
 
-	// ---------------------------------------------------------------- abstract
+    // ---------------------------------------------------------------- abstract
 
-	/**
-	 * Compares element at <code>index</code> position with given object.
-	 */
-	protected abstract int compare(int index, E element);
+    /**
+     * Compares element at <code>index</code> position with given object.
+     */
+    protected abstract int compare(int index, E element);
 
-	/**
-	 * Returns index of last element in wrapped collection.
-	 */
-	protected abstract int getLastIndex();
+    /**
+     * Returns index of last element in wrapped collection.
+     */
+    protected abstract int getLastIndex();
 
-	// ---------------------------------------------------------------- find
+    // ---------------------------------------------------------------- find
 
-	/**
-	 * Finds index of given element or negative value if element is not found.
-	 */
-	public int find(E element) {
-		return find(element, 0, getLastIndex());
-	}
+    /**
+     * Finds index of given element or negative value if element is not found.
+     */
+    public int find(E element) {
+        return find(element, 0, getLastIndex());
+    }
 
-	public int find(E element, int low) {
-		return find(element, low, getLastIndex());
-	}
+    public int find(E element, int low) {
+        return find(element, low, getLastIndex());
+    }
 
-	/**
-	 * Finds index of given element in inclusive index range. Returns negative
-	 * value if element is not found.
-	 */
-	public int find(E element, int low, int high) {
-		while (low <= high) {
-			int mid = (low + high) >>> 1;
-			int delta = compare(mid, element);
+    /**
+     * Finds index of given element in inclusive index range. Returns negative
+     * value if element is not found.
+     */
+    public int find(E element, int low, int high) {
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            int delta = compare(mid, element);
 
-			if (delta < 0) {
-				low = mid + 1;
-			} else if (delta > 0) {
-				high = mid - 1;
-			} else {
-				return mid;
-			}
-		}
-		// not found
-		return -(low + 1);
-	}
+            if (delta < 0) {
+                low = mid + 1;
+            } else if (delta > 0) {
+                high = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+        // not found
+        return -(low + 1);
+    }
 
-	// ---------------------------------------------------------------- first
+    // ---------------------------------------------------------------- first
 
-	/**
-	 * Finds very first index of given element or negative value if element is not found.
-	 */
-	public int findFirst(E o) {
-		return findFirst(o, 0, getLastIndex());
-	}
+    /**
+     * Finds very first index of given element or negative value if element is not found.
+     */
+    public int findFirst(E o) {
+        return findFirst(o, 0, getLastIndex());
+    }
 
-	public int findFirst(E o, int low) {
-		return findFirst(o, low, getLastIndex());
-	}
+    public int findFirst(E o, int low) {
+        return findFirst(o, low, getLastIndex());
+    }
 
-	/**
-	 * Finds very first index of given element in inclusive index range. Returns negative
-	 * value if element is not found.
-	 */
-	public int findFirst(E o, int low, int high) {
+    /**
+     * Finds very first index of given element in inclusive index range. Returns negative
+     * value if element is not found.
+     */
+    public int findFirst(E o, int low, int high) {
 
-		int ndx = -1;
-		while (low <= high) {
-			int mid = (low + high) >>> 1;
-			int delta = compare(mid, o);
+        int ndx = -1;
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            int delta = compare(mid, o);
 
-			if (delta < 0) {
-				low = mid + 1;
-			} else {
-				if (delta == 0) {
-					ndx = mid;
-				}
-				high = mid - 1;
-			}
-		}
+            if (delta < 0) {
+                low = mid + 1;
+            } else {
+                if (delta == 0) {
+                    ndx = mid;
+                }
+                high = mid - 1;
+            }
+        }
 
-		if (ndx == -1) {
-			return -(low + 1);
-		}
+        if (ndx == -1) {
+            return -(low + 1);
+        }
 
-		return ndx;
-	}
+        return ndx;
+    }
 
-	// ---------------------------------------------------------------- last
+    // ---------------------------------------------------------------- last
 
-	/**
-	 * Finds very last index of given element or negative value if element is not found.
-	 */
-	public int findLast(E o) {
-		return findLast(o, 0, getLastIndex());
-	}
+    /**
+     * Finds very last index of given element or negative value if element is not found.
+     */
+    public int findLast(E o) {
+        return findLast(o, 0, getLastIndex());
+    }
 
-	public int findLast(E o, int low) {
-		return findLast(o, low, getLastIndex());
-	}
+    public int findLast(E o, int low) {
+        return findLast(o, low, getLastIndex());
+    }
 
-	/**
-	 * Finds very last index of given element in inclusive index range. Returns negative
-	 * value if element is not found.
-	 */
-	public int findLast(E o, int low, int high) {
-		int ndx = -1;
-		while (low <= high) {
-			int mid = (low + high) >>> 1;
-			int delta = compare(mid, o);
+    /**
+     * Finds very last index of given element in inclusive index range. Returns negative
+     * value if element is not found.
+     */
+    public int findLast(E o, int low, int high) {
+        int ndx = -1;
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            int delta = compare(mid, o);
 
-			if (delta > 0) {
-				high = mid - 1;
-			} else {
-				if (delta == 0) {
-					ndx = mid;
-				}
-				low = mid + 1;
-			}
-		}
+            if (delta > 0) {
+                high = mid - 1;
+            } else {
+                if (delta == 0) {
+                    ndx = mid;
+                }
+                low = mid + 1;
+            }
+        }
 
-		if (ndx == -1) {
-			return -(low + 1);
-		}
+        if (ndx == -1) {
+            return -(low + 1);
+        }
 
-		return ndx;
-	}
+        return ndx;
+    }
 
 }

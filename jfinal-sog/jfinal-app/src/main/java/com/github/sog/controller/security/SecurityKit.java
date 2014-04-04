@@ -7,11 +7,11 @@
 package com.github.sog.controller.security;
 
 import com.github.sog.config.JFinalApp;
-import com.github.sog.libs.AppFunc;
 import com.github.sog.config.StringPool;
 import com.github.sog.kit.encry.DigestsKit;
 import com.github.sog.kit.encry.EncodeKit;
 import com.github.sog.kit.servlet.RequestKit;
+import com.github.sog.libs.AppFunc;
 import com.google.common.base.Function;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.ehcache.CacheKit;
@@ -56,7 +56,8 @@ public class SecurityKit {
     private static final String LOGIN_CACHE_SESSION = "login.session";
 
     private final static byte[] E_KEY = new byte[]{'1', '2', '3', '4', '5', '6', '7', '8'};
-
+    private final static String DES     = "DES";
+    private final static int    MAX_AGE = 86400 * 365;
 
     /**
      * Determine whether the user is logged in, if you have logged in, return <code> true </ code>
@@ -88,7 +89,6 @@ public class SecurityKit {
         return matcher;
     }
 
-
     /**
      * logout
      *
@@ -115,7 +115,6 @@ public class SecurityKit {
         }
         req.getSession().invalidate();
     }
-
 
     /**
      * Get user login information,
@@ -160,7 +159,6 @@ public class SecurityKit {
     public static <T extends Model> T getLoginUser(HttpServletRequest req) {
         return (T) req.getSession().getAttribute(LOGIN_SESSION_KEY);
     }
-
 
     /**
      * Sign settings
@@ -267,7 +265,6 @@ public class SecurityKit {
         return null;
     }
 
-
     /**
      * encrypt
      *
@@ -352,8 +349,4 @@ public class SecurityKit {
             throw new RuntimeException(e);
         }
     }
-
-
-    private final static String DES     = "DES";
-    private final static int    MAX_AGE = 86400 * 365;
 }

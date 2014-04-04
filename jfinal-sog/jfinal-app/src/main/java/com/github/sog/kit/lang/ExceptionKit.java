@@ -77,7 +77,7 @@ public class ExceptionKit {
 
     /**
      * Introspects the <code>Throwable</code> to obtain the root cause.
-     * <p>
+     * <p/>
      * This method walks through the exception chain to the last element,
      * "root" of the tree, and returns that exception. If no root cause found
      * returns provided throwable.

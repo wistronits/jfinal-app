@@ -6,8 +6,8 @@
 
 package com.github.sog.kit.cst;
 
-import com.google.common.collect.Lists;
 import com.github.sog.libs.AppFunc;
+import com.google.common.collect.Lists;
 import org.junit.Assert;
 import org.junit.Test;
 

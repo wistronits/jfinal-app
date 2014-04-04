@@ -5,8 +5,8 @@
  */
 package com.github.sog.plugin.redis;
 
-import com.google.common.collect.Lists;
 import com.github.sog.kit.lang.SerializableKit;
+import com.google.common.collect.Lists;
 import com.jfinal.log.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -15,8 +15,12 @@ import redis.clients.jedis.Tuple;
 import redis.clients.util.SafeEncoder;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class JedisKit {
     private static Logger LOG = Logger.getLogger(JedisKit.class);

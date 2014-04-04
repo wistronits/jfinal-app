@@ -5,8 +5,8 @@
  */
 package com.github.sog.plugin.redis;
 
-import com.google.common.collect.Maps;
 import com.github.sog.config.StringPool;
+import com.google.common.collect.Maps;
 import com.jfinal.log.Logger;
 
 import java.io.Serializable;
@@ -15,13 +15,10 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class QueueConsumer {
-    final Logger LOG = Logger.getLogger(getClass());
-
     static final String PROCESSINGLIST = StringPool.DASH + "processing";
     static final String PREFIX         = "queue" + StringPool.DASH;
-
     static Map<String, QueueConsumer> existingConsumers = Maps.newHashMap();
-
+    final Logger LOG = Logger.getLogger(getClass());
     int interval = 1000;
 
     boolean start = false;

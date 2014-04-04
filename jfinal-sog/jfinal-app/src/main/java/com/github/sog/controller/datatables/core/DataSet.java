@@ -19,8 +19,8 @@ import java.util.List;
  */
 public class DataSet<E> {
     private final List<E> rows;
-    private final long totalDisplayRecords;
-    private final long totalRecords;
+    private final long    totalDisplayRecords;
+    private final long    totalRecords;
 
     private DataSet(List<E> rows, long totalRecords, long totalDisplayRecords) {
         this.rows = rows;
@@ -28,7 +28,7 @@ public class DataSet<E> {
         this.totalDisplayRecords = totalDisplayRecords;
     }
 
-    public static <E> DataSet<E> newSet(List<E> rows, long total, long display){
+    public static <E> DataSet<E> newSet(List<E> rows, long total, long display) {
         return new DataSet<E>(rows, total, display);
     }
 

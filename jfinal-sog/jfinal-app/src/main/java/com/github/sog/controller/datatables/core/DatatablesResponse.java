@@ -18,13 +18,13 @@ import java.util.List;
  * @version 1.0 2014-01-15 14:38
  * @since JDK 1.6
  */
-public final class DatatablesResponse<E> implements Serializable{
+public final class DatatablesResponse<E> implements Serializable {
     private static final long serialVersionUID = 2150327528879897368L;
 
     private final List<E> aaData;
-    private final long iTotalRecords;
-    private final long iTotalDisplayRecords;
-    private final int sEcho;
+    private final long    iTotalRecords;
+    private final long    iTotalDisplayRecords;
+    private final int     sEcho;
 
 
     private DatatablesResponse(DataSet<E> dataSet, DatatablesCriterias criterias) {
@@ -32,6 +32,10 @@ public final class DatatablesResponse<E> implements Serializable{
         this.iTotalRecords = dataSet.getTotalRecords();
         this.iTotalDisplayRecords = dataSet.getTotalDisplayRecords();
         this.sEcho = criterias.getInternalCounter();
+    }
+
+    public static <T> DatatablesResponse<T> build(DataSet<T> dataSet, DatatablesCriterias criterias) {
+        return new DatatablesResponse<T>(dataSet, criterias);
     }
 
     public List<E> getAaData() {
@@ -48,9 +52,5 @@ public final class DatatablesResponse<E> implements Serializable{
 
     public int getsEcho() {
         return sEcho;
-    }
-
-    public static <T> DatatablesResponse<T> build(DataSet<T> dataSet, DatatablesCriterias criterias) {
-        return new DatatablesResponse<T>(dataSet, criterias);
     }
 }

@@ -6,9 +6,9 @@
 
 package com.github.sog.controller.datatables.core;
 
+import com.github.sog.controller.datatables.DTConstants;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Ints;
-import com.github.sog.controller.datatables.DTConstants;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,12 +27,12 @@ import java.util.List;
 public final class DatatablesCriterias implements Serializable {
     private static final long serialVersionUID = 7101911815995931134L;
 
-    private final String search;
-    private final int displayStart;
-    private final int displaySize;
+    private final String          search;
+    private final int             displayStart;
+    private final int             displaySize;
     private final List<ColumnDef> columnDefs;
     private final List<ColumnDef> sortingColumnDefs;
-    private final int internalCounter;
+    private final int             internalCounter;
 
     private DatatablesCriterias(String search, int displayStart, int displaySize, List<ColumnDef> columnDefs,
                                 List<ColumnDef> sortingColumnDefs, int internalCounter) {
@@ -61,7 +61,7 @@ public final class DatatablesCriterias implements Serializable {
             int colNumber = StringUtils.isNotBlank(sColNumber) ? Ints.tryParse(sColNumber) : -1;
             int sortingColNumber = StringUtils.isNotBlank(sSortingColNumber) ? Ints.tryParse(sSortingColNumber) : -1;
 
-            iDisplayStart = (iDisplayStart == 0) ? 1 : iDisplayStart +1;
+            iDisplayStart = (iDisplayStart == 0) ? 1 : iDisplayStart + 1;
 
             List<ColumnDef> columnDefs = Lists.newArrayList();
             List<ColumnDef> sortingColumnDefs = Lists.newArrayList();

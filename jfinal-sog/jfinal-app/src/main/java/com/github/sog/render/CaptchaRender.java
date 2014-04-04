@@ -16,11 +16,11 @@
 
 package com.github.sog.render;
 
+import com.github.sog.config.StringPool;
 import com.jfinal.core.Const;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.StringKit;
 import com.jfinal.render.Render;
-import com.github.sog.config.StringPool;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -42,19 +42,15 @@ import java.util.Random;
  */
 public class CaptchaRender extends Render {
 
-    private static final long serialVersionUID = -7599510915228560611L;
-
-    /**
-     * 随机码生成字典
-     */
-    private static final String[] strArr = {"3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y"};
-
-
     /**
      * 默认存储时使用的key,将md5散列后的随机码保存至session，cookie时使用。
      */
     public static final String DEFAULT_CAPTCHA_MD5_CODE_KEY = "_CAPTCHA_MD5_CODE_";
-
+    private static final long serialVersionUID = -7599510915228560611L;
+    /**
+     * 随机码生成字典
+     */
+    private static final String[] strArr = {"3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y"};
     /**
      * 图片宽度
      */
@@ -101,6 +97,47 @@ public class CaptchaRender extends Render {
         this.imgRandNumber = imgRandNumber;
         this.randonCode = generateRandonCode();
         this.md5RandonCode = encrypt(randonCode);
+    }
+
+    /**
+     * 使用md5散列字符串
+     *
+     * @param srcStr 输入的字符串
+     * @return 加密后的字符串
+     */
+    private static String encrypt(String srcStr) {
+        try {
+            String result = "";
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] bytes = md.digest(srcStr.getBytes(Const.DEFAULT_ENCODING));
+            for (byte b : bytes) {
+                String hex = Integer.toHexString(b & 0xFF).toUpperCase();
+                result += ((hex.length() == 1) ? StringPool.ZERO : StringPool.EMPTY) + hex;
+            }
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 验证码检查
+     *
+     * @param controller      控制器
+     * @param inputRandomCode 用户输入的验证码
+     * @return 若二者一致，返回true，否则返回false
+     */
+    public static boolean validate(Controller controller, String inputRandomCode) {
+        if (StringKit.isBlank(inputRandomCode))
+            return false;
+        try {
+            inputRandomCode = inputRandomCode.toUpperCase();
+            inputRandomCode = encrypt(inputRandomCode);
+            return inputRandomCode.equals(controller.getCookie(DEFAULT_CAPTCHA_MD5_CODE_KEY));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -214,47 +251,6 @@ public class CaptchaRender extends Render {
         int g = fc + random.nextInt(bc - fc);
         int b = fc + random.nextInt(bc - fc);
         return new Color(r, g, b);
-    }
-
-    /**
-     * 使用md5散列字符串
-     *
-     * @param srcStr 输入的字符串
-     * @return 加密后的字符串
-     */
-    private static String encrypt(String srcStr) {
-        try {
-            String result = "";
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] bytes = md.digest(srcStr.getBytes(Const.DEFAULT_ENCODING));
-            for (byte b : bytes) {
-                String hex = Integer.toHexString(b & 0xFF).toUpperCase();
-                result += ((hex.length() == 1) ? StringPool.ZERO : StringPool.EMPTY) + hex;
-            }
-            return result;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * 验证码检查
-     *
-     * @param controller      控制器
-     * @param inputRandomCode 用户输入的验证码
-     * @return 若二者一致，返回true，否则返回false
-     */
-    public static boolean validate(Controller controller, String inputRandomCode) {
-        if (StringKit.isBlank(inputRandomCode))
-            return false;
-        try {
-            inputRandomCode = inputRandomCode.toUpperCase();
-            inputRandomCode = encrypt(inputRandomCode);
-            return inputRandomCode.equals(controller.getCookie(DEFAULT_CAPTCHA_MD5_CODE_KEY));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 }
 

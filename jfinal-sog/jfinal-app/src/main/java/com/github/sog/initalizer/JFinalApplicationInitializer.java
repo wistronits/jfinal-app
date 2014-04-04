@@ -7,8 +7,8 @@
 package com.github.sog.initalizer;
 
 import com.alibaba.druid.util.JdbcUtils;
-import com.github.sog.initalizer.ctxbox.ClassFinder;
 import com.github.sog.config.StringPool;
+import com.github.sog.initalizer.ctxbox.ClassFinder;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
@@ -99,7 +99,7 @@ public class JFinalApplicationInitializer implements ServletContainerInitializer
             final File script_dir = new File(real_script_path);
             if (script_dir.exists() && script_dir.isDirectory()) {
                 final String db_url = p.getProperty(DB_URL);
-                Preconditions.checkNotNull(db_url  , "The DataBase connection url is must!");
+                Preconditions.checkNotNull(db_url, "The DataBase connection url is must!");
                 Collection<File> list_script_files
                         = Ordering.natural()
                         .sortedCopy(FileUtils.listFiles(script_dir, new String[]{"sql"}, false));

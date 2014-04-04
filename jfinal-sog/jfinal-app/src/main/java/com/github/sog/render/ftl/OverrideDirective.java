@@ -5,15 +5,15 @@
  */
 package com.github.sog.render.ftl;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.util.Map;
-
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Map;
 
 /**
  * <p>
@@ -29,7 +29,7 @@ public class OverrideDirective implements TemplateDirectiveModel {
     public final static String DIRECTIVE_NAME = "override";
 
     @SuppressWarnings("rawtypes")
-	@Override
+    @Override
     public void execute(Environment env, Map params, TemplateModel[] loopVars,
                         TemplateDirectiveBody body) throws TemplateException, IOException {
         String name = DirectiveUtils.getRequiredParam(params, "name");
@@ -46,12 +46,12 @@ public class OverrideDirective implements TemplateDirectiveModel {
 
     /** 重写指令的内容渲染包装器 */
     static class TemplateDirectiveBodyOverrideWraper implements TemplateDirectiveBody, TemplateModel {
-        /** 当前内容渲染 */
-        private final TemplateDirectiveBody body;
-        /** 内容渲染包装器 */
-        public TemplateDirectiveBodyOverrideWraper parentBody;
         /** 运行环境 */
-        public final Environment env;
+        public final  Environment                         env;
+        /** 当前内容渲染 */
+        private final TemplateDirectiveBody               body;
+        /** 内容渲染包装器 */
+        public        TemplateDirectiveBodyOverrideWraper parentBody;
 
         /**
          * 构造一个包装器

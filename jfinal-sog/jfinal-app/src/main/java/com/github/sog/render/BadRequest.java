@@ -20,6 +20,6 @@ import com.jfinal.render.Render;
 public class BadRequest extends Render {
     @Override
     public void render() {
-        
+
     }
 }

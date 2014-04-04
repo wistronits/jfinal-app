@@ -30,7 +30,7 @@ import java.util.Set;
  * @version 1.0 2014-04-04 10:20
  * @since JDK 1.6
  */
-public class OrderSafeProperties extends java.util.Properties  {
+public class OrderSafeProperties extends java.util.Properties {
 
     // set used to preserve key order
     private final LinkedHashSet<Object> keys = new LinkedHashSet<Object>();
@@ -54,12 +54,12 @@ public class OrderSafeProperties extends java.util.Properties  {
 
             String escapedLine = StringEscapeUtils.escapeJava(line) + "\n";
             // remove escaped backslashes
-            escapedLine = escapedLine.replaceAll("\\\\\\\\","\\\\");
-            out.write( escapedLine.getBytes("iso-8859-1"));
+            escapedLine = escapedLine.replaceAll("\\\\\\\\", "\\\\");
+            out.write(escapedLine.getBytes("iso-8859-1"));
         }
 
         // read properties-file with regular java.util.Properties impl
-        super.load( new ByteArrayInputStream( out.toByteArray()) );
+        super.load(new ByteArrayInputStream(out.toByteArray()));
     }
 
     @Override

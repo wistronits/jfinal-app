@@ -684,6 +684,7 @@ public class ArraysKit {
         Class<T> componentType = (Class<T>) dest.getClass().getComponentType();
         return insert(dest, src, offset, componentType);
     }
+
     /**
      * Inserts one element into an array.
      */
@@ -703,6 +704,7 @@ public class ArraysKit {
         System.arraycopy(dest, offset, temp, src.length + offset, dest.length - offset);
         return temp;
     }
+
     /**
      * Inserts one element into another array.
      */
@@ -1052,6 +1054,7 @@ public class ArraysKit {
         }
         return dest;
     }
+
     /**
      * Converts to object array.
      */
@@ -1077,6 +1080,7 @@ public class ArraysKit {
         }
         return dest;
     }
+
     /**
      * Converts to object array.
      */
@@ -1102,6 +1106,7 @@ public class ArraysKit {
         }
         return dest;
     }
+
     /**
      * Converts to object array.
      */
@@ -1127,6 +1132,7 @@ public class ArraysKit {
         }
         return dest;
     }
+
     /**
      * Converts to object array.
      */
@@ -1152,6 +1158,7 @@ public class ArraysKit {
         }
         return dest;
     }
+
     /**
      * Converts to object array.
      */
@@ -1177,6 +1184,7 @@ public class ArraysKit {
         }
         return dest;
     }
+
     /**
      * Converts to object array.
      */
@@ -1202,6 +1210,7 @@ public class ArraysKit {
         }
         return dest;
     }
+
     /**
      * Converts to object array.
      */
@@ -1227,6 +1236,7 @@ public class ArraysKit {
         }
         return dest;
     }
+
     /**
      * Converts to object array.
      */
@@ -1237,7 +1247,6 @@ public class ArraysKit {
         }
         return dest;
     }
-
 
 
     // ---------------------------------------------------------------- indexof
@@ -1254,12 +1263,14 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Returns <code>true</code> if an array contains given value.
      */
     public static boolean contains(byte[] array, byte value) {
         return indexOf(array, value) != -1;
     }
+
     /**
      * Finds the first occurrence of given value in an array from specified given position.
      */
@@ -1271,6 +1282,7 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Finds the first occurrence in an array from specified given position and upto given length.
      */
@@ -1294,12 +1306,14 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Returns <code>true</code> if an array contains given value.
      */
     public static boolean contains(char[] array, char value) {
         return indexOf(array, value) != -1;
     }
+
     /**
      * Finds the first occurrence of given value in an array from specified given position.
      */
@@ -1311,6 +1325,7 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Finds the first occurrence in an array from specified given position and upto given length.
      */
@@ -1334,12 +1349,14 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Returns <code>true</code> if an array contains given value.
      */
     public static boolean contains(short[] array, short value) {
         return indexOf(array, value) != -1;
     }
+
     /**
      * Finds the first occurrence of given value in an array from specified given position.
      */
@@ -1351,6 +1368,7 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Finds the first occurrence in an array from specified given position and upto given length.
      */
@@ -1374,12 +1392,14 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Returns <code>true</code> if an array contains given value.
      */
     public static boolean contains(int[] array, int value) {
         return indexOf(array, value) != -1;
     }
+
     /**
      * Finds the first occurrence of given value in an array from specified given position.
      */
@@ -1391,6 +1411,7 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Finds the first occurrence in an array from specified given position and upto given length.
      */
@@ -1414,12 +1435,14 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Returns <code>true</code> if an array contains given value.
      */
     public static boolean contains(long[] array, long value) {
         return indexOf(array, value) != -1;
     }
+
     /**
      * Finds the first occurrence of given value in an array from specified given position.
      */
@@ -1431,6 +1454,7 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Finds the first occurrence in an array from specified given position and upto given length.
      */
@@ -1454,12 +1478,14 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Returns <code>true</code> if an array contains given value.
      */
     public static boolean contains(boolean[] array, boolean value) {
         return indexOf(array, value) != -1;
     }
+
     /**
      * Finds the first occurrence of given value in an array from specified given position.
      */
@@ -1471,6 +1497,7 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Finds the first occurrence in an array from specified given position and upto given length.
      */
@@ -1494,12 +1521,14 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Returns <code>true</code> if <code>float</code> array contains given value.
      */
     public static boolean contains(float[] array, float value) {
         return indexOf(array, value) != -1;
     }
+
     /**
      * Finds the first occurrence of given value in <code>float</code>
      * array from specified given position.
@@ -1512,6 +1541,7 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Finds the first occurrence in <code>float</code> array from specified given position and upto given length.
      */
@@ -1535,12 +1565,14 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Returns <code>true</code> if <code>double</code> array contains given value.
      */
     public static boolean contains(double[] array, double value) {
         return indexOf(array, value) != -1;
     }
+
     /**
      * Finds the first occurrence of given value in <code>double</code>
      * array from specified given position.
@@ -1553,6 +1585,7 @@ public class ArraysKit {
         }
         return -1;
     }
+
     /**
      * Finds the first occurrence in <code>double</code> array from specified given position and upto given length.
      */
@@ -1576,6 +1609,7 @@ public class ArraysKit {
         }
         return -1;
     }
+
     public static boolean contains(Object[] array, Object value) {
         return indexOf(array, value) != -1;
     }
@@ -1591,11 +1625,10 @@ public class ArraysKit {
         }
         return -1;
     }
+
     public static boolean contains(Object[] array, Object value, int startIndex) {
         return indexOf(array, value, startIndex) != -1;
     }
-
-
 
 
     // ---------------------------------------------------------------- indexof 2
@@ -1607,6 +1640,7 @@ public class ArraysKit {
     public static int indexOf(byte[] array, byte[] sub) {
         return indexOf(array, sub, 0, array.length);
     }
+
     public static boolean contains(byte[] array, byte[] sub) {
         return indexOf(array, sub) != -1;
     }
@@ -1640,7 +1674,8 @@ public class ArraysKit {
                 if (sub[j] != array[k]) {
                     continue mainloop;
                 }
-                j++; k++;
+                j++;
+                k++;
             }
             return i;
         }
@@ -1653,6 +1688,7 @@ public class ArraysKit {
     public static int indexOf(char[] array, char[] sub) {
         return indexOf(array, sub, 0, array.length);
     }
+
     public static boolean contains(char[] array, char[] sub) {
         return indexOf(array, sub) != -1;
     }
@@ -1686,7 +1722,8 @@ public class ArraysKit {
                 if (sub[j] != array[k]) {
                     continue mainloop;
                 }
-                j++; k++;
+                j++;
+                k++;
             }
             return i;
         }
@@ -1699,6 +1736,7 @@ public class ArraysKit {
     public static int indexOf(short[] array, short[] sub) {
         return indexOf(array, sub, 0, array.length);
     }
+
     public static boolean contains(short[] array, short[] sub) {
         return indexOf(array, sub) != -1;
     }
@@ -1732,7 +1770,8 @@ public class ArraysKit {
                 if (sub[j] != array[k]) {
                     continue mainloop;
                 }
-                j++; k++;
+                j++;
+                k++;
             }
             return i;
         }
@@ -1745,6 +1784,7 @@ public class ArraysKit {
     public static int indexOf(int[] array, int[] sub) {
         return indexOf(array, sub, 0, array.length);
     }
+
     public static boolean contains(int[] array, int[] sub) {
         return indexOf(array, sub) != -1;
     }
@@ -1778,7 +1818,8 @@ public class ArraysKit {
                 if (sub[j] != array[k]) {
                     continue mainloop;
                 }
-                j++; k++;
+                j++;
+                k++;
             }
             return i;
         }
@@ -1791,6 +1832,7 @@ public class ArraysKit {
     public static int indexOf(long[] array, long[] sub) {
         return indexOf(array, sub, 0, array.length);
     }
+
     public static boolean contains(long[] array, long[] sub) {
         return indexOf(array, sub) != -1;
     }
@@ -1824,7 +1866,8 @@ public class ArraysKit {
                 if (sub[j] != array[k]) {
                     continue mainloop;
                 }
-                j++; k++;
+                j++;
+                k++;
             }
             return i;
         }
@@ -1837,6 +1880,7 @@ public class ArraysKit {
     public static int indexOf(boolean[] array, boolean[] sub) {
         return indexOf(array, sub, 0, array.length);
     }
+
     public static boolean contains(boolean[] array, boolean[] sub) {
         return indexOf(array, sub) != -1;
     }
@@ -1870,7 +1914,8 @@ public class ArraysKit {
                 if (sub[j] != array[k]) {
                     continue mainloop;
                 }
-                j++; k++;
+                j++;
+                k++;
             }
             return i;
         }
@@ -1883,6 +1928,7 @@ public class ArraysKit {
     public static int indexOf(float[] array, float[] sub) {
         return indexOf(array, sub, 0, array.length);
     }
+
     public static boolean contains(float[] array, float[] sub) {
         return indexOf(array, sub) != -1;
     }
@@ -1916,7 +1962,8 @@ public class ArraysKit {
                 if (Float.compare(sub[j], array[k]) != 0) {
                     continue mainloop;
                 }
-                j++; k++;
+                j++;
+                k++;
             }
             return i;
         }
@@ -1929,6 +1976,7 @@ public class ArraysKit {
     public static int indexOf(double[] array, double[] sub) {
         return indexOf(array, sub, 0, array.length);
     }
+
     public static boolean contains(double[] array, double[] sub) {
         return indexOf(array, sub) != -1;
     }
@@ -1962,7 +2010,8 @@ public class ArraysKit {
                 if (Double.compare(sub[j], array[k]) != 0) {
                     continue mainloop;
                 }
-                j++; k++;
+                j++;
+                k++;
             }
             return i;
         }

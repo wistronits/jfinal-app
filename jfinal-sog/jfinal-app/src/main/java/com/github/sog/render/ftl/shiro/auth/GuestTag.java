@@ -6,12 +6,12 @@
 
 package com.github.sog.render.ftl.shiro.auth;
 
-import java.io.IOException;
-import java.util.Map;
-
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateException;
+
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,20 +25,20 @@ import freemarker.template.TemplateException;
 public class GuestTag extends SecureTag {
 
 
-	@Override
-	public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
-		if (getSubject() == null || getSubject().getPrincipal() == null) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug("Subject does not exist or does not have a known identity (aka 'principal').  " +
-						"Tag body will be evaluated.");
-			}
+    @Override
+    public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
+        if (getSubject() == null || getSubject().getPrincipal() == null) {
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("Subject does not exist or does not have a known identity (aka 'principal').  " +
+                        "Tag body will be evaluated.");
+            }
 
-			renderBody(env, body);
-		} else {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug("Subject exists or has a known identity (aka 'principal').  " +
-						"Tag body will not be evaluated.");
-			}
-		}
-	}
+            renderBody(env, body);
+        } else {
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("Subject exists or has a known identity (aka 'principal').  " +
+                        "Tag body will not be evaluated.");
+            }
+        }
+    }
 }

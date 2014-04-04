@@ -6,12 +6,12 @@
 
 package com.github.sog.initalizer.ctxbox;
 
+import com.github.sog.config.StringPool;
+import com.github.sog.kit.common.Reflect;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
-import com.github.sog.kit.common.Reflect;
 import com.jfinal.kit.PathKit;
-import com.github.sog.config.StringPool;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;

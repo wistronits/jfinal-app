@@ -39,6 +39,7 @@ public class IO {
 
     /**
      * Read a properties file with the utf-8 encoding
+     *
      * @param is Stream to properties file
      * @return The Properties object
      */
@@ -55,6 +56,7 @@ public class IO {
 
     /**
      * Read the Stream content as a string (use utf-8)
+     *
      * @param is The stream to read
      * @return The String content
      */
@@ -64,6 +66,7 @@ public class IO {
 
     /**
      * Read the Stream content as a string
+     *
      * @param is The stream to read
      * @return The String content
      */
@@ -71,19 +74,21 @@ public class IO {
         String res = null;
         try {
             res = IOUtils.toString(is, encoding);
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             try {
                 is.close();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 //
             }
         }
         return res;
     }
+
     /**
      * Read file content to a String (always use utf-8)
+     *
      * @param file The file to read
      * @return The String content
      */
@@ -93,6 +98,7 @@ public class IO {
 
     /**
      * Read file content to a String
+     *
      * @param file The file to read
      * @return The String content
      */
@@ -108,13 +114,13 @@ public class IO {
                 out.println(line);
             }
             return result.toString();
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new UnexpectedException(e);
         } finally {
-            if(is != null) {
+            if (is != null) {
                 try {
                     is.close();
-                } catch(Exception e) {
+                } catch (Exception e) {
                     //
                 }
             }
@@ -140,10 +146,10 @@ public class IO {
         } catch (IOException ex) {
             throw new UnexpectedException(ex);
         } finally {
-            if(is != null) {
+            if (is != null) {
                 try {
                     is.close();
-                } catch(Exception e) {
+                } catch (Exception e) {
                     //
                 }
             }
@@ -157,6 +163,7 @@ public class IO {
 
     /**
      * Read binary content of a file (warning does not use on large file !)
+     *
      * @param file The file te read
      * @return The binary data
      */
@@ -167,13 +174,13 @@ public class IO {
             byte[] result = new byte[(int) file.length()];
             is.read(result);
             return result;
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new UnexpectedException(e);
         } finally {
-            if(is != null) {
+            if (is != null) {
                 try {
                     is.close();
-                } catch(Exception e) {
+                } catch (Exception e) {
                     //
                 }
             }
@@ -182,6 +189,7 @@ public class IO {
 
     /**
      * Read binary content of a stream (warning does not use on large file !)
+     *
      * @param is The stream to read
      * @return The binary data
      */
@@ -194,15 +202,16 @@ public class IO {
                 baos.write(buffer, 0, read);
             }
             return baos.toByteArray();
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new UnexpectedException(e);
         }
     }
 
     /**
      * Write String content to a stream (always use utf-8)
+     *
      * @param content The content to write
-     * @param os The stream to write
+     * @param os      The stream to write
      */
     public static void writeContent(CharSequence content, OutputStream os) {
         writeContent(content, os, "utf-8");
@@ -210,8 +219,9 @@ public class IO {
 
     /**
      * Write String content to a stream (always use utf-8)
+     *
      * @param content The content to write
-     * @param os The stream to write
+     * @param os      The stream to write
      */
     public static void writeContent(CharSequence content, OutputStream os, String encoding) {
         try {
@@ -219,12 +229,12 @@ public class IO {
             printWriter.println(content);
             printWriter.flush();
             os.flush();
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new UnexpectedException(e);
         } finally {
             try {
                 os.close();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 //
             }
         }
@@ -232,8 +242,9 @@ public class IO {
 
     /**
      * Write String content to a file (always use utf-8)
+     *
      * @param content The content to write
-     * @param file The file to write
+     * @param file    The file to write
      */
     public static void writeContent(CharSequence content, File file) {
         writeContent(content, file, "utf-8");
@@ -241,8 +252,9 @@ public class IO {
 
     /**
      * Write String content to a file (always use utf-8)
+     *
      * @param content The content to write
-     * @param file The file to write
+     * @param file    The file to write
      */
     public static void writeContent(CharSequence content, File file, String encoding) {
         OutputStream os = null;
@@ -252,12 +264,12 @@ public class IO {
             printWriter.println(content);
             printWriter.flush();
             os.flush();
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new UnexpectedException(e);
         } finally {
             try {
-                if(os != null) os.close();
-            } catch(Exception e) {
+                if (os != null) os.close();
+            } catch (Exception e) {
                 //
             }
         }
@@ -265,6 +277,7 @@ public class IO {
 
     /**
      * Write binay data to a file
+     *
      * @param data The binary data to write
      * @param file The file to write
      */
@@ -274,12 +287,12 @@ public class IO {
             os = new FileOutputStream(file);
             os.write(data);
             os.flush();
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new UnexpectedException(e);
         } finally {
             try {
-                if(os != null) os.close();
-            } catch(Exception e) {
+                if (os != null) os.close();
+            } catch (Exception e) {
                 //
             }
         }
@@ -295,12 +308,12 @@ public class IO {
             while ((read = is.read(buffer)) > 0) {
                 os.write(buffer, 0, read);
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new UnexpectedException(e);
         } finally {
             try {
                 is.close();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 //
             }
         }
@@ -316,17 +329,17 @@ public class IO {
             while ((read = is.read(buffer)) > 0) {
                 os.write(buffer, 0, read);
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new UnexpectedException(e);
         } finally {
             try {
                 is.close();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 //
             }
             try {
                 os.close();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 //
             }
         }
@@ -344,17 +357,17 @@ public class IO {
             while ((read = is.read(buffer)) > 0) {
                 os.write(buffer, 0, read);
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new UnexpectedException(e);
         } finally {
             try {
                 is.close();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 //
             }
             try {
-                if(os != null) os.close();
-            } catch(Exception e) {
+                if (os != null) os.close();
+            } catch (Exception e) {
                 //
             }
         }
@@ -366,12 +379,12 @@ public class IO {
             if (!target.exists()) {
                 target.mkdir();
             }
-            for (String child: source.list()) {
+            for (String child : source.list()) {
                 copyDirectory(new File(source, child), new File(target, child));
             }
         } else {
             try {
-                write(new FileInputStream(source),  new FileOutputStream(target));
+                write(new FileInputStream(source), new FileOutputStream(target));
             } catch (IOException e) {
                 throw new UnexpectedException(e);
             }

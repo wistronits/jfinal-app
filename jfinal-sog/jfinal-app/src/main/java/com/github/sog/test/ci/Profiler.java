@@ -1,8 +1,8 @@
 package com.github.sog.test.ci;
 
-import com.google.common.collect.Lists;
 import com.github.sog.config.StringPool;
 import com.github.sog.kit.lang.ObjectKit;
+import com.google.common.collect.Lists;
 
 import java.text.DecimalFormat;
 import java.util.Collections;
@@ -23,11 +23,11 @@ import static com.github.sog.config.StringPool.EMPTY;
  *
  * 			Thread.sleep(1100);
  * 			doSomething();
- * 		} finally {
+ *        } finally {
  * 			Profiler.release();
  * 			System.out.println(Profiler.dump());
- * 		}
- * 	}
+ *        }
+ *    }
  *
  * 	public void doSomething() throws InterruptedException {
  * 		try {
@@ -36,10 +36,10 @@ import static com.github.sog.config.StringPool.EMPTY;
  * 			// do some thing...
  * 			Thread.sleep(380);
  *
- * 		} finally {
+ *        } finally {
  * 			Profiler.release();
- * 		}
- * 	}
+ *        }
+ *    }
  *
  * </pre>
  * dump()输出如下:
@@ -316,15 +316,16 @@ public final class Profiler {
     public static final class Step {
         private final List<Step> subStepList = Lists.newArrayListWithCapacity(4);
         private final String message;
-        private final Step parentStep;
-        private final Step firstStep;
-        private final long baseTime;
-        private final long startTime;
-        private long endTime;
-
-        private long loopCount;
+        private final Step   parentStep;
+        private final Step   firstStep;
+        private final long   baseTime;
+        private final long   startTime;
+        DecimalFormat pecentageFormat = new DecimalFormat("##.#%");
+        DecimalFormat numberFormat    = new DecimalFormat("##,###,###");
+        private       long   endTime;
+        private long      loopCount;
         private Throwable exception;
-        private int resultSize;
+        private int       resultSize;
 
         /**
          * 创建一个新的step。
@@ -593,13 +594,10 @@ public final class Profiler {
             return buffer.toString();
         }
 
-
-        DecimalFormat pecentageFormat = new DecimalFormat("##.#%");
-        DecimalFormat numberFormat = new DecimalFormat("##,###,###");
         /**
          * 将step转换成字符串的表示。
          *
-         * @param buffer 字符串buffer
+         * @param buffer  字符串buffer
          * @param prefix1 首行前缀
          * @param prefix2 后续行前缀
          */
