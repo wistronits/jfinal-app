@@ -120,20 +120,22 @@ public class MimeTypes {
         if (mimetypes != null) return;
         // Load default mimetypes from the framework
         try {
-            InputStream is = MimeTypes.class.getClassLoader().getResourceAsStream("play/libs/mime-types.properties");
+            InputStream is = MimeTypes.class.getClassLoader().getResourceAsStream("libs/mime-types.properties");
             mimetypes = new Properties();
             mimetypes.load(is);
         } catch (Exception ex) {
             logger.warn(ex.getMessage());
         }
         // Load custom mimetypes from the application configuration
-        Enumeration<Object> confenum = JFinalApp.configuration.keys();
-        while (confenum.hasMoreElements()) {
-            String key = (String) confenum.nextElement();
-            if (key.startsWith("mimetype.")) {
-                String type = key.substring(key.indexOf('.') + 1).toLowerCase();
-                String value = (String) JFinalApp.configuration.get(key);
-                mimetypes.setProperty(type, value);
+        if (JFinalApp.initlization) {
+            Enumeration<Object> confenum = JFinalApp.configuration.keys();
+            while (confenum.hasMoreElements()) {
+                String key = (String) confenum.nextElement();
+                if (key.startsWith("mimetype.")) {
+                    String type = key.substring(key.indexOf('.') + 1).toLowerCase();
+                    String value = (String) JFinalApp.configuration.get(key);
+                    mimetypes.setProperty(type, value);
+                }
             }
         }
     }

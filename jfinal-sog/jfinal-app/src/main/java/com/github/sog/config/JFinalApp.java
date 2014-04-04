@@ -78,6 +78,8 @@ import static com.github.sog.initalizer.InitConst.*;
  */
 public class JFinalApp extends JFinalConfig {
 
+    public static boolean initlization = false;
+
     /**
      * 2 modes
      */
@@ -105,6 +107,8 @@ public class JFinalApp extends JFinalConfig {
     public void configConstant(Constants constants) {
         // set config propertis.
         configuration = ConfigProperties.getConfigProps();
+
+        initlization = true;
 
         constants.setLoggerFactory(new LogbackLoggerFactory());
 

@@ -89,9 +89,9 @@ public class Printf {
 			} else if (param instanceof Long) {
 				format = pf.form(((Long) param).longValue());
 			} else if (param instanceof Double) {
-				format = pf.form(((Double) param).doubleValue());
+				format = pf.form((Double) param);
 			} else if (param instanceof Float) {
-				format = pf.form(((Float) param).floatValue());
+				format = pf.form((Float) param);
 			} else if (param instanceof Byte) {
 				format = pf.form(((Byte) param).byteValue());
 			} else if (param instanceof Short) {
