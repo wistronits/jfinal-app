@@ -14,6 +14,19 @@
     <artifactId>jfinal-wxchat</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <developers>
+        <developer>
+            <id>Jerry</id>
+            <name>Jerry Ou</name>
+            <email>xioudi@gmail.com</email>
+            <organization>Sog2Y</organization>
+            <roles>
+                <role>Project Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
     <properties>
         <junit.version>4.11</junit.version>
         <jfinal-app.version>0.0.9-SNAPSHOT</jfinal-app.version>
